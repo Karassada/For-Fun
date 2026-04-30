@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rise Tarnished — Elden Ring Build Guide</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0a;--bg-card:#111;--border:#1e1a12;--border-gold:#3a2e12;
+  --gold:#c9a840;--gold-dim:#7a6228;--gold-bright:#e8c660;
+  --text:#d4c5a0;--text-dim:#7a6e58;--text-muted:#3d3526;
+  --str:#c0392b;--dex:#2980b9;--int:#8e44ad;--fth:#d4a017;--arc:#922b21;--hybrid:#16a085;
+  --below:#27ae60;--soft:#e8c030;--hard:#e74c3c;
+}
+body{background:var(--bg);color:var(--text);font-family:Georgia,'Times New Roman',serif;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 15%,#1a0d00 0%,transparent 55%),radial-gradient(ellipse at 85% 85%,#0d0820 0%,transparent 55%);pointer-events:none;z-index:0}
+
+.wrap{position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:0 24px}
+
+/* LANG BUTTON */
+.lang-btn{position:fixed;top:16px;right:20px;z-index:100;background:transparent;border:1px solid var(--border-gold);color:var(--gold);padding:8px 16px;font-family:inherit;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.lang-btn:hover{background:rgba(201,168,64,.08);border-color:var(--gold)}
+
+/* HEADER */
+header{text-align:center;padding:52px 20px 28px;border-bottom:1px solid var(--border-gold);position:relative;margin-bottom:0}
+header::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:240px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);box-shadow:0 0 24px var(--gold-dim)}
+.eyebrow{color:var(--gold-dim);font-size:11px;letter-spacing:7px;text-transform:uppercase;margin-bottom:14px}
+h1{font-size:clamp(1.8rem,5vw,3.2rem);color:var(--gold);text-transform:uppercase;letter-spacing:10px;text-shadow:0 0 60px rgba(201,168,64,.35);font-weight:normal}
+.h1-sub{color:var(--text-dim);font-size:12px;letter-spacing:4px;text-transform:uppercase;margin-top:10px}
+
+/* LEVEL SELECTOR */
+.level-selector{display:flex;justify-content:center;gap:8px;padding:28px 0 20px;flex-wrap:wrap}
+.level-btn{background:transparent;border:1px solid var(--border-gold);color:var(--text-dim);padding:10px 26px;font-family:inherit;font-size:13px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.level-btn:hover{color:var(--gold);border-color:var(--gold);background:rgba(201,168,64,.04)}
+.level-btn.active{color:#0a0a0a;background:var(--gold);border-color:var(--gold);font-weight:bold}
+
+/* DIVIDER */
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border-gold),transparent);margin:4px 0 20px}
+
+/* CONTROLS */
+.controls{display:flex;gap:12px;padding:0 0 8px;flex-wrap:wrap;align-items:center}
+.search-input{background:#0e0e0e;border:1px solid var(--border-gold);color:var(--text);padding:9px 14px;font-family:inherit;font-size:13px;outline:none;width:220px;transition:border-color .2s}
+.search-input:focus{border-color:var(--gold)}
+.search-input::placeholder{color:var(--text-muted)}
+.ctrl-label{color:var(--text-muted);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-right:2px}
+.filter-group{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.fbtn{background:transparent;border:1px solid var(--border);color:var(--text-dim);padding:7px 12px;font-family:inherit;font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.fbtn:hover{border-color:var(--gold-dim);color:var(--text)}
+.fbtn.active{border-color:var(--gold);color:var(--gold);background:rgba(201,168,64,.06)}
+.fbtn.s-str.active{border-color:var(--str);color:var(--str);background:rgba(192,57,43,.06)}
+.fbtn.s-dex.active{border-color:var(--dex);color:var(--dex);background:rgba(41,128,185,.06)}
+.fbtn.s-int.active{border-color:var(--int);color:var(--int);background:rgba(142,68,173,.06)}
+.fbtn.s-fth.active{border-color:var(--fth);color:var(--fth);background:rgba(212,160,23,.06)}
+.fbtn.s-arc.active{border-color:var(--arc);color:var(--arc);background:rgba(146,43,33,.06)}
+.fbtn.s-hyb.active{border-color:var(--hybrid);color:var(--hybrid);background:rgba(22,160,133,.06)}
+.sort-sel{background:#0e0e0e;border:1px solid var(--border-gold);color:var(--text-dim);padding:7px 12px;font-family:inherit;font-size:12px;cursor:pointer;outline:none}
+
+/* LEGEND */
+.legend{display:flex;gap:20px;padding:10px 16px;background:#0c0c0c;border:1px solid var(--border);margin-bottom:20px;flex-wrap:wrap;align-items:center}
+.legend-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted)}
+.leg-item{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text-dim)}
+.leg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.caps-list{display:flex;gap:10px;flex-wrap:wrap;font-size:10px;color:var(--text-muted);letter-spacing:.5px}
+.cap-entry b{color:var(--text-dim)}
+
+/* RESULTS BAR */
+.results-bar{display:flex;justify-content:space-between;align-items:center;padding:4px 0 16px;color:var(--text-muted);font-size:11px;letter-spacing:1px;text-transform:uppercase}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:14px;padding-bottom:60px}
+
+/* CARD */
+.card{background:var(--bg-card);border:1px solid var(--border);padding:18px 20px;transition:border-color .2s,transform .18s;position:relative;overflow:hidden;cursor:default}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity .2s}
+.card:hover{border-color:var(--border-gold);transform:translateY(-2px)}
+.card:hover::before{opacity:1}
+.card[data-primary="STR"]::before{background:var(--str)}
+.card[data-primary="DEX"]::before{background:var(--dex)}
+.card[data-primary="INT"]::before{background:var(--int)}
+.card[data-primary="FTH"]::before{background:var(--fth)}
+.card[data-primary="ARC"]::before{background:var(--arc)}
+.card[data-hybrid="1"]::before{background:var(--hybrid)}
+
+/* CARD HEADER */
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:10px}
+.card-top-left{display:flex;gap:10px;align-items:flex-start;flex:1;min-width:0}
+.wnum{color:var(--text-muted);font-size:10px;letter-spacing:1px;margin-bottom:3px}
+.wname-main{font-size:1.1rem;color:var(--gold);font-weight:normal;letter-spacing:.5px;line-height:1.2}
+.wname-sub{font-size:11px;color:var(--text-dim);margin-top:2px}
+.badges{display:flex;flex-direction:column;gap:4px;align-items:flex-end}
+.badge{font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border:1px solid}
+.badge-base{color:#8a9a6a;border-color:#3a4a2a}
+.badge-dlc{color:var(--gold);border-color:var(--gold-dim)}
+.badge-type{color:var(--text-muted);border-color:var(--border)}
+
+/* PRIMARY STAT BADGE */
+.primary-badge{display:inline-block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:2px 10px;border:1px solid;margin-bottom:9px}
+.pb-STR{color:var(--str);border-color:var(--str)}
+.pb-DEX{color:var(--dex);border-color:var(--dex)}
+.pb-INT{color:var(--int);border-color:var(--int)}
+.pb-FTH{color:var(--fth);border-color:var(--fth)}
+.pb-ARC{color:var(--arc);border-color:var(--arc)}
+.pb-hybrid{color:var(--hybrid);border-color:var(--hybrid)}
+
+/* STAT BARS */
+.stat-row{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.slabel{width:52px;font-size:10px;letter-spacing:.5px;color:var(--text-muted);flex-shrink:0;white-space:nowrap}
+.sbar-wrap{flex:1;height:7px;background:#161616;position:relative;overflow:visible}
+.sbar-fill{height:100%;transition:width .45s cubic-bezier(.4,0,.2,1),background-color .45s ease;position:relative}
+.sbar-fill.below{background:var(--below)}
+.sbar-fill.soft{background:var(--soft);box-shadow:0 0 5px rgba(232,192,48,.4)}
+.sbar-fill.hard{background:var(--hard);box-shadow:0 0 8px rgba(231,76,60,.5)}
+/* soft/hard cap tick marks */
+.sbar-wrap .tick{position:absolute;top:-1px;bottom:-1px;width:1px;background:rgba(255,255,255,.12);pointer-events:none}
+.sval{width:26px;font-size:11px;text-align:right;flex-shrink:0;font-variant-numeric:tabular-nums;transition:color .3s}
+.sval.below{color:var(--below)}
+.sval.soft{color:var(--soft)}
+.sval.hard{color:var(--hard)}
+
+/* AR SECTION */
+.ar-row{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;padding-top:10px;border-top:1px solid var(--border)}
+.ar-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted)}
+.ar-val{font-size:1.35rem;color:var(--gold);font-weight:normal;letter-spacing:2px}
+.ar-val.none{color:var(--text-muted);font-size:.85rem;letter-spacing:1px}
+
+/* NOTES */
+.bnotes{font-size:11px;color:var(--text-dim);margin-top:6px;line-height:1.55;font-style:italic}
+
+/* INFUSION */
+.infusion{font-size:10px;color:var(--text-muted);margin-bottom:8px}
+.infusion em{color:var(--text-dim);font-style:normal}
+
+/* WEAPON IMAGE */
+.wimg-wrap{width:56px;height:56px;flex-shrink:0;background:#0a0a0a;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.wimg{width:52px;height:52px;object-fit:contain;filter:drop-shadow(0 0 5px rgba(201,168,64,.18))}
+.wimg-missing{width:52px;height:52px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:16px;opacity:.4}
+
+/* EMPTY */
+.empty{grid-column:1/-1;text-align:center;padding:70px 20px;color:var(--text-muted);letter-spacing:4px;text-transform:uppercase;font-size:.9rem}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#060606}
+::-webkit-scrollbar-thumb{background:var(--border-gold)}
+
+@media(max-width:600px){
+  .grid{grid-template-columns:1fr}
+  h1{letter-spacing:5px}
+  .controls{gap:8px}
+  .search-input{width:100%}
+  .lang-btn{top:10px;right:10px;padding:6px 10px;font-size:10px}
+}
+</style>
+</head>
+<body>
+
+<!-- LANGUAGE TOGGLE -->
+<button class="lang-btn" id="lang-btn">JP</button>
+
+<div class="wrap">
+
+<header>
+  <div class="eyebrow" data-i18n="eyebrow">Base Game + Shadow of the Erdtree · Patch 1.12+</div>
+  <h1 data-i18n="title">Rise, Tarnished</h1>
+  <div class="h1-sub" data-i18n="subtitle">Elden Ring · Optimal Weapon Builds</div>
+</header>
+
+<!-- LEVEL SELECTOR -->
+<div class="level-selector">
+  <button class="level-btn" data-rl="base" data-i18n="baseReq">Base Req.</button>
+  <button class="level-btn active" data-rl="150">Level 150</button>
+  <button class="level-btn" data-rl="200">Level 200</button>
+  <button class="level-btn" data-rl="250">Level 250</button>
+  <button class="level-btn" data-rl="300">Level 300</button>
+</div>
+
+<div class="divider"></div>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <input class="search-input" id="search" type="text" placeholder="Search weapon…" data-i18n-placeholder="searchPlaceholder">
+
+  <span class="ctrl-label" data-i18n="statFilter">Stat</span>
+  <div class="filter-group" id="stat-filters">
+    <button class="fbtn active" data-stat="all" data-i18n="all">All</button>
+    <button class="fbtn s-str" data-stat="STR" data-i18n-stat="STR">STR</button>
+    <button class="fbtn s-dex" data-stat="DEX" data-i18n-stat="DEX">DEX</button>
+    <button class="fbtn s-int" data-stat="INT" data-i18n-stat="INT">INT</button>
+    <button class="fbtn s-fth" data-stat="FTH" data-i18n-stat="FTH">FTH</button>
+    <button class="fbtn s-arc" data-stat="ARC" data-i18n-stat="ARC">ARC</button>
+    <button class="fbtn s-hyb" data-stat="hybrid" data-i18n="hybrid">Hybrid</button>
+  </div>
+
+  <span class="ctrl-label" data-i18n="sourceFilter">Source</span>
+  <div class="filter-group" id="src-filters">
+    <button class="fbtn active" data-src="all" data-i18n="all">All</button>
+    <button class="fbtn" data-src="Base Game" data-i18n="base">Base</button>
+    <button class="fbtn" data-src="DLC">DLC</button>
+  </div>
+
+  <span class="ctrl-label" data-i18n="sortFilter">Sort</span>
+  <select class="sort-sel" id="sort-sel">
+    <option value="default" data-i18n="sortDefault">Default (#)</option>
+    <option value="ar-desc" data-i18n="sortArDesc">AR High→Low</option>
+    <option value="ar-asc" data-i18n="sortArAsc">AR Low→High</option>
+    <option value="name" data-i18n="sortName">Name A→Z</option>
+  </select>
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <span class="legend-title" data-i18n="softCaps">Soft Caps</span>
+  <div class="caps-list">
+    <span class="cap-entry"><b data-i18n-stat="VIG">VIG</b> 40|60</span>
+    <span class="cap-entry"><b data-i18n-stat="MND">MND</b> 55|60</span>
+    <span class="cap-entry"><b data-i18n-stat="END">END</b> 50|99</span>
+    <span class="cap-entry"><b data-i18n-stat="STR">STR</b> 54|80</span>
+    <span class="cap-entry"><b data-i18n-stat="DEX">DEX</b> 60|80</span>
+    <span class="cap-entry"><b data-i18n-stat="INT">INT</b> 60|80</span>
+    <span class="cap-entry"><b data-i18n-stat="FTH">FTH</b> 60|80</span>
+    <span class="cap-entry"><b data-i18n-stat="ARC">ARC</b> 45|60</span>
+  </div>
+  <div style="margin-left:auto;display:flex;gap:16px;flex-wrap:wrap">
+    <div class="leg-item"><div class="leg-dot" style="background:var(--below)"></div><span data-i18n="belowSoft">Below soft cap</span></div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--soft)"></div><span data-i18n="softCapDim">Soft cap (diminishing)</span></div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--hard)"></div><span data-i18n="hardCapMax">Hard cap (max)</span></div>
+  </div>
+</div>
+
+<div class="results-bar">
+  <span id="result-count"></span>
+  <span id="rl-label"></span>
+</div>
+
+<!-- GRID -->
+<div class="grid" id="grid"></div>
+
+</div><!-- /wrap -->
+
+<script>
+const SOFT = {VIG:{s1:40,s2:60},MND:{s1:55,s2:60},END:{s1:50,s2:99},STR:{s1:54,s2:80},DEX:{s1:60,s2:80},INT:{s1:60,s2:80},FTH:{s1:60,s2:80},ARC:{s1:45,s2:60}};
+const STATS = ['VIG','MND','END','STR','DEX','INT','FTH','ARC'];
+
+/* ── TRANSLATIONS ── */
+const TRANSLATIONS = {
+  en: {
+    eyebrow: 'Base Game + Shadow of the Erdtree · Patch 1.12+',
+    title: 'Rise, Tarnished',
+    subtitle: 'Elden Ring · Optimal Weapon Builds',
+    baseReq: 'Base Req.',
+    statFilter: 'Stat',
+    sourceFilter: 'Source',
+    sortFilter: 'Sort',
+    all: 'All',
+    hybrid: 'Hybrid',
+    base: 'Base',
+    sortDefault: 'Default (#)',
+    sortArDesc: 'AR High→Low',
+    sortArAsc: 'AR Low→High',
+    sortName: 'Name A→Z',
+    softCaps: 'Soft Caps',
+    belowSoft: 'Below soft cap',
+    softCapDim: 'Soft cap (diminishing)',
+    hardCapMax: 'Hard cap (max)',
+    searchPlaceholder: 'Search weapon…',
+    estAR: 'Est. AR',
+    reqOnly: 'Req. Only',
+    noMatch: 'No weapons match your filters',
+    weapons: (n) => `${n} weapon${n!==1?'s':''}`,
+    rlBase: 'Showing: Minimum Requirements',
+    rlLevel: (n) => `Showing: Level ${n}`,
+    stats: {VIG:'VIG',MND:'MND',END:'END',STR:'STR',DEX:'DEX',INT:'INT',FTH:'FTH',ARC:'ARC'},
+    primaryLabel: (p) => p,
+    srcMap: {'Base Game':'Base Game','DLC':'DLC'},
+    typeMap: {
+      'Dagger':'Dagger','Straight Sword':'Straight Sword','Greatsword':'Greatsword',
+      'Colossal Sword':'Colossal Sword','Thrusting Sword':'Thrusting Sword',
+      'Heavy Thrusting Sword':'Heavy Thrusting Sword','Curved Sword':'Curved Sword',
+      'Curved Greatsword':'Curved Greatsword','Katana':'Katana','Great Katana':'Great Katana',
+      'Twinblade':'Twinblade','Light Greatsword':'Light Greatsword','Backhand Blades':'Backhand Blades',
+      'Axe':'Axe','Greataxe':'Greataxe','Hammer':'Hammer','Great Hammer':'Great Hammer',
+      'Colossal Weapon':'Colossal Weapon','Spear':'Spear','Great Spear':'Great Spear',
+      'Halberd':'Halberd','Reaper':'Reaper','Whip':'Whip','Fist':'Fist','Fist Weapon':'Fist Weapon',
+      'Claw':'Claw','Flail':'Flail','Great Katana':'Great Katana',
+    },
+    translateNote: (n) => n,
+    levelWord: 'Level',
+    langToggle: 'JP',
+  },
+  jp: {
+    eyebrow: 'ベースゲーム + 黄金樹のかけら · パッチ 1.12+',
+    title: '立て、褪せ人',
+    subtitle: 'エルデンリング · 最適武器ビルド',
+    baseReq: '最低要求',
+    statFilter: 'ステータス',
+    sourceFilter: 'ソース',
+    sortFilter: '並び替え',
+    all: '全て',
+    hybrid: '複合',
+    base: '本編',
+    sortDefault: 'デフォルト (#)',
+    sortArDesc: 'AR 高→低',
+    sortArAsc: 'AR 低→高',
+    sortName: '名前 A→Z',
+    softCaps: 'ソフトキャップ',
+    belowSoft: 'ソフトキャップ未満',
+    softCapDim: 'ソフトキャップ（逓減）',
+    hardCapMax: 'ハードキャップ（最大）',
+    searchPlaceholder: '武器を検索…',
+    estAR: '推定AR',
+    reqOnly: '要求値のみ',
+    noMatch: '条件に一致する武器がありません',
+    weapons: (n) => `${n}件の武器`,
+    rlBase: '表示中: 最低要求のみ',
+    rlLevel: (n) => `表示中: レベル ${n}`,
+    stats: {VIG:'生命力',MND:'精神力',END:'持久力',STR:'筋力',DEX:'技量',INT:'知力',FTH:'信仰',ARC:'神秘'},
+    primaryLabel: (p) => {
+      const map = {VIG:'生命力',MND:'精神力',END:'持久力',STR:'筋力',DEX:'技量',INT:'知力',FTH:'信仰',ARC:'神秘'};
+      return p.split('/').map(x => map[x] || x).join('/');
+    },
+    srcMap: {'Base Game':'本編','DLC':'DLC'},
+    typeMap: {
+      'Dagger':'短剣','Straight Sword':'直剣','Greatsword':'大剣','Colossal Sword':'特大剣',
+      'Thrusting Sword':'刺剣','Heavy Thrusting Sword':'重刺剣','Curved Sword':'曲剣',
+      'Curved Greatsword':'大曲剣','Katana':'刀','Great Katana':'大刀','Twinblade':'双剣',
+      'Light Greatsword':'軽大剣','Backhand Blades':'逆手剣','Axe':'斧','Greataxe':'大斧',
+      'Hammer':'ハンマー','Great Hammer':'大ハンマー','Colossal Weapon':'特大武器',
+      'Spear':'槍','Great Spear':'大槍','Halberd':'薙刀','Reaper':'大鎌','Whip':'鞭',
+      'Fist':'拳','Fist Weapon':'拳武器','Claw':'鉤爪','Flail':'フレイル',
+    },
+    translateNote: (n) => {
+      if (!n) return n;
+      return n
+        .replace(/Minimum requirements only — no stat optimization\./g,'最低要求値のみ — ステータス最適化なし。')
+        .replace(/Level (\d+) build — invest surplus into primary stat\./g,'レベル $1 ビルド — 余りを主要ステータスへ。')
+        .replace(/Two-hand = (\d+) eff\. STR\. VIG (\d+) hit\./g,'両手持ち = 実質筋力$1。VIG $2 達成。')
+        .replace(/VIG (\d+) hit\. Two-hand = (\d+) eff\./g,'VIG $1 達成。両手持ち = 実質$2。')
+        .replace(/Two-hand = (\d+) eff\. STR\./g,'両手持ち = 実質筋力$1。')
+        .replace(/Power-stance = ~(\d+) combined per hit\./g,'パワースタンス = 約$1合計ダメージ/ヒット。')
+        .replace(/Lightning infusion\./g,'雷付与。').replace(/Keen infusion\./g,'鋭利付与。')
+        .replace(/Meets STR req barely\. VIG low — risky\./g,'筋力要求値ギリギリ。VIG低め — リスクあり。')
+        .replace(/VIG improved\. STR pushed further\./g,'VIG改善。STRさらに上昇。')
+        .replace(/VIG raised\. Max FP at MND (\d+)\./g,'VIG上昇。MND $1 でFP最大。')
+        .replace(/VIG and END raised\./g,'VIG・END上昇。')
+        .replace(/VIG (\d+) hit\./g,'VIG $1 達成。')
+        .replace(/VIG (\d+)\. FTH slightly raised\./g,'VIG $1。FTH少し上昇。')
+        .replace(/VIG (\d+)\. END investment\./g,'VIG $1。END投資。')
+        .replace(/VIG (\d+)\. Remainder into END\/MND\./g,'VIG $1。余りをEND/MNDへ。')
+        .replace(/VIG (\d+)\. Remaining into MND\/END\./g,'VIG $1。余りをMND/ENDへ。')
+        .replace(/VIG (\d+)\. Surplus into sustain stats\./g,'VIG $1。余りを持続力ステータスへ。')
+        .replace(/VIG (\d+)\./g,'VIG $1 達成。')
+        .replace(/Surplus into END\/MND\./g,'余りをEND/MNDへ。').replace(/Surplus into END\./g,'余りをENDへ。')
+        .replace(/All surplus into MND\/END\./g,'余り全てをMND/ENDへ。')
+        .replace(/Remainder into END\/MND\./g,'余りをEND/MNDへ。').replace(/Remaining into MND\/END\./g,'余りをMND/ENDへ。')
+        .replace(/END\/MND invested for sustain\./g,'END/MND 持続力に投資。').replace(/END\/MND invested\./g,'END/MND 投資済み。')
+        .replace(/END and MND capped\./g,'END・MND キャップ達成。')
+        .replace(/Dump into END\/MND\./g,'END/MNDへ振り込む。')
+        .replace(/MND maxed for FP sustain\./g,'FP持続のためMND最大化。')
+        .replace(/MND (\d+) hard cap\. Full spellblade\./g,'MND $1 ハードキャップ。完全呪剣士。')
+        .replace(/Minor STR boost for AR\. MND\/END maxed\./g,'AR向けSTR小幅上昇。MND/END最大。')
+        .replace(/STR hard cap reached\./g,'STRハードキャップ達成。')
+        .replace(/STR hard cap\. VIG (\d+) hit\./g,'STRハードキャップ。VIG $1 達成。')
+        .replace(/STR hard cap\. Dump into END\/MND\./g,'STRハードキャップ。END/MNDへ振り込む。')
+        .replace(/STR two-hand soft cap \(54\)\. Peak\./g,'STR両手ソフトキャップ(54)。最大。')
+        .replace(/STR beyond soft cap\. Diminishing\./g,'STRソフトキャップ超え。逓減。')
+        .replace(/STR pushed past soft cap\./g,'STRソフトキャップ超え。')
+        .replace(/STR raised for extra quality AR\./g,'クオリティAR向けSTR上昇。')
+        .replace(/STR raised — quality build benefits\./g,'STR上昇 — クオリティビルド恩恵。')
+        .replace(/STR primary \+ ARC (\d+) for bleed\./g,'STR主軸 + ARC $1 出血用。')
+        .replace(/STR primary, ARC supplemental\./g,'STR主軸、ARC補助。')
+        .replace(/STR (\d+) \+ ARC (\d+)\. High AR \+ bleed\./g,'STR $1 + ARC $2。高AR + 出血。')
+        .replace(/STR (\d+) soft cap\. ARC raised\./g,'STR $1 ソフトキャップ。ARC上昇。')
+        .replace(/STR (\d+) soft cap\. Max practical AR\./g,'STR $1 ソフトキャップ。実用AR最大。')
+        .replace(/STR beyond soft cap\./g,'STRソフトキャップ超え。')
+        .replace(/STR hard cap\./g,'STRハードキャップ。')
+        .replace(/DEX (\d+) soft cap\. High base req\./g,'DEX $1 ソフトキャップ。基本要求値高め。')
+        .replace(/DEX (\d+) soft cap\. Max AoW effectiveness\./g,'DEX $1 ソフトキャップ。戦技効果最大。')
+        .replace(/DEX (\d+) soft cap\. Peak balance\./g,'DEX $1 ソフトキャップ。バランス最良。')
+        .replace(/DEX (\d+) soft cap added\./g,'DEX $1 ソフトキャップ追加。')
+        .replace(/DEX (\d+) soft cap\./g,'DEX $1 ソフトキャップ。')
+        .replace(/DEX (\d+) cap\./g,'DEX $1 キャップ。')
+        .replace(/DEX (\d+) for max cast speed\./g,'DEX $1 キャスト速度最大化。')
+        .replace(/DEX past first soft cap\./g,'DEX第一ソフトキャップ超え。')
+        .replace(/DEX pushed past first soft cap\./g,'DEX第一ソフトキャップ突破。')
+        .replace(/DEX raised, FTH past soft cap\./g,'DEX上昇、FTHソフトキャップ超え。')
+        .replace(/DEX raised\./g,'DEX上昇。').replace(/DEX soft cap\. INT approaching hard\./g,'DEXソフトキャップ。INTハードキャップ近く。')
+        .replace(/DEX\/FTH balance for spear\./g,'DEX/FTH 槍向けバランス。')
+        .replace(/DEX hard cap\. Peak AR pure DEX\./g,'DEXハードキャップ。純DEX AR最大。')
+        .replace(/DEX hard cap\. Full ARC\/DEX range\./g,'DEXハードキャップ。ARC/DEX完全レンジ。')
+        .replace(/DEX hard cap\. Full bleed potential\./g,'DEXハードキャップ。出血ポテンシャル最大。')
+        .replace(/DEX hard cap\. Full dual scaling\./g,'DEXハードキャップ。デュアルスケーリング最大。')
+        .replace(/DEX hard cap\. Max bleed \+ base AR\./g,'DEXハードキャップ。出血最大 + 基本AR。')
+        .replace(/DEX hard cap\. Peak AR\./g,'DEXハードキャップ。AR最大。')
+        .replace(/DEX hard cap\./g,'DEXハードキャップ。')
+        .replace(/DEX near (soft )?cap\./g,'DEXキャップ近く。')
+        .replace(/INT (\d+) soft cap\. Moonlight buff active\./g,'INT $1 ソフトキャップ。月光バフ有効。')
+        .replace(/INT (\d+) soft cap\. DEX (\d+) cast speed\./g,'INT $1 ソフトキャップ。DEX $2 キャスト速度。')
+        .replace(/INT (\d+) for strong sorcery output\./g,'INT $1 強力な魔法出力。')
+        .replace(/INT (\d+) soft cap\./g,'INT $1 ソフトキャップ。')
+        .replace(/INT hard cap \+ high MND for FP\./g,'INTハードキャップ + 高MND FP確保。')
+        .replace(/INT hard cap\. DEX (\d+) soft cap\./g,'INTハードキャップ。DEX $1 ソフトキャップ。')
+        .replace(/INT hard cap\. DEX past first soft\./g,'INTハードキャップ。DEX第一ソフトキャップ超え。')
+        .replace(/INT hard cap\. Full magic output\./g,'INTハードキャップ。魔法出力最大。')
+        .replace(/INT hard cap\. Near peak output\./g,'INTハードキャップ。出力ほぼ最大。')
+        .replace(/INT hard cap\. Full INT\/DEX peak\./g,'INTハードキャップ。INT/DEXピーク最大。')
+        .replace(/INT hard cap\. Full DEX\/INT peak\./g,'INTハードキャップ。DEX/INTピーク最大。')
+        .replace(/INT hard cap\./g,'INTハードキャップ。').replace(/INT approaching hard\./g,'INTハードキャップ近く。')
+        .replace(/FTH (\d+) soft cap\. Taker's Flames strong\./g,'FTH $1 ソフトキャップ。奪う者の炎強力。')
+        .replace(/FTH (\d+) \+ DEX (\d+) baseline\./g,'FTH $1 + DEX $2 基準。')
+        .replace(/FTH past first soft cap\./g,'FTH第一ソフトキャップ超え。')
+        .replace(/FTH raised slightly for AoW bonus\./g,'戦技ボーナス向けFTH微上昇。')
+        .replace(/More FTH for AoW lightning dmg\./g,'戦技雷ダメージ向けFTH追加。')
+        .replace(/FTH hard cap\. Full AoW damage\./g,'FTHハードキャップ。戦技ダメージ最大。')
+        .replace(/FTH hard cap\. DEX near soft cap\./g,'FTHハードキャップ。DEXソフトキャップ近く。')
+        .replace(/FTH hard cap\. DEX near cap\./g,'FTHハードキャップ。DEXキャップ近く。')
+        .replace(/FTH hard cap\./g,'FTHハードキャップ。')
+        .replace(/ARC (\d+) soft cap \+ DEX (\d+)\./g,'ARC $1 ソフトキャップ + DEX $2。')
+        .replace(/ARC (\d+) \+ DEX (\d+)\. Balanced bleed\./g,'ARC $1 + DEX $2。バランス型出血。')
+        .replace(/ARC (\d+) \+ DEX (\d+)\. Strong bleed\./g,'ARC $1 + DEX $2。強力出血。')
+        .replace(/ARC (\d+) \+ DEX (\d+)\. Bleed at peak\./g,'ARC $1 + DEX $2。出血ピーク。')
+        .replace(/ARC (\d+) \+ DEX (\d+)\. High AR \+ bleed\./g,'ARC $1 + DEX $2。高AR + 出血。')
+        .replace(/ARC (\d+) hard cap\. Bloodboon devastating\./g,'ARC $1 ハードキャップ。血の恵み爆発的。')
+        .replace(/ARC (\d+) hard cap\. DEX raised\./g,'ARC $1 ハードキャップ。DEX上昇。')
+        .replace(/ARC (\d+) hard cap\. Extreme buildup\./g,'ARC $1 ハードキャップ。超高蓄積。')
+        .replace(/ARC (\d+) hard cap\. STR beyond soft\./g,'ARC $1 ハードキャップ。STRソフトキャップ超え。')
+        .replace(/ARC hard cap\. Best of both builds\./g,'ARCハードキャップ。両ビルド最良。')
+        .replace(/Dual-build: ARC added for bleed\./g,'デュアルビルド: 出血用ARC追加。')
+        .replace(/Balanced STR\/DEX\. Innate bleed (\d+)\./g,'STR/DEXバランス。固有出血$1。')
+        .replace(/Balanced STR\/FTH (\d+)\/(\d+)\./g,'STR/FTHバランス $1/$2。')
+        .replace(/Balanced INT\/FTH build\./g,'INT/FTHバランスビルド。')
+        .replace(/Balanced DEX\/INT approach\./g,'DEX/INTバランス型。')
+        .replace(/Balanced tri-stat approach\./g,'三ステータスバランス型。')
+        .replace(/Both at first soft cap\./g,'両方第一ソフトキャップ達成。')
+        .replace(/Both at soft cap\. Near peak AR\./g,'両方ソフトキャップ。ARほぼ最大。')
+        .replace(/Both at soft cap\. Strong peak\./g,'両方ソフトキャップ。強力なピーク。')
+        .replace(/Both hard caps\. Full DEX\/INT peak\./g,'両方ハードキャップ。DEX/INTピーク最大。')
+        .replace(/Both hard caps\. Full INT\/DEX peak\./g,'両方ハードキャップ。INT/DEXピーク最大。')
+        .replace(/Both hard caps\. Maximum hybrid output\./g,'両方ハードキャップ。ハイブリッド出力最大。')
+        .replace(/Both stats approaching soft caps\./g,'両ステータスソフトキャップ接近。')
+        .replace(/Both stats past first soft cap\./g,'両ステータス第一ソフトキャップ超え。')
+        .replace(/Both stats toward (\d+)\./g,'両ステータス$1目標。')
+        .replace(/Both toward (\d+)\. Highest melee AR\./g,'両方$1目標。近接AR最大。')
+        .replace(/All at first soft caps\. Strong\./g,'全て第一ソフトキャップ。強力。')
+        .replace(/All three past (\d+)\. Good split\./g,'全三ステータス$1超え。バランス良い配分。')
+        .replace(/Pushing hard caps across all three\./g,'三ステータス全てハードキャップ目標。')
+        .replace(/Pushing toward hard caps\./g,'ハードキャップ向けて上昇。')
+        .replace(/High FP for frequent (\w+) use\./g,'頻繁な戦技使用のためFP高め。')
+        .replace(/Fully QoL optimised\./g,'QoL完全最適化。').replace(/Full QoL stats maxed\./g,'全QoLステータス最大。')
+        .replace(/Full quality — both STR\+DEX capped\./g,'フルクオリティ — STR+DEX両方キャップ。')
+        .replace(/STR raised — quality build benefits\./g,'STR上昇 — クオリティビルド恩恵。');
+    },
+    levelWord: 'レベル',
+    langToggle: 'EN',
+  }
+};
+
+let curLang = 'en';
+let curRL = '150';
+let curStat = 'all';
+let curSrc = 'all';
+let curSort = 'default';
+let curSearch = '';
+
+function T() { return TRANSLATIONS[curLang]; }
+
+/* ── APPLY LANGUAGE TO STATIC ELEMENTS ── */
+function applyLang() {
+  const t = T();
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+  document.querySelectorAll('[data-i18n-stat]').forEach(el => {
+    const stat = el.dataset.i18nStat;
+    el.textContent = t.stats[stat] || stat;
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.dataset.i18nPlaceholder;
+    if (t[key] !== undefined) el.placeholder = t[key];
+  });
+  document.querySelectorAll('#sort-sel option[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+  document.getElementById('lang-btn').textContent = t.langToggle;
+  document.documentElement.lang = curLang;
+  document.querySelectorAll('.level-btn[data-rl]').forEach(btn => {
+    const rl = btn.dataset.rl;
+    if (rl !== 'base') btn.textContent = t.levelWord + ' ' + rl;
+  });
+}
+
+const WIKI_BASE = 'https://eldenring.wiki.fextralife.com/file/Elden-Ring/';
+const WIKI_IMGS = {
+  /* Daggers */
+  "Dagger":"dagger_dagger_weapon_elden_ring_wiki_guide_200px.png",
+  "Parrying Dagger":"parrying_dagger_dagger_weapon_elden_ring_wiki_guide_200px.png",
+  "Misericorde":"misericorde_dagger_weapon_elden_ring_wiki_guide_200px.png",
+  "Great Knife":"great_knife_dagger_weapon_elden_ring_wiki_guide_200px.png",
+  "Bloodstained Dagger":"bloodstained_dagger_dagger_weapon_elden_ring_wiki_guide_200px.png",
+  "Erdsteel Dagger":"erdsteel_dagger_dagger_weapon_elden_ring_wiki_guide_200px.png",
+  "Wakizashi":"wakizashi_dagger_weapon_elden_ring_wiki_guide_200px.png",
+  "Celebrant's Sickle":"celebrants-sickle_dagger_weapon_elden_ring_wiki_guide_200px.png",
+  "Ivory Sickle":"ivory_sickle_dagger_weapon_elden_ring_wiki_guide_200px.png",
+  "Crystal Knife":"crystal_knife_dagger_weapon_elden_ring_wiki_guide_200px.png",
+  "Scorpion's Stinger":"scorpions_stinger_dagger_weapon_elden_ring_wiki_guide_200px.png",
+  "Cinquedea":"cinquedea_dagger_weapon_elden_ring_wiki_guide_200px.png",
+  "Glintstone Kris":"glintstone_kris_dagger_weapon_elden_ring_wiki_guide_200px.png",
+  "Reduvia":"reduvia_dagger_weapon_elden_ring_wiki_guide_200px.png",
+  "Blade of Calling":"blade_of_calling_dagger_weapon_elden_ring_wiki_guide_200px.png",
+  "Black Knife":"black_knife_dagger_weapon_elden_ring_wiki_guide_200px.png",
+  "Main-gauche":"main-gauche_dagger_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  "Fire Knight's Shortsword":"fire_knights_shortsword_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  "Virulent Blade":"virulent_blade_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  "Needle of Night":"needle_of_night_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  "Smithscript Dagger":"smithscript_dagger_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  /* Spears */
+  "Short Spear":"short-spear__weapons-elden-ring-wiki-guide-200.png",
+  "Iron Spear":"iron_spear_elden_ring_wiki_guide_200px.png",
+  "Spear":"spear_elden_ring_wiki_guide_200px.png",
+  "Partisan":"partisan_spear-elden-ring-wiki-guide-200px.png",
+  "Pike":"pike_spear-elden-ring-wiki-guide-200px.png",
+  "Spiked Spear":"spiked_spear_elden_ring_wiki_guide_200px.png",
+  "Cross-Naginata":"cross-naginata_elden_ring_wiki_guide_75px.png",
+  "Clayman's Harpoon":"claymans_harpoon-elden-ring-wiki-guide.png",
+  "Celebrant's Rib-Rake":"celebrants_rib-rake_elden_ring_wiki_guide_200px.png",
+  "Torchpole":"torchpole_elden_ring_wiki_guide_75px.png",
+  "Inquisitor's Girandole":"inquisitor's_girandole_weapons_elden_ring_wiki_guide_75px.png",
+  "Crystal Spear":"crystal_spear_elden_ring_wiki_guide_200px.png",
+  "Rotten Crystal Spear":"rotten_crystal_spear_elden_ring_wiki_guide_200px.png",
+  "Cleanrot Spear":"cleanrot_spear-elden-ring-wiki-guide.png",
+  "Death Ritual Spear":"death_ritual_spear_weapons_elden_ring_wiki_guide_75px.png",
+  "Bolt of Gransax":"bolt_of_gransax-elden-ring-wiki-guide.png",
+  "Smithscript Spear":"smithscript_spear_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  "Swift Spear":"swift_spear_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  "Bloodfiend's Fork":"bloodfiends_fork_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  /* Great Spears */
+  "Lance":"lance_greatspear_weapon_elden_ring_wiki_guide_200px.png",
+  "Treespear":"treespear_greatspear_weapon_elden_ring_wiki_guide_200px.png",
+  "Serpent-Hunter":"serpent-hunter_greatspear_weapon_elden_ring_wiki_guide_200px.png",
+  "Siluria's Tree":"silurias_tree_greatspear_weapon_elden_ring_wiki_guide_200px.png",
+  "Vyke's War Spear":"vykes_war_spear_greatspear_weapon_elden_ring_wiki_guide_200px.png",
+  "Mohgwyn's Sacred Spear":"mohgwyns_sacred_spear_great_spears_elden_ring_wiki_guide_200px.png",
+  "Bloodfiend's Sacred Spear":"bloodfiends_sacred_spear_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  "Messmer Soldier's Spear":"messmer_soldiers_spear_spears_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  "Barbed Staff-Spear":"barbed_staff-spear_spears_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  "Spear of the Impaler":"spear_of_the_impaler_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  /* Halberds */
+  "Halberd":"halberd_halberd_weapon_elden_ring_wiki_guide_200px.png",
+  "Banished Knight's Halberd":"banished_knights_halberd_halberd_weapon_elden_ring_wiki_guide_200px.png",
+  "Lucerne":"lucerne_halberd_weapon_elden_ring_wiki_guide_200px.png",
+  "Glaive":"glaive_halberds_elden_ring_wiki_guide_200px.png",
+  "Vulgar Militia Shotel":"vulgar_militia_shotel_halberd_weapon_elden_ring_wiki_guide_200px.png",
+  "Vulgar Militia Saw":"vulgar_militia_saw_halberd_weapon_elden_ring_wiki_guide_200px.png",
+  "Guardian's Swordspear":"guardians_swordspear_halberd_weapon_elden_ring_wiki_guide_200px.png",
+  "Nightrider Glaive":"nightrider_glaive_halberd_weapon_elden_ring_wiki_guide_200px.png",
+  "Pest's Glaive":"pests_glaive_halberd_weapon_elden_ring_wiki_guide_200px.png",
+  "Gargoyle's Halberd":"gargoyles-halberd-weapon-elden-ring-wiki-guide.png",
+  "Gargoyle's Black Halberd":"gargoyles-black-halberd-weapon-elden-ring-wiki-guide.png",
+  "Ripple Crescent Halberd":"ripple_crescent_halberd_halberd_weapon_elden_ring_wiki_guide_200px.png",
+  "Golden Halberd":"golden_halberd_halberd_weapon_elden_ring_wiki_guide_200px.png",
+  "Dragon Halberd":"dragon_halberd_halberd_weapon_elden_ring_wiki_guide_200px.png",
+  "Loretta's War Sickle":"lorettas_war_sickle_halberd_weapon_elden_ring_wiki_guide_200px.png",
+  "Commander's Standard":"commanders_standard_halberd_weapon_elden_ring_wiki_guide_200px.png",
+  "Spirit Glaive":"spirit_glaive_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  "Poleblade of the Bud":"poleblade_of_the_bud_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  /* Reapers */
+  "Scythe":"scythe_reaper_weapon_elden_ring_wiki_guide_200px.png",
+  "Grave Scythe":"grave_scythe_reaper_weapon_elden_ring_wiki_guide_200px.png",
+  "Halo Scythe":"halo_scythe_reaper_weapon_elden_ring_wiki_guide_200px.png",
+  "Winged Scythe":"winged_scythe_reaper_weapon_elden_ring_wiki_guide_200px.png",
+  "Obsidian Lamina":"obsidian_lamina_reaper_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  /* Whips */
+  "Whip":"whip_weapon_elden_ring_wiki_guide_200px.png",
+  "Thorned Whip":"thorned_whip_weapon_elden_ring_wiki_guide_200px.png",
+  "Urumi":"urumi_weapon_elden_ring_wiki_guide_200px.png",
+  "Hoslow's Petal Whip":"hoslows_petal_whip_weapon_elden_ring_wiki_guide_200px.png",
+  "Magma Whip Candlestick":"magma_whip_candlestick_weapon_elden_ring_wiki_guide_200px.png",
+  "Giant's Red Braid":"giant's_red_braid_weapon_elden_ring_wiki_guide_200px.png",
+  "Tooth Whip":"tooth_whip_whips_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  /* Hammers */
+  "Club":"club_hammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Curved Club":"curved_club_elden_ring_wiki_guide_200px.png",
+  "Spiked Club":"spiked_club_hammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Stone Club":"stone_club_clubs_elden_ring_wiki_guide_200px.png",
+  "Mace":"mace_hammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Morning Star":"morning_star_hammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Warpick":"warpick_hammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Hammer":"hammer_hammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Monk's Flamemace":"monks_flamemace_hammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Varre's Bouquet":"varres_bouquet_elden_ring_wiki_guide_200px.png",
+  "Envoy's Horn":"envoys_horn_elden_ring_wiki_guide_200px.png",
+  "Nox Flowing Hammer":"nox_flowing_hammer_hammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Ringed Finger":"ringed_finger_hammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Scepter of the All-Knowing":"scepter_of_the_all-knowing_hammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Marika's Hammer":"marikas_hammer_elden_ring_wiki_guide_200px.png",
+  "Flowerstone Gavel":"flowerstone_gavel_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  /* Great Hammers */
+  "Large Club":"large_club_warhammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Curved Great Club":"curved_great_club_warhammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Great Mace":"great_mace_warhammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Pickaxe":"pickaxe_warhammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Brick Hammer":"brick_hammer_warhammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Battle Hammer":"battle_hammer_warhammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Rotten Battle Hammer":"rotten_battle_hammer_warhammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Celebrant's Skull":"celebrants_skull_warhammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Great Stars":"great_stars_warhammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Greathorn Hammer":"greathorn_hammer_warhammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Envoy's Long Horn":"envoys_long_horn_warhammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Cranial Vessel Candlestand":"cranial_vessel_candlestand_warhammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Beastclaw Greathammer":"beastclaw_greathammer_warhammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Devourer's Scepter":"devourers_scepter_warhammer_weapon_elden_ring_wiki_guide_200px.png",
+  "Black Steel Greathammer":"black_steel_greathammer_great_hammer_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  "Smithscript Greathammer":"smithscript_greathammer_great_hammer_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  /* Flails */
+  "Flail":"flail_weapon_elden_ring_wiki_guide_200px.png",
+  "Nightrider Flail":"nightrider_flail_weapon_elden_ring_wiki_guide_200px.png",
+  "Chainlink Flail":"chainlink_flail_weapon_elden_ring_wiki_guide_200px.png",
+  "Family Heads":"family_heads_weapon_elden_ring_wiki_guide_200px.png",
+  "Bastard's Stars":"bastards_stars_weapon_elden_ring_wiki_guide_200px.png",
+  "Serpent Flail":"serpent_flail_flails_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  /* Colossal Weapons */
+  "Bloodfiend's Arm":"bloodfiends_arm_colossal_weapon_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  "Anvil Hammer":"anvil_hammer_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  "Devonia's Hammer":"devonias_hammer_unique_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  "Shadow Sunflower Blossom":"shadow_sunflower_blossom_colossal_weapon_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  "Gazing Finger":"gazing_finger_colossal_weapon_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  "Duelist Greataxe":"duelist_greataxe_elden_ring_wiki_guide_200px.png",
+  "Rotten Greataxe":"rotten_greataxe_colossal_weapon_elden_ring_wiki_guide_200px.png",
+  "Golem's Halberd":"golems_halberd_colossal_weapon_elden_ring_wiki_guide_200px.png",
+  "Giant-Crusher":"giant-crusher_elden_ring_wiki_guide_200px.png",
+  "Prelate's Inferno Crozier":"prelates_inferno_crozier_colossal_weapon_elden_ring_wiki_guide_200px.png",
+  "Great Club":"great_club_colossal_weapon_elden_ring_wiki_guide_200px.png",
+  "Troll's Hammer":"trolls_hammer_colossal_weapon_elden_ring_wiki_guide_200px.png",
+  "Dragon Greatclaw":"dragon_greatclaw_colossal_weapon_elden_ring_wiki_guide_200px.png",
+  "Watchdog's Staff":"watchdog_staff_colossal_weapon_elden_ring_wiki_guide_200px.png",
+  "Staff of the Avatar":"staff_of_the_avatar_colossal_weapon_elden_ring_wiki_guide_200px.png",
+  "Rotten Staff":"rotten_staff_elden_ring_wiki_guide_200px.png",
+  "Envoy's Greathorn":"envoys_greathorn_elden_ring_wiki_guide_200px.png",
+  "Ghiza's Wheel":"ghizas_wheel_colossal_weapon_elden_ring_wiki_guide_200px.png",
+  "Fallingstar Beast Jaw":"fallingstar_beast_jaw_elden_ring_wiki_guide_200px.png",
+  "Axe of Godfrey":"axe_of_godfrey_colossal_weapon_elden_ring_wiki_guide_200px.png",
+  /* Greataxes */
+  "Greataxe":"greataxe_greataxe_weapon_elden_ring_wiki_guide_200px.png",
+  "Crescent Moon Axe":"crescent_moon_axe_greataxe_weapon_elden_ring_wiki_guide_200px.png",
+  "Longhaft Axe":"longhaft_axe_elden_ring_wiki_guide_200px.png",
+  "Executioner's Greataxe":"executioners_greataxe_greataxe_weapon_elden_ring_wiki_guide_200px.png",
+  "Great Omenkiller Cleaver":"great_omenkiller_cleaver_elden_ring_wiki_guide_200px.png",
+  "Rusted Anchor":"rusted_anchor_greataxe_weapon_elden_ring_wiki_guide_200px.png",
+  "Butchering Knife":"butchering_knife_greataxe_weapon_elden_ring_wiki_guide_200px.png",
+  "Gargoyle's Great Axe":"gargoyles_great_axe_greataxe_weapon_elden_ring_wiki_guide_200px.png",
+  "Gargoyle's Black Axe":"gargoyles_black_axe_greataxe_weapon_elden_ring_wiki_guide_200px.png",
+  "Winged Greathorn":"winged_greathorn_greataxe_weapon_elden_ring_wiki_guide_200px.png",
+  "Axe of Godrick":"axe_of_godrick_greataxe_weapon_elden_ring_wiki_guide_200px.png",
+  "Putrescence Cleaver":"putrescence_cleaver_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  "Death Knight's Longhaft Axe":"death_knights_longhaft_axe_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  "Bonny Butchering Knife":"bonny_butchering_knife_greataxe_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  /* Fists */
+  "Caestus":"caestus_fist_weapon_elden_ring_wiki_guide_200px.png",
+  "Spiked Caestus":"spiked_caestus_fist_weapon_elden_ring_wiki_guide_200px.png",
+  "Katar":"katar_fist_weapon_elden_ring_wiki_guide_200px.png",
+  "Iron Ball":"iron_ball_fist_weapon_elden_ring_wiki_guide_200px.png",
+  "Star Fist":"star_fist_fist_weapon_elden_ring_wiki_guide_200px.png",
+  "Clinging Bone":"clinging_bone_fist_weapon_elden_ring_wiki_guide_200px.png",
+  "Veteran's Prosthesis":"veterans_prosthesis_fist_weapon_elden_ring_wiki_guide_200px.png",
+  "Cipher Pata":"cipher_pata_fist_weapon_elden_ring_wiki_guide_200px.png",
+  "Grafted Dragon":"grafted_dragon_fist_weapon_elden_ring_wiki_guide_200px.png",
+  "Pata":"pata_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  "Golem Fist":"golem_fist_fist_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  "Thiollier's Hidden Needle":"thiolliers_hidden_needle_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  "Poisoned Hand":"poisoned_hand_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  "Madding Hand":"madding_hand_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png",
+  /* Claws */
+  "Claws of Night":"claws_of_night_unique_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_75px.png",
+  "Hookclaws":"hookclaws_claw_weapon_elden_ring_wiki_guide_200px.png",
+  "Bloodhound Claws":"bloodhound_claws_claw_weapon_elden_ring_wiki_guide_200px.png",
+  "Venomous Fang":"venomous_fang_claw_weapon_elden_ring_wiki_guide_200px.png",
+  "Raptor Talons":"raptor_talons_claw_weapon_elden_ring_wiki_guide_200px.png",
+};
+
+function wikiImg(w) {
+  if (WIKI_IMGS[w.name]) return WIKI_BASE + WIKI_IMGS[w.name];
+  const slug = w.name.toLowerCase().replace(/['']/g,'').replace(/é/g,'e').replace(/\s+/g,'_').replace(/[^a-z0-9_\-]/g,'');
+  const sfx = w.src === 'DLC'
+    ? '_elden_ring_shadow_of_the_erdtree_dlc_wiki_guide_200px.png'
+    : '_elden_ring_wiki_guide_200px.png';
+  return WIKI_BASE + slug + sfx;
+}
+
+const W = [
+  {id:1,name:"Anvil Hammer",jp:"鍛冶師の鎚",type:"Colossal Weapon",src:"DLC",primary:"STR",
+   infusion:"None (unique) — Smithing Art Spears",
+   req:{STR:39,DEX:10,INT:11,FTH:20},
+   builds:{
+    150:{VIG:50,MND:15,END:25,STR:54,DEX:10,INT:11,FTH:20,ARC:7,AR:880,notes:"Two-hand = 81 eff. STR."},
+    200:{VIG:60,MND:15,END:30,STR:60,DEX:10,INT:11,FTH:20,ARC:7,AR:920,notes:"VIG 60 hit. Two-hand = 90 eff."},
+    250:{VIG:60,MND:20,END:40,STR:80,DEX:10,INT:11,FTH:20,ARC:7,AR:971,notes:"STR hard cap. Dump into END/MND."},
+    300:{VIG:60,MND:30,END:50,STR:80,DEX:10,INT:11,FTH:30,ARC:7,AR:985,notes:"FTH raised slightly for AoW bonus."}}},
+
+  {id:2,name:"Greatsword of Solitude",jp:"孤牢の大剣",type:"Greatsword",src:"DLC",primary:"STR",
+   infusion:"None (unique) — Solitary Moon Slash",
+   req:{STR:27,DEX:13},
+   builds:{
+    150:{VIG:50,MND:15,END:25,STR:54,DEX:13,INT:9,FTH:8,ARC:7,AR:730,notes:"Two-hand = 81 eff. STR."},
+    200:{VIG:60,MND:15,END:35,STR:66,DEX:13,INT:9,FTH:8,ARC:7,AR:773,notes:"Two-hand = 99 eff. STR."},
+    250:{VIG:60,MND:20,END:45,STR:80,DEX:13,INT:9,FTH:8,ARC:7,AR:810,notes:"STR hard cap reached."},
+    300:{VIG:60,MND:35,END:50,STR:80,DEX:13,INT:9,FTH:8,ARC:7,AR:820,notes:"All surplus into MND/END."}}},
+
+  {id:3,name:"Giant-Crusher",jp:"巨人砕き",type:"Colossal Weapon",src:"Base Game",primary:"STR",
+   infusion:"Heavy (+25) — Cragblade / Giant Hunt",
+   req:{STR:60,DEX:8},
+   builds:{
+    150:{VIG:40,MND:12,END:30,STR:60,DEX:8,INT:9,FTH:8,ARC:7,AR:820,notes:"Meets STR req barely. VIG low — risky."},
+    200:{VIG:55,MND:15,END:35,STR:70,DEX:8,INT:9,FTH:8,ARC:7,AR:880,notes:"VIG improved. STR pushed further."},
+    250:{VIG:60,MND:18,END:40,STR:80,DEX:8,INT:9,FTH:8,ARC:7,AR:930,notes:"STR hard cap. VIG 60 hit."},
+    300:{VIG:60,MND:30,END:50,STR:80,DEX:8,INT:9,FTH:8,ARC:7,AR:945,notes:"END/MND invested for sustain."}}},
+
+  {id:4,name:"Star Fist (Heavy)",jp:"星砕き",type:"Fist Weapon",src:"Base Game",primary:"STR",
+   infusion:"Heavy (+25) — Cragblade",
+   req:{STR:12,DEX:8},
+   builds:{
+    150:{VIG:50,MND:15,END:25,STR:60,DEX:8,INT:9,FTH:8,ARC:7,AR:460,notes:"Power-stance = ~920 combined per hit."},
+    200:{VIG:60,MND:15,END:30,STR:72,DEX:8,INT:9,FTH:8,ARC:7,AR:490,notes:"STR pushed past soft cap."},
+    250:{VIG:60,MND:20,END:40,STR:80,DEX:8,INT:9,FTH:8,ARC:7,AR:510,notes:"STR hard cap."},
+    300:{VIG:60,MND:30,END:50,STR:80,DEX:8,INT:9,FTH:8,ARC:7,AR:520,notes:"END/MND invested."}}},
+
+  {id:5,name:"Death Knight's Longhaft Axe",jp:"死の騎士の長柄斧",type:"Greataxe",src:"DLC",primary:"STR",
+   infusion:"None (unique) — Blinkbolt Long-hafted Axe",
+   req:{STR:23,DEX:10,FTH:18},
+   builds:{
+    150:{VIG:50,MND:15,END:25,STR:54,DEX:10,INT:9,FTH:18,ARC:7,AR:700,notes:"Two-hand = 81 eff. STR."},
+    200:{VIG:60,MND:15,END:30,STR:66,DEX:10,INT:9,FTH:20,ARC:7,AR:740,notes:"VIG 60. FTH slightly raised."},
+    250:{VIG:60,MND:20,END:40,STR:80,DEX:10,INT:9,FTH:25,ARC:7,AR:780,notes:"STR hard cap."},
+    300:{VIG:60,MND:30,END:50,STR:80,DEX:10,INT:9,FTH:35,ARC:7,AR:800,notes:"More FTH for AoW lightning dmg."}}},
+
+  {id:6,name:"Bloodhound's Fang",jp:"猟犬の牙",type:"Curved Greatsword",src:"Base Game",primary:"STR/DEX",
+   infusion:"None (unique) — Bloodhound's Finesse",
+   req:{STR:18,DEX:17},
+   builds:{
+    150:{VIG:50,MND:15,END:25,STR:35,DEX:55,INT:9,FTH:8,ARC:7,AR:820,notes:"Balanced STR/DEX. Innate bleed 55."},
+    200:{VIG:60,MND:15,END:30,STR:40,DEX:70,INT:9,FTH:8,ARC:7,AR:880,notes:"DEX pushed past first soft cap."},
+    250:{VIG:60,MND:20,END:40,STR:45,DEX:80,INT:9,FTH:8,ARC:7,AR:930,notes:"DEX hard cap."},
+    300:{VIG:60,MND:30,END:50,STR:60,DEX:80,INT:9,FTH:8,ARC:7,AR:960,notes:"STR raised for extra quality AR."}}},
+
+  {id:7,name:"Rakshasa's Great Katana",jp:"羅刹の大刀",type:"Great Katana",src:"DLC",primary:"DEX",
+   infusion:"None (unique) — Weed Cutter",
+   req:{STR:12,DEX:27},
+   builds:{
+    150:{VIG:50,MND:15,END:25,STR:12,DEX:60,INT:9,FTH:8,ARC:7,AR:730,notes:"DEX 60 soft cap."},
+    200:{VIG:60,MND:20,END:30,STR:12,DEX:80,INT:9,FTH:8,ARC:7,AR:810,notes:"DEX hard cap. Peak AR."},
+    250:{VIG:60,MND:25,END:45,STR:12,DEX:80,INT:9,FTH:8,ARC:7,AR:820,notes:"Surplus into END/MND."},
+    300:{VIG:60,MND:40,END:50,STR:12,DEX:80,INT:9,FTH:8,ARC:7,AR:825,notes:"Fully QoL optimised."}}},
+
+  {id:8,name:"Backhand Blade",jp:"逆手剣",type:"Backhand Blades",src:"DLC",primary:"DEX",
+   infusion:"Lightning/Keen (+25) — unique follow-up AoW",
+   req:{STR:10,DEX:13},
+   builds:{
+    150:{VIG:50,MND:15,END:25,STR:20,DEX:60,INT:9,FTH:8,ARC:7,AR:520,notes:"Lightning infusion. DEX 60 cap."},
+    200:{VIG:60,MND:20,END:30,STR:25,DEX:80,INT:9,FTH:8,ARC:7,AR:564,notes:"DEX hard cap. Peak AR pure DEX."},
+    250:{VIG:60,MND:25,END:40,STR:40,DEX:80,INT:9,FTH:8,ARC:7,AR:590,notes:"STR raised — quality build benefits."},
+    300:{VIG:60,MND:35,END:50,STR:60,DEX:80,INT:9,FTH:8,ARC:7,AR:620,notes:"Full quality — both STR+DEX capped."}}},
+
+  {id:9,name:"Hand of Malenia",jp:"ミケラの刃、マレニアの手",type:"Katana",src:"Base Game",primary:"DEX",
+   infusion:"None (unique) — Waterfowl Dance",
+   req:{STR:16,DEX:48},
+   builds:{
+    150:{VIG:45,MND:15,END:22,STR:16,DEX:60,INT:9,FTH:8,ARC:7,AR:750,notes:"DEX 60 soft cap. High base req."},
+    200:{VIG:55,MND:18,END:28,STR:16,DEX:80,INT:9,FTH:8,ARC:7,AR:840,notes:"DEX hard cap. Peak AR."},
+    250:{VIG:60,MND:25,END:38,STR:16,DEX:80,INT:9,FTH:8,ARC:7,AR:855,notes:"VIG 60. Remainder into END/MND."},
+    300:{VIG:60,MND:40,END:50,STR:16,DEX:80,INT:9,FTH:8,ARC:7,AR:865,notes:"Full QoL stats maxed."}}},
+
+  {id:10,name:"Milady",jp:"レディソード",type:"Light Greatsword",src:"DLC",primary:"DEX",
+   infusion:"Keen (+25) — Swift Slash (cannot replace)",
+   req:{STR:12,DEX:17},
+   builds:{
+    150:{VIG:50,MND:15,END:25,STR:12,DEX:60,INT:9,FTH:8,ARC:7,AR:540,notes:"DEX 60 soft cap."},
+    200:{VIG:60,MND:20,END:30,STR:12,DEX:80,INT:9,FTH:8,ARC:7,AR:564,notes:"DEX hard cap. Peak AR."},
+    250:{VIG:60,MND:25,END:45,STR:12,DEX:80,INT:9,FTH:8,ARC:7,AR:575,notes:"Surplus into END."},
+    300:{VIG:60,MND:40,END:50,STR:12,DEX:80,INT:9,FTH:8,ARC:7,AR:580,notes:"MND maxed for FP sustain."}}},
+
+  {id:11,name:"Nagakiba (Blood)",jp:"長刀",type:"Katana",src:"Base Game",primary:"DEX/ARC",
+   infusion:"Blood (+25) — Blood Blade ranged projectile",
+   req:{STR:18,DEX:22},
+   builds:{
+    150:{VIG:50,MND:18,END:25,STR:18,DEX:40,INT:9,FTH:8,ARC:45,AR:680,notes:"ARC 45 soft cap + DEX 40."},
+    200:{VIG:55,MND:20,END:30,STR:18,DEX:50,INT:9,FTH:8,ARC:60,AR:750,notes:"ARC 60 hard cap. DEX raised."},
+    250:{VIG:60,MND:25,END:38,STR:18,DEX:60,INT:9,FTH:8,ARC:60,AR:790,notes:"DEX 60 soft cap added."},
+    300:{VIG:60,MND:35,END:48,STR:18,DEX:80,INT:9,FTH:8,ARC:60,AR:820,notes:"DEX hard cap. Full bleed potential."}}},
+
+  {id:12,name:"Uchigatana (Blood/Keen)",jp:"打刀",type:"Katana",src:"Base Game",primary:"DEX/ARC",
+   infusion:"Keen for pure DEX; Blood for DEX/ARC bleed",
+   req:{STR:11,DEX:15},
+   builds:{
+    150:{VIG:50,MND:15,END:25,STR:11,DEX:60,INT:9,FTH:8,ARC:7,AR:620,notes:"Keen infusion. DEX 60 soft cap."},
+    200:{VIG:60,MND:18,END:30,STR:11,DEX:80,INT:9,FTH:8,ARC:7,AR:700,notes:"DEX hard cap."},
+    250:{VIG:60,MND:25,END:40,STR:11,DEX:80,INT:9,FTH:8,ARC:40,AR:740,notes:"Dual-build: ARC added for bleed."},
+    300:{VIG:60,MND:30,END:48,STR:11,DEX:80,INT:9,FTH:8,ARC:60,AR:780,notes:"ARC hard cap. Best of both builds."}}},
+
+  {id:13,name:"Rivers of Blood",jp:"血の川",type:"Katana",src:"Base Game",primary:"DEX/ARC",
+   infusion:"None (unique) — Corpse Piler (6 rapid slashes)",
+   req:{STR:12,DEX:18,ARC:20},
+   builds:{
+    150:{VIG:50,MND:20,END:22,STR:12,DEX:45,INT:9,FTH:8,ARC:45,AR:640,notes:"ARC 45 + DEX 45. Bleed at peak."},
+    200:{VIG:55,MND:22,END:28,STR:12,DEX:55,INT:9,FTH:8,ARC:60,AR:710,notes:"ARC 60 hard cap. DEX raised."},
+    250:{VIG:60,MND:25,END:35,STR:12,DEX:70,INT:9,FTH:8,ARC:60,AR:750,notes:"DEX past first soft cap."},
+    300:{VIG:60,MND:35,END:45,STR:12,DEX:80,INT:9,FTH:8,ARC:60,AR:780,notes:"DEX hard cap. Max bleed + base AR."}}},
+
+  {id:14,name:"Dark Moon Greatsword",jp:"暗月の大剣",type:"Greatsword",src:"Base Game",primary:"INT",
+   infusion:"None (unique) — Moonlight Greatsword AoW",
+   req:{STR:16,DEX:11,INT:38},
+   builds:{
+    150:{VIG:45,MND:25,END:20,STR:16,DEX:11,INT:60,FTH:8,ARC:7,AR:760,notes:"INT 60 soft cap. Moonlight buff active."},
+    200:{VIG:50,MND:30,END:25,STR:16,DEX:11,INT:80,FTH:8,ARC:7,AR:891,notes:"INT hard cap. Full magic output."},
+    250:{VIG:60,MND:35,END:30,STR:16,DEX:11,INT:80,FTH:8,ARC:7,AR:900,notes:"VIG 60. Remaining into MND/END."},
+    300:{VIG:60,MND:50,END:40,STR:16,DEX:11,INT:80,FTH:8,ARC:7,AR:910,notes:"High FP for frequent AoW use."}}},
+
+  {id:15,name:"Moonveil",jp:"ムーンヴェイル",type:"Katana",src:"Base Game",primary:"INT",
+   infusion:"None (unique) — Transient Moonlight (sheathe-draw)",
+   req:{STR:12,DEX:18,INT:23},
+   builds:{
+    150:{VIG:45,MND:25,END:20,STR:12,DEX:25,INT:60,FTH:8,ARC:7,AR:720,notes:"INT 60 soft cap. DEX 25 cast speed."},
+    200:{VIG:50,MND:30,END:25,STR:12,DEX:30,INT:80,FTH:8,ARC:7,AR:830,notes:"INT hard cap. Near peak output."},
+    250:{VIG:60,MND:35,END:35,STR:12,DEX:30,INT:80,FTH:8,ARC:7,AR:845,notes:"VIG 60 hit. QoL balance."},
+    300:{VIG:60,MND:50,END:45,STR:12,DEX:40,INT:80,FTH:8,ARC:7,AR:860,notes:"DEX 40 for max cast speed."}}},
+
+  {id:16,name:"Carian Sorcery Sword",jp:"輝石の杖剣",type:"Straight Sword (Staff)",src:"Base Game",primary:"INT",
+   infusion:"None (unique) — functions as Staff + Melee",
+   req:{STR:6,DEX:20,INT:18},
+   builds:{
+    150:{VIG:40,MND:30,END:18,STR:8,DEX:20,INT:65,FTH:8,ARC:7,AR:680,notes:"INT 65 for strong sorcery output."},
+    200:{VIG:45,MND:40,END:22,STR:8,DEX:20,INT:80,FTH:8,ARC:7,AR:760,notes:"INT hard cap + high MND for FP."},
+    250:{VIG:55,MND:50,END:28,STR:8,DEX:20,INT:80,FTH:8,ARC:7,AR:775,notes:"VIG raised. Max FP at MND 50."},
+    300:{VIG:60,MND:60,END:38,STR:8,DEX:20,INT:80,FTH:8,ARC:7,AR:785,notes:"MND 60 hard cap. Full spellblade."}}},
+
+  {id:17,name:"Star-Lined Sword",jp:"星列の刀",type:"Katana",src:"DLC",primary:"DEX/INT",
+   infusion:"None (unique) — multi-hit AoW with follow-ups",
+   req:{STR:8,DEX:18,INT:20},
+   builds:{
+    150:{VIG:45,MND:22,END:20,STR:12,DEX:40,INT:50,FTH:8,ARC:7,AR:700,notes:"Balanced DEX/INT approach."},
+    200:{VIG:50,MND:28,END:25,STR:12,DEX:50,INT:65,FTH:8,ARC:7,AR:790,notes:"Both stats past first soft cap."},
+    250:{VIG:60,MND:32,END:32,STR:12,DEX:60,INT:80,FTH:8,ARC:7,AR:860,notes:"INT hard cap. DEX 60 soft cap."},
+    300:{VIG:60,MND:40,END:40,STR:12,DEX:80,INT:80,FTH:8,ARC:7,AR:930,notes:"Both hard caps. Full DEX/INT peak."}}},
+
+  {id:18,name:"Sword of Night and Flame",jp:"夜と炎の剣",type:"Straight Sword",src:"Base Game",primary:"INT/FTH",
+   infusion:"None (unique) — Night-and-Flame Stance",
+   req:{STR:12,DEX:12,INT:24,FTH:24},
+   builds:{
+    150:{VIG:40,MND:30,END:18,STR:12,DEX:12,INT:50,FTH:50,ARC:7,AR:680,notes:"Balanced INT/FTH build."},
+    200:{VIG:48,MND:35,END:22,STR:12,DEX:12,INT:60,FTH:60,ARC:7,AR:750,notes:"Both at first soft cap."},
+    250:{VIG:55,MND:40,END:28,STR:12,DEX:12,INT:70,FTH:70,ARC:7,AR:820,notes:"Pushing toward hard caps."},
+    300:{VIG:60,MND:50,END:35,STR:12,DEX:12,INT:80,FTH:80,ARC:7,AR:890,notes:"Both hard caps. Maximum hybrid output."}}},
+
+  {id:19,name:"Blasphemous Blade",jp:"冒涜の聖剣",type:"Greatsword",src:"Base Game",primary:"FTH",
+   infusion:"None (unique) — Taker's Flames (FTH only, HP regen)",
+   req:{STR:22,DEX:15,FTH:21},
+   builds:{
+    150:{VIG:50,MND:25,END:20,STR:22,DEX:15,INT:9,FTH:60,ARC:7,AR:710,notes:"FTH 60 soft cap. Taker's Flames strong."},
+    200:{VIG:55,MND:28,END:25,STR:22,DEX:15,INT:9,FTH:80,ARC:7,AR:770,notes:"FTH hard cap. Full AoW damage."},
+    250:{VIG:60,MND:35,END:35,STR:22,DEX:15,INT:9,FTH:80,ARC:7,AR:785,notes:"VIG 60. END investment."},
+    300:{VIG:60,MND:50,END:50,STR:22,DEX:15,INT:9,FTH:80,ARC:7,AR:800,notes:"END and MND capped."}}},
+
+  {id:20,name:"Fire Knight's Greatsword",jp:"火の騎士の大剣",type:"Colossal Sword",src:"DLC",primary:"STR/FTH",
+   infusion:"None (unique) — Fire Knight's Flame AoW",
+   req:{STR:26,DEX:11,FTH:24},
+   builds:{
+    150:{VIG:45,MND:20,END:22,STR:40,DEX:11,INT:9,FTH:40,ARC:7,AR:850,notes:"Balanced STR/FTH 40/40."},
+    200:{VIG:50,MND:22,END:28,STR:50,DEX:11,INT:9,FTH:55,ARC:7,AR:960,notes:"Both stats toward 60."},
+    250:{VIG:55,MND:25,END:35,STR:60,DEX:11,INT:9,FTH:60,ARC:7,AR:1050,notes:"Both at soft cap. Near peak AR."},
+    300:{VIG:60,MND:30,END:45,STR:70,DEX:11,INT:9,FTH:70,ARC:7,AR:1100,notes:"Both toward 80. Highest melee AR."}}},
+
+  {id:21,name:"Godslayer's Greatsword",jp:"神狩りの剣",type:"Colossal Sword",src:"Base Game",primary:"DEX/FTH",
+   infusion:"None (unique) — Queen's Black Flame (% HP burn)",
+   req:{STR:20,DEX:22,FTH:30},
+   builds:{
+    150:{VIG:45,MND:25,END:22,STR:20,DEX:30,INT:9,FTH:60,ARC:7,AR:680,notes:"FTH 60 + DEX 30 baseline."},
+    200:{VIG:55,MND:28,END:28,STR:20,DEX:45,INT:9,FTH:75,ARC:7,AR:760,notes:"DEX raised, FTH past soft cap."},
+    250:{VIG:60,MND:32,END:35,STR:20,DEX:55,INT:9,FTH:80,ARC:7,AR:820,notes:"FTH hard cap. DEX near soft cap."},
+    300:{VIG:60,MND:40,END:45,STR:20,DEX:60,INT:9,FTH:80,ARC:7,AR:850,notes:"DEX 60 soft cap. Peak balance."}}},
+
+  {id:22,name:"Spear of the Impaler",jp:"貫通槍",type:"Great Spear",src:"Base Game",primary:"DEX/FTH",
+   infusion:"None (unique) — Impaling Thrust (holy AOE stagger)",
+   req:{STR:20,DEX:14,FTH:26},
+   builds:{
+    150:{VIG:48,MND:22,END:22,STR:20,DEX:35,INT:9,FTH:55,ARC:7,AR:670,notes:"DEX/FTH balance for spear."},
+    200:{VIG:55,MND:25,END:28,STR:20,DEX:45,INT:9,FTH:70,ARC:7,AR:740,notes:"FTH past first soft cap."},
+    250:{VIG:60,MND:30,END:35,STR:20,DEX:55,INT:9,FTH:80,ARC:7,AR:800,notes:"FTH hard cap. DEX near cap."},
+    300:{VIG:60,MND:40,END:45,STR:20,DEX:60,INT:9,FTH:80,ARC:7,AR:830,notes:"DEX 60 soft cap. Max AoW effectiveness."}}},
+
+  {id:23,name:"Mohgwyn's Sacred Spear",jp:"血の君主の聖槍",type:"Great Spear",src:"Base Game",primary:"ARC",
+   infusion:"None (unique) — Bloodboon Ritual (360° blood rain)",
+   req:{STR:24,DEX:14,ARC:27},
+   builds:{
+    150:{VIG:50,MND:20,END:22,STR:24,DEX:14,INT:9,FTH:8,ARC:60,AR:760,notes:"ARC 60 hard cap. Bloodboon devastating."},
+    200:{VIG:55,MND:22,END:30,STR:24,DEX:14,INT:9,FTH:8,ARC:60,AR:800,notes:"VIG and END raised."},
+    250:{VIG:60,MND:28,END:40,STR:24,DEX:14,INT:9,FTH:8,ARC:60,AR:850,notes:"VIG 60. Surplus into sustain stats."},
+    300:{VIG:60,MND:40,END:50,STR:30,DEX:14,INT:9,FTH:8,ARC:60,AR:880,notes:"Minor STR boost for AR. MND/END maxed."}}},
+
+  {id:24,name:"Bloodfiend's Arm (Occult)",jp:"血鬼の腕",type:"Colossal Weapon",src:"DLC",primary:"ARC",
+   infusion:"Occult (+25) — Cragblade recommended",
+   req:{STR:34,DEX:8},
+   builds:{
+    150:{VIG:50,MND:15,END:25,STR:40,DEX:8,INT:9,FTH:8,ARC:45,AR:800,notes:"STR 40 + ARC 45. High AR + bleed."},
+    200:{VIG:55,MND:18,END:30,STR:45,DEX:8,INT:9,FTH:8,ARC:60,AR:900,notes:"ARC 60 hard cap. Extreme buildup."},
+    250:{VIG:60,MND:20,END:38,STR:54,DEX:8,INT:9,FTH:8,ARC:60,AR:960,notes:"STR two-hand soft cap (54). Peak."},
+    300:{VIG:60,MND:28,END:48,STR:60,DEX:8,INT:9,FTH:8,ARC:60,AR:1000,notes:"STR 60 soft cap. Max practical AR."}}},
+
+  {id:25,name:"Eleonora's Poleblade",jp:"エレオノーラの双刃",type:"Twinblade",src:"Base Game",primary:"DEX/ARC",
+   infusion:"None (unique) — Bloodblade Dance (spinning combo)",
+   req:{STR:12,DEX:21,ARC:19},
+   builds:{
+    150:{VIG:50,MND:20,END:22,STR:12,DEX:40,INT:9,FTH:8,ARC:50,AR:660,notes:"DEX 40 + ARC 50. Balanced bleed."},
+    200:{VIG:55,MND:22,END:28,STR:12,DEX:50,INT:9,FTH:8,ARC:60,AR:730,notes:"ARC 60 hard cap. DEX raised."},
+    250:{VIG:60,MND:28,END:35,STR:12,DEX:60,INT:9,FTH:8,ARC:60,AR:770,notes:"DEX 60 soft cap."},
+    300:{VIG:60,MND:38,END:45,STR:12,DEX:80,INT:9,FTH:8,ARC:60,AR:810,notes:"DEX hard cap. Full dual scaling."}}},
+
+  {id:26,name:"Ancient Meteoric Ore Greatsword",jp:"古隕鉄の大剣",type:"Colossal Sword",src:"DLC",primary:"STR/ARC",
+   infusion:"None (unique) — Meteorite AoW (gravity + bleed AOE)",
+   req:{STR:34,DEX:8,ARC:20},
+   builds:{
+    150:{VIG:48,MND:18,END:25,STR:45,DEX:8,INT:9,FTH:8,ARC:40,AR:820,notes:"STR primary, ARC supplemental."},
+    200:{VIG:55,MND:20,END:30,STR:55,DEX:8,INT:9,FTH:8,ARC:55,AR:930,notes:"Both stats approaching soft caps."},
+    250:{VIG:60,MND:22,END:38,STR:60,DEX:8,INT:9,FTH:8,ARC:60,AR:1010,notes:"Both at soft cap. Strong peak."},
+    300:{VIG:60,MND:30,END:48,STR:70,DEX:8,INT:9,FTH:8,ARC:60,AR:1060,notes:"STR beyond soft cap. Diminishing."}}},
+
+  {id:27,name:"Reduvia",jp:"レドゥビア",type:"Dagger",src:"Base Game",primary:"DEX/ARC",
+   infusion:"None (unique) — Reduvia Blood Blade (ranged arc)",
+   req:{STR:5,DEX:13,ARC:13},
+   builds:{
+    150:{VIG:50,MND:20,END:22,STR:8,DEX:45,INT:9,FTH:8,ARC:50,AR:540,notes:"ARC 50 + DEX 45. Strong bleed."},
+    200:{VIG:55,MND:22,END:28,STR:8,DEX:55,INT:9,FTH:8,ARC:60,AR:610,notes:"ARC 60 hard cap. DEX raised."},
+    250:{VIG:60,MND:28,END:35,STR:8,DEX:70,INT:9,FTH:8,ARC:60,AR:650,notes:"DEX past first soft cap."},
+    300:{VIG:60,MND:38,END:45,STR:8,DEX:80,INT:9,FTH:8,ARC:60,AR:690,notes:"DEX hard cap. Full ARC/DEX range."}}},
+
+  {id:28,name:"Sword Lance (Blood)",jp:"剣接ぎの大剣",type:"Heavy Thrusting Sword",src:"DLC",primary:"STR",
+   infusion:"Blood (+25) — Spinning Gravity Thrust (3× bleed)",
+   req:{STR:21,DEX:11},
+   builds:{
+    150:{VIG:50,MND:18,END:25,STR:50,DEX:11,INT:9,FTH:8,ARC:40,AR:520,notes:"STR primary + ARC 40 for bleed."},
+    200:{VIG:55,MND:20,END:30,STR:60,DEX:11,INT:9,FTH:8,ARC:50,AR:570,notes:"STR 60 soft cap. ARC raised."},
+    250:{VIG:60,MND:22,END:38,STR:66,DEX:11,INT:9,FTH:8,ARC:60,AR:600,notes:"ARC 60 hard cap. STR beyond soft."},
+    300:{VIG:60,MND:30,END:48,STR:80,DEX:11,INT:9,FTH:8,ARC:60,AR:630,notes:"STR hard cap. Full bleed potential."}}},
+
+  {id:29,name:"Rellana's Twin Blades",jp:"レラーナの双剣",type:"Light Greatsword (Dual)",src:"DLC",primary:"DEX/INT/FTH",
+   infusion:"None (unique) — Rellana's Twin Moons AoW",
+   req:{STR:10,DEX:18,INT:18,FTH:18},
+   builds:{
+    150:{VIG:40,MND:25,END:20,STR:10,DEX:40,INT:40,FTH:40,ARC:7,AR:680,notes:"Balanced tri-stat approach."},
+    200:{VIG:50,MND:30,END:25,STR:10,DEX:50,INT:50,FTH:50,ARC:7,AR:780,notes:"All three past 50. Good split."},
+    250:{VIG:55,MND:35,END:30,STR:10,DEX:60,INT:60,FTH:60,ARC:7,AR:880,notes:"All at first soft caps. Strong."},
+    300:{VIG:60,MND:40,END:38,STR:10,DEX:70,INT:70,FTH:70,ARC:7,AR:970,notes:"Pushing hard caps across all three."}}},
+
+  {id:30,name:"Wing of Astel",jp:"アステルの翼",type:"Curved Sword",src:"Base Game",primary:"DEX/INT",
+   infusion:"None (unique) — Nebula AoW (void burst + free magic projectile)",
+   req:{STR:7,DEX:17,INT:20},
+   builds:{
+    150:{VIG:45,MND:25,END:20,STR:7,DEX:50,INT:55,FTH:8,ARC:7,AR:680,notes:"Balanced DEX/INT approach."},
+    200:{VIG:52,MND:30,END:25,STR:7,DEX:60,INT:70,FTH:8,ARC:7,AR:760,notes:"DEX soft cap. INT approaching hard."},
+    250:{VIG:60,MND:35,END:32,STR:7,DEX:70,INT:80,FTH:8,ARC:7,AR:830,notes:"INT hard cap. DEX past first soft."},
+    300:{VIG:60,MND:45,END:42,STR:7,DEX:80,INT:80,FTH:8,ARC:7,AR:880,notes:"Both hard caps. Full INT/DEX peak."}}},
+
+  /* ── DAGGERS ── */
+  {id:31,name:"Black Knife",jp:"黒き刃",type:"Dagger",src:"Base Game",primary:"DEX/FTH",req:{STR:5,DEX:12,FTH:18}},
+  {id:32,name:"Blade of Calling",jp:"喚び刃",type:"Dagger",src:"DLC",primary:"FTH",req:{STR:5,DEX:13,FTH:20}},
+  {id:33,name:"Celebrant's Sickle",jp:"祝賀者の鎌",type:"Dagger",src:"Base Game",primary:"DEX",req:{STR:7,DEX:13}},
+  {id:34,name:"Cinquedea",jp:"チンクェデア",type:"Dagger",src:"Base Game",primary:"ARC",req:{STR:10,DEX:12,ARC:12}},
+  {id:35,name:"Dagger",jp:"短剣",type:"Dagger",src:"Base Game",primary:"DEX",req:{STR:5,DEX:9}},
+  {id:36,name:"Erdsteel Dagger",jp:"黄金樹鋼の短剣",type:"Dagger",src:"Base Game",primary:"FTH",req:{STR:5,DEX:9,FTH:12}},
+  {id:37,name:"Glintstone Kris",jp:"輝石のクリス",type:"Dagger",src:"Base Game",primary:"INT",req:{STR:5,DEX:12,INT:15}},
+  {id:38,name:"Great Knife",jp:"大型ナイフ",type:"Dagger",src:"Base Game",primary:"DEX",req:{STR:5,DEX:13}},
+  {id:39,name:"Ivory Sickle",jp:"象牙の鎌",type:"Dagger",src:"Base Game",primary:"FTH",req:{STR:5,DEX:12,FTH:12}},
+  {id:40,name:"Messmer Soldier's Axe",jp:"メスメル兵の斧",type:"Axe",src:"DLC",primary:"STR/DEX",req:{STR:12,DEX:10}},
+  {id:41,name:"Misericorde",jp:"ミセリコルデ",type:"Dagger",src:"Base Game",primary:"DEX",req:{STR:5,DEX:14}},
+  {id:42,name:"Needle of Night",jp:"夜の針",type:"Dagger",src:"DLC",primary:"INT",req:{STR:5,DEX:14,INT:20}},
+  {id:43,name:"Parrying Dagger",jp:"パリィ短剣",type:"Dagger",src:"Base Game",primary:"DEX",req:{STR:5,DEX:14}},
+  {id:44,name:"Scorpion's Stinger",jp:"蠍の毒針",type:"Dagger",src:"Base Game",primary:"ARC",req:{STR:5,DEX:10,ARC:12}},
+  {id:45,name:"Smithscript Dagger",jp:"鍛冶符の短剣",type:"Dagger",src:"DLC",primary:"DEX",req:{STR:5,DEX:12}},
+  {id:46,name:"Virulent Blade",jp:"猛毒の刃",type:"Dagger",src:"DLC",primary:"DEX/ARC",req:{STR:5,DEX:10,ARC:14}},
+  {id:47,name:"Wakizashi",jp:"脇差",type:"Dagger",src:"Base Game",primary:"DEX",req:{STR:9,DEX:15}},
+
+  /* ── STRAIGHT SWORDS ── */
+  {id:48,name:"Broadsword",jp:"ブロードソード",type:"Straight Sword",src:"Base Game",primary:"STR/DEX",req:{STR:10,DEX:10}},
+  {id:49,name:"Carian Knight's Sword",jp:"輝石騎士剣",type:"Straight Sword",src:"Base Game",primary:"DEX/INT",req:{STR:10,DEX:12,INT:16}},
+  {id:50,name:"Coded Sword",jp:"律法の剣",type:"Straight Sword",src:"Base Game",primary:"FTH",req:{STR:10,DEX:8,FTH:20}},
+  {id:51,name:"Crystal Sword",jp:"クリスタルソード",type:"Straight Sword",src:"Base Game",primary:"INT",req:{STR:10,DEX:9,INT:10}},
+  {id:52,name:"Demi-Human Queen's Blade",jp:"亜人女王の剣",type:"Straight Sword",src:"Base Game",primary:"DEX",req:{STR:10,DEX:16}},
+  {id:53,name:"Flamberge",jp:"フランベルジュ",type:"Greatsword",src:"Base Game",primary:"STR/DEX",req:{STR:13,DEX:14}},
+  {id:54,name:"Golden Epitaph",jp:"黄金の墓碑",type:"Straight Sword",src:"Base Game",primary:"FTH",req:{STR:10,DEX:7,FTH:14}},
+  {id:55,name:"Longsword",jp:"ロングソード",type:"Straight Sword",src:"Base Game",primary:"STR/DEX",req:{STR:10,DEX:10}},
+  {id:56,name:"Lordsworn's Straight Sword",jp:"主力直剣",type:"Straight Sword",src:"Base Game",primary:"STR/DEX",req:{STR:10,DEX:10}},
+  {id:57,name:"Miquellan Knight's Sword",jp:"ミケラ騎士の剣",type:"Straight Sword",src:"Base Game",primary:"FTH",req:{STR:10,DEX:11,FTH:12}},
+  {id:58,name:"Noble's Slender Sword",jp:"貴族の細剣",type:"Straight Sword",src:"Base Game",primary:"DEX",req:{STR:7,DEX:13}},
+  {id:59,name:"Ornamental Straight Sword",jp:"装飾剣",type:"Straight Sword",src:"Base Game",primary:"DEX",req:{STR:8,DEX:14}},
+  {id:60,name:"Regalia of Eochaid",jp:"エオカイドの本領",type:"Straight Sword",src:"Base Game",primary:"DEX",req:{STR:9,DEX:18}},
+  {id:61,name:"Rift Blade",jp:"裂け目の刃",type:"Straight Sword",src:"DLC",primary:"DEX/INT",req:{STR:6,DEX:15,INT:15}},
+  {id:62,name:"Short Sword",jp:"ショートソード",type:"Straight Sword",src:"Base Game",primary:"STR/DEX",req:{STR:8,DEX:9}},
+  {id:63,name:"Solemn Duty",jp:"厳粛な誓い",type:"Straight Sword",src:"DLC",primary:"STR/FTH",req:{STR:14,DEX:7,FTH:18}},
+  {id:64,name:"Sunflower",jp:"陽花",type:"Straight Sword",src:"DLC",primary:"FTH",req:{STR:10,DEX:10,FTH:15}},
+  {id:65,name:"Warhawk's Talon",jp:"鷹の爪",type:"Straight Sword",src:"DLC",primary:"DEX",req:{STR:9,DEX:16}},
+
+  /* ── GREATSWORDS ── */
+  {id:66,name:"Banished Knight's Greatsword",jp:"追放騎士の大剣",type:"Greatsword",src:"Base Game",primary:"STR",req:{STR:26,DEX:10}},
+  {id:67,name:"Claymore",jp:"クレイモア",type:"Greatsword",src:"Base Game",primary:"STR/DEX",req:{STR:16,DEX:13}},
+  {id:68,name:"Death's Poker",jp:"死竿",type:"Greatsword",src:"Base Game",primary:"STR",req:{STR:20,DEX:10}},
+  {id:69,name:"Forked Greatsword",jp:"二叉の大剣",type:"Greatsword",src:"Base Game",primary:"STR/DEX",req:{STR:16,DEX:16}},
+  {id:70,name:"Gargoyle's Greatsword",jp:"ガーゴイルの大剣",type:"Greatsword",src:"Base Game",primary:"STR",req:{STR:26,DEX:16}},
+  {id:71,name:"Helphen's Steeple",jp:"ヘルフェンの塔",type:"Greatsword",src:"Base Game",primary:"STR",req:{STR:24,DEX:18}},
+  {id:72,name:"Inseparable Sword",jp:"不離の剣",type:"Greatsword",src:"Base Game",primary:"STR/FTH",req:{STR:24,DEX:19,FTH:20}},
+  {id:73,name:"Knight's Greatsword",jp:"騎士の大剣",type:"Greatsword",src:"Base Game",primary:"STR/DEX",req:{STR:18,DEX:15}},
+  {id:74,name:"Lordsworn's Greatsword",jp:"主力大剣",type:"Greatsword",src:"Base Game",primary:"STR/DEX",req:{STR:16,DEX:10}},
+  {id:75,name:"Ordovis's Greatsword",jp:"オルドビスの大剣",type:"Greatsword",src:"Base Game",primary:"STR/FTH",req:{STR:20,DEX:15,FTH:16}},
+  {id:76,name:"Queelign's Greatsword",jp:"クィーリンの大剣",type:"Heavy Thrusting Sword",src:"DLC",primary:"STR/FTH",req:{STR:20,DEX:14,FTH:24}},
+  {id:77,name:"Royal Greatsword",jp:"王族の大剣",type:"Colossal Sword",src:"DLC",primary:"STR",req:{STR:20,DEX:14}},
+  {id:78,name:"Leda's Sword",jp:"レダの剣",type:"Light Greatsword",src:"DLC",primary:"DEX",req:{STR:7,DEX:17}},
+  {id:79,name:"Sword of Milos",jp:"ミリセントの剣",type:"Greatsword",src:"Base Game",primary:"STR",req:{STR:14,DEX:10}},
+  {id:80,name:"Troll Knight's Sword",jp:"トロル騎士の剣",type:"Colossal Sword",src:"Base Game",primary:"STR",req:{STR:28,DEX:12}},
+  {id:81,name:"Zweihander",jp:"ツヴァイヘンダー",type:"Colossal Sword",src:"Base Game",primary:"STR/DEX",req:{STR:19,DEX:12}},
+
+  /* ── COLOSSAL SWORDS ── */
+  {id:82,name:"Grafted Blade Greatsword",jp:"接ぎ木の刃の大剣",type:"Colossal Sword",src:"Base Game",primary:"STR",req:{STR:40,DEX:14}},
+  {id:83,name:"Greatsword",jp:"大剣",type:"Colossal Sword",src:"Base Game",primary:"STR",req:{STR:31,DEX:12}},
+  {id:84,name:"Maliketh's Black Blade",jp:"マリケスの黒き剣",type:"Colossal Sword",src:"Base Game",primary:"STR/FTH",req:{STR:34,DEX:12,FTH:20}},
+  {id:85,name:"Ruins Greatsword",jp:"廃墟の大剣",type:"Colossal Sword",src:"Base Game",primary:"STR/INT",req:{STR:50,DEX:12,INT:16}},
+  {id:86,name:"Starscourge Greatsword",jp:"星砕きの大剣",type:"Colossal Sword",src:"Base Game",primary:"STR",req:{STR:38,DEX:12}},
+  {id:87,name:"Greatsword of Damnation",jp:"断罪の大剣",type:"Colossal Sword",src:"DLC",primary:"STR/FTH",req:{STR:24,DEX:10,FTH:20}},
+
+  /* ── THRUSTING SWORDS ── */
+  {id:88,name:"Antspur Rapier",jp:"蟻塚の刺突剣",type:"Thrusting Sword",src:"Base Game",primary:"DEX",req:{STR:8,DEX:18}},
+  {id:89,name:"Crystal Spear",jp:"クリスタルスピア",type:"Spear",src:"Base Game",primary:"INT",req:{STR:11,DEX:18,INT:14}},
+  {id:90,name:"Estoc",jp:"エストック",type:"Thrusting Sword",src:"Base Game",primary:"STR/DEX",req:{STR:8,DEX:11}},
+  {id:91,name:"Frozen Needle",jp:"氷の針",type:"Thrusting Sword",src:"Base Game",primary:"DEX",req:{STR:10,DEX:16}},
+  {id:92,name:"Rapier",jp:"レイピア",type:"Thrusting Sword",src:"Base Game",primary:"DEX",req:{STR:7,DEX:16}},
+  {id:93,name:"Rogier's Rapier",jp:"ロジェのレイピア",type:"Thrusting Sword",src:"Base Game",primary:"DEX/INT",req:{STR:7,DEX:18,INT:14}},
+
+  /* ── HEAVY THRUSTING SWORDS ── */
+  {id:94,name:"Bloody Helice",jp:"血の螺旋剣",type:"Heavy Thrusting Sword",src:"Base Game",primary:"DEX/ARC",req:{STR:16,DEX:22,ARC:18}},
+  {id:95,name:"Great Épée",jp:"グレートエペ",type:"Heavy Thrusting Sword",src:"DLC",primary:"STR/DEX",req:{STR:17,DEX:14}},
+
+  /* ── CURVED SWORDS ── */
+  {id:96,name:"Bandit's Curved Sword",jp:"山賊の曲剣",type:"Curved Sword",src:"Base Game",primary:"DEX",req:{STR:10,DEX:13}},
+  {id:97,name:"Falchion",jp:"ファルシオン",type:"Curved Sword",src:"Base Game",primary:"STR/DEX",req:{STR:9,DEX:14}},
+  {id:98,name:"Flowing Curved Sword",jp:"流水の曲剣",type:"Curved Sword",src:"Base Game",primary:"STR/DEX",req:{STR:10,DEX:18}},
+  {id:99,name:"Magma Blade",jp:"溶岩の刃",type:"Curved Sword",src:"Base Game",primary:"DEX/FTH",req:{STR:9,DEX:15,FTH:18}},
+  {id:100,name:"Mantis Blade",jp:"蟷螂の刃",type:"Curved Sword",src:"Base Game",primary:"DEX",req:{STR:8,DEX:20}},
+  {id:101,name:"Nox Flowing Sword",jp:"ノックスの流水剣",type:"Curved Sword",src:"Base Game",primary:"DEX/INT",req:{STR:10,DEX:20,INT:16}},
+  {id:102,name:"Omen Cleaver",jp:"鬼人の蛮刀",type:"Curved Greatsword",src:"Base Game",primary:"STR",req:{STR:14,DEX:10}},
+  {id:103,name:"Scavenger's Curved Sword",jp:"漁りの曲剣",type:"Curved Sword",src:"Base Game",primary:"STR/DEX",req:{STR:9,DEX:14}},
+  {id:104,name:"Shotel",jp:"ショーテル",type:"Curved Sword",src:"Base Game",primary:"DEX",req:{STR:7,DEX:20}},
+  {id:105,name:"Smithscript Cirque",jp:"鍛冶符の投擲刃",type:"Curved Sword",src:"DLC",primary:"DEX",req:{STR:6,DEX:18}},
+
+  /* ── CURVED GREATSWORDS ── */
+  {id:106,name:"Eclipse Shotel",jp:"日蝕のショーテル",type:"Curved Sword",src:"Base Game",primary:"FTH",req:{STR:10,DEX:14,FTH:20}},
+  {id:107,name:"Great Omenkiller Cleaver",jp:"鬼人の大蛮刀",type:"Greataxe",src:"Base Game",primary:"STR/ARC",req:{STR:26,DEX:11,ARC:14}},
+  {id:108,name:"Magma Wyrm's Scalesword",jp:"溶岩竜の鱗剣",type:"Curved Greatsword",src:"Base Game",primary:"STR/FTH",req:{STR:24,DEX:14,FTH:18}},
+  {id:109,name:"Marais Executioner's Sword",jp:"マレーの処刑剣",type:"Greatsword",src:"Base Game",primary:"STR/ARC",req:{STR:24,DEX:14,ARC:18}},
+  {id:110,name:"Morgott's Cursed Sword",jp:"モーゴットの呪剣",type:"Curved Greatsword",src:"Base Game",primary:"DEX/ARC",req:{STR:14,DEX:35,ARC:17}},
+  {id:111,name:"Onyx Lord's Greatsword",jp:"オニキス卿の大剣",type:"Curved Greatsword",src:"Base Game",primary:"STR/INT",req:{STR:24,DEX:13,INT:20}},
+  {id:112,name:"Zamor Curved Sword",jp:"ザモルの曲剣",type:"Curved Greatsword",src:"Base Game",primary:"DEX/FTH",req:{STR:22,DEX:18,FTH:20}},
+
+  /* ── KATANAS ── */
+  {id:113,name:"Dragonscale Blade",jp:"竜鱗の刀",type:"Katana",src:"Base Game",primary:"DEX/FTH",req:{STR:12,DEX:18,FTH:17}},
+  {id:114,name:"Meteoric Ore Blade",jp:"隕石鉱の刀",type:"Katana",src:"Base Game",primary:"STR/DEX/INT",req:{STR:15,DEX:14,INT:18}},
+  {id:115,name:"Serpentbone Blade",jp:"蛇骨の刀",type:"Katana",src:"Base Game",primary:"DEX",req:{STR:11,DEX:22}},
+
+  /* ── TWINBLADES ── */
+  {id:116,name:"Gargoyle's Twinblade",jp:"ガーゴイルの双刃",type:"Twinblade",src:"Base Game",primary:"STR",req:{STR:22,DEX:18}},
+  {id:117,name:"Godskin Peeler",jp:"神皮剥ぎ",type:"Twinblade",src:"Base Game",primary:"DEX",req:{STR:17,DEX:22}},
+  {id:118,name:"Twinblade",jp:"双刃剣",type:"Twinblade",src:"Base Game",primary:"STR/DEX",req:{STR:10,DEX:18}},
+  {id:119,name:"Vulgar Militia Saw",jp:"粗暴民兵の鋸",type:"Halberd",src:"Base Game",primary:"STR",req:{STR:14,DEX:9}},
+
+  /* ── AXES ── */
+  {id:120,name:"Battle Axe",jp:"バトルアックス",type:"Axe",src:"Base Game",primary:"STR",req:{STR:15,DEX:8}},
+  {id:121,name:"Forked Hatchet",jp:"二叉の手斧",type:"Axe",src:"Base Game",primary:"DEX",req:{STR:8,DEX:14}},
+  {id:122,name:"Gargoyle's Black Axe",jp:"ガーゴイルの黒斧",type:"Greataxe",src:"Base Game",primary:"STR/FTH",req:{STR:20,DEX:14,FTH:14}},
+  {id:123,name:"Hatchet",jp:"手斧",type:"Axe",src:"Base Game",primary:"STR",req:{STR:10,DEX:8}},
+  {id:124,name:"Highland Axe",jp:"高地の斧",type:"Axe",src:"Base Game",primary:"STR",req:{STR:12,DEX:8}},
+  {id:125,name:"Iron Cleaver",jp:"鉄の手斧",type:"Axe",src:"Base Game",primary:"STR",req:{STR:16,DEX:8}},
+  {id:126,name:"Jawbone Axe",jp:"顎骨の斧",type:"Axe",src:"Base Game",primary:"STR",req:{STR:12,DEX:8}},
+  {id:127,name:"Monk's Flameblade",jp:"修道士の炎刃",type:"Curved Greatsword",src:"Base Game",primary:"STR/FTH",req:{STR:14,DEX:9,FTH:15}},
+  {id:128,name:"Ripple Blade",jp:"波紋の刃",type:"Axe",src:"Base Game",primary:"ARC",req:{STR:10,DEX:10,ARC:10}},
+  {id:129,name:"Sacrificial Axe",jp:"生贄の斧",type:"Axe",src:"Base Game",primary:"STR",req:{STR:12,DEX:8}},
+  {id:130,name:"Smithscript Axe",jp:"鍛冶符の斧",type:"Axe",src:"DLC",primary:"DEX",req:{STR:8,DEX:14}},
+
+  /* ── GREATAXES ── */
+  {id:131,name:"Butchering Knife",jp:"解体刀",type:"Greataxe",src:"Base Game",primary:"STR",req:{STR:22,DEX:12}},
+  {id:132,name:"Duelist Greataxe",jp:"決闘者の大斧",type:"Colossal Weapon",src:"Base Game",primary:"STR",req:{STR:30,DEX:14}},
+  {id:133,name:"Gargoyle's Great Axe",jp:"ガーゴイルの大斧",type:"Greataxe",src:"Base Game",primary:"STR",req:{STR:26,DEX:18}},
+  {id:134,name:"Greataxe",jp:"大斧",type:"Greataxe",src:"Base Game",primary:"STR",req:{STR:30,DEX:8}},
+  {id:135,name:"Rusted Anchor",jp:"錆びた錨",type:"Greataxe",src:"Base Game",primary:"STR",req:{STR:12,DEX:8}},
+  {id:136,name:"Crescent Moon Axe",jp:"三日月斧",type:"Greataxe",src:"Base Game",primary:"STR",req:{STR:24,DEX:10}},
+  {id:137,name:"Longhaft Axe",jp:"長柄斧",type:"Greataxe",src:"Base Game",primary:"STR",req:{STR:20,DEX:10}},
+  {id:138,name:"Winged Greathorn",jp:"翼の大角",type:"Greataxe",src:"Base Game",primary:"STR/ARC",req:{STR:26,DEX:8,ARC:14}},
+
+  /* ── HAMMERS ── */
+  {id:139,name:"Brick Hammer",jp:"煉瓦のハンマー",type:"Hammer",src:"Base Game",primary:"STR",req:{STR:18,DEX:8}},
+  {id:140,name:"Club",jp:"棍棒",type:"Hammer",src:"Base Game",primary:"STR",req:{STR:10,DEX:8}},
+  {id:141,name:"Hammer",jp:"ハンマー",type:"Hammer",src:"Base Game",primary:"STR",req:{STR:10,DEX:8}},
+  {id:142,name:"Morning Star",jp:"モーニングスター",type:"Hammer",src:"Base Game",primary:"STR",req:{STR:12,DEX:8}},
+  {id:143,name:"Nox Flowing Hammer",jp:"ノックスの流水鎚",type:"Hammer",src:"Base Game",primary:"DEX/INT",req:{STR:12,DEX:15,INT:15}},
+  {id:144,name:"Pickaxe",jp:"つるはし",type:"Great Hammer",src:"Base Game",primary:"STR",req:{STR:16,DEX:8}},
+  {id:145,name:"Stone of Gurranq",jp:"グラングの石",type:"Hammer",src:"Base Game",primary:"STR/FTH",req:{STR:20,DEX:8,FTH:20}},
+  {id:146,name:"Warpick",jp:"ウォーピック",type:"Hammer",src:"Base Game",primary:"STR",req:{STR:12,DEX:8}},
+  {id:147,name:"Smithscript Hammer",jp:"鍛冶符の鎚",type:"Hammer",src:"DLC",primary:"STR",req:{STR:14,DEX:8}},
+  {id:147.1,name:"Mace",jp:"メイス",type:"Hammer",src:"Base Game",primary:"STR",req:{STR:12,DEX:8}},
+  {id:147.2,name:"Curved Club",jp:"曲がり棍棒",type:"Hammer",src:"Base Game",primary:"STR",req:{STR:10,DEX:8}},
+  {id:147.3,name:"Spiked Club",jp:"棘棍棒",type:"Hammer",src:"Base Game",primary:"STR",req:{STR:10,DEX:10}},
+  {id:147.4,name:"Ringed Finger",jp:"指輪の指",type:"Hammer",src:"Base Game",primary:"STR",req:{STR:10,DEX:8}},
+  {id:147.5,name:"Scepter of the All-Knowing",jp:"全知の笏",type:"Hammer",src:"Base Game",primary:"INT",req:{STR:10,DEX:16,INT:10}},
+  {id:147.6,name:"Envoy's Horn",jp:"使者の角笛",type:"Hammer",src:"Base Game",primary:"STR",req:{STR:8,DEX:10}},
+  {id:147.7,name:"Marika's Hammer",jp:"マリカの金鎚",type:"Hammer",src:"Base Game",primary:"STR/FTH",req:{STR:20,DEX:12,FTH:19}},
+  {id:147.8,name:"Varre's Bouquet",jp:"ヴァレーの花束",type:"Hammer",src:"Base Game",primary:"ARC",req:{STR:8,DEX:8,ARC:12}},
+  {id:147.9,name:"Flowerstone Gavel",jp:"花石の槌",type:"Hammer",src:"DLC",primary:"STR",req:{STR:14,DEX:8}},
+
+  /* ── FLAILS ── */
+  {id:148,name:"Bastard's Stars",jp:"落胤の星",type:"Flail",src:"Base Game",primary:"STR/INT",req:{STR:14,DEX:8,INT:18}},
+  {id:149,name:"Family Heads",jp:"一族の首",type:"Flail",src:"Base Game",primary:"ARC",req:{STR:12,DEX:8,ARC:14}},
+  {id:150,name:"Flail",jp:"フレイル",type:"Flail",src:"Base Game",primary:"STR/DEX",req:{STR:14,DEX:12}},
+  {id:151,name:"Nightrider Flail",jp:"夜騎士のフレイル",type:"Flail",src:"Base Game",primary:"STR/DEX",req:{STR:15,DEX:12}},
+  {id:152,name:"Varré's Bouquet",jp:"ヴァレーの花束",type:"Flail",src:"Base Game",primary:"ARC",req:{STR:8,DEX:8,ARC:12}},
+  {id:153,name:"Chainlink Flail",jp:"鎖のフレイル",type:"Flail",src:"DLC",primary:"STR",req:{STR:14,DEX:10}},
+
+  /* ── GREAT HAMMERS ── */
+  {id:154,name:"Envoy's Long Horn",jp:"使者の長角",type:"Great Hammer",src:"Base Game",primary:"STR",req:{STR:26,DEX:10}},
+  {id:155,name:"Great Club",jp:"グレートクラブ",type:"Colossal Weapon",src:"Base Game",primary:"STR",req:{STR:28,DEX:12}},
+  {id:156,name:"Great Stars",jp:"グレートスターズ",type:"Great Hammer",src:"Base Game",primary:"STR",req:{STR:24,DEX:10}},
+  {id:157,name:"Prelate's Inferno Crozier",jp:"司教の炎杖",type:"Colossal Weapon",src:"Base Game",primary:"STR/FTH",req:{STR:30,DEX:10,FTH:22}},
+  {id:158,name:"Stone Club",jp:"石の棍棒",type:"Hammer",src:"Base Game",primary:"STR",req:{STR:20,DEX:8}},
+  {id:159,name:"Troll's Hammer",jp:"トロルのハンマー",type:"Colossal Weapon",src:"Base Game",primary:"STR",req:{STR:30,DEX:14}},
+  {id:160,name:"Watchdog's Staff",jp:"番犬の杖",type:"Colossal Weapon",src:"Base Game",primary:"STR",req:{STR:22,DEX:14}},
+
+  /* ── COLOSSAL WEAPONS ── */
+  {id:161,name:"Axe of Godfrey",jp:"ゴッドフレイの斧",type:"Colossal Weapon",src:"Base Game",primary:"STR",req:{STR:44,DEX:12}},
+  {id:162,name:"Axe of Godrick",jp:"ゴドリックの斧",type:"Greataxe",src:"Base Game",primary:"STR",req:{STR:36,DEX:16}},
+  {id:163,name:"Borealis's Mist",jp:"ボレアリスの霧",type:"Colossal Weapon",src:"Base Game",primary:"STR",req:{STR:28,DEX:14}},
+  {id:164,name:"Dragon Greatclaw",jp:"竜の大鉤爪",type:"Colossal Weapon",src:"Base Game",primary:"STR",req:{STR:30,DEX:14}},
+  {id:165,name:"Fallingstar Beast Jaw",jp:"流星獣の顎",type:"Colossal Weapon",src:"Base Game",primary:"STR/INT",req:{STR:30,DEX:14,INT:18}},
+  {id:166,name:"Ghiza's Wheel",jp:"ギザの車輪",type:"Colossal Weapon",src:"Base Game",primary:"STR/DEX",req:{STR:28,DEX:20}},
+  {id:167,name:"Troll's Golden Sword",jp:"トロルの金剣",type:"Colossal Sword",src:"Base Game",primary:"STR",req:{STR:32,DEX:14}},
+
+  /* ── SPEARS ── */
+  {id:168,name:"Cleanrot Spear",jp:"浄腐の槍",type:"Spear",src:"Base Game",primary:"DEX/FTH",req:{STR:14,DEX:19,FTH:12}},
+  {id:169,name:"Clayman's Harpoon",jp:"泥人の銛",type:"Spear",src:"Base Game",primary:"DEX/INT",req:{STR:9,DEX:14,INT:12}},
+  {id:170,name:"Cross-Naginata",jp:"十文字薙刀",type:"Spear",src:"Base Game",primary:"DEX",req:{STR:16,DEX:22}},
+  {id:171,name:"Death Ritual Spear",jp:"死の儀式の槍",type:"Spear",src:"Base Game",primary:"INT",req:{STR:12,DEX:20,INT:22}},
+  {id:172,name:"Crystalian Spear",jp:"水晶人の槍",type:"Spear",src:"Base Game",primary:"INT",req:{STR:12,DEX:15,INT:14}},
+  {id:173,name:"Lance",jp:"ランス",type:"Great Spear",src:"Base Game",primary:"STR/DEX",req:{STR:20,DEX:14}},
+  {id:174,name:"Partisan",jp:"パルチザン",type:"Spear",src:"Base Game",primary:"STR/DEX",req:{STR:14,DEX:14}},
+  {id:175,name:"Pike",jp:"パイク",type:"Spear",src:"Base Game",primary:"STR/DEX",req:{STR:22,DEX:10}},
+  {id:176,name:"Short Spear",jp:"ショートスピア",type:"Spear",src:"Base Game",primary:"STR/DEX",req:{STR:12,DEX:10}},
+  {id:177,name:"Spear",jp:"槍",type:"Spear",src:"Base Game",primary:"STR/DEX",req:{STR:14,DEX:12}},
+  {id:178,name:"Torchpole",jp:"松明竿",type:"Spear",src:"Base Game",primary:"STR/DEX",req:{STR:11,DEX:11}},
+  {id:179,name:"Treespear",jp:"樹の槍",type:"Great Spear",src:"Base Game",primary:"STR/FTH",req:{STR:17,DEX:11,FTH:12}},
+  {id:180,name:"Vyke's War Spear",jp:"ヴァイクの戦槍",type:"Great Spear",src:"Base Game",primary:"FTH/ARC",req:{STR:14,DEX:19,FTH:22,ARC:17}},
+  {id:181,name:"Winged Spear",jp:"翼の槍",type:"Spear",src:"Base Game",primary:"STR/DEX",req:{STR:16,DEX:14}},
+  {id:182,name:"Smithscript Spear",jp:"鍛冶符の槍",type:"Spear",src:"DLC",primary:"DEX",req:{STR:12,DEX:16}},
+
+  /* ── GREAT SPEARS ── */
+  {id:183,name:"Bolt of Gransax",jp:"グランサクスの雷",type:"Spear",src:"Base Game",primary:"DEX",req:{STR:20,DEX:40}},
+  {id:184,name:"Rotten Crystal Spear",jp:"腐敗水晶の槍",type:"Spear",src:"Base Game",primary:"INT",req:{STR:16,DEX:18,INT:14}},
+  {id:185,name:"Serpent-Hunter",jp:"龍狩りの大槍",type:"Great Spear",src:"Base Game",primary:"STR/DEX",req:{STR:20,DEX:14}},
+  {id:186,name:"Siluria's Tree",jp:"シルリアの樹",type:"Great Spear",src:"Base Game",primary:"STR/FTH",req:{STR:27,DEX:13,FTH:27}},
+  {id:187,name:"Giant's Red Braid",jp:"巨人の赤編み",type:"Whip",src:"DLC",primary:"STR/ARC",req:{STR:24,DEX:14,ARC:18}},
+
+  /* ── HALBERDS ── */
+  {id:188,name:"Banished Knight's Halberd",jp:"追放騎士の薙刀",type:"Halberd",src:"Base Game",primary:"STR/DEX",req:{STR:16,DEX:12}},
+  {id:189,name:"Commander's Standard",jp:"指揮官の旗",type:"Halberd",src:"Base Game",primary:"STR/FTH",req:{STR:24,DEX:16,FTH:18}},
+  {id:190,name:"Dragon Halberd",jp:"竜の薙刀",type:"Halberd",src:"Base Game",primary:"STR/DEX",req:{STR:22,DEX:10}},
+  {id:191,name:"Gargoyle's Halberd",jp:"ガーゴイルの薙刀",type:"Halberd",src:"Base Game",primary:"STR/DEX",req:{STR:20,DEX:12}},
+  {id:192,name:"Glaive",jp:"グレイヴ",type:"Halberd",src:"Base Game",primary:"STR/DEX",req:{STR:18,DEX:12}},
+  {id:193,name:"Golden Halberd",jp:"黄金の薙刀",type:"Halberd",src:"Base Game",primary:"STR/FTH",req:{STR:30,DEX:14,FTH:14}},
+  {id:194,name:"Loretta's War Sickle",jp:"ローレッタの戦鎌",type:"Halberd",src:"Base Game",primary:"DEX/INT",req:{STR:10,DEX:18,INT:16}},
+  {id:195,name:"Lucerne",jp:"ルツェルン",type:"Halberd",src:"Base Game",primary:"STR/DEX",req:{STR:15,DEX:14}},
+  {id:196,name:"Nightrider Glaive",jp:"夜騎士のグレイヴ",type:"Halberd",src:"Base Game",primary:"STR/DEX",req:{STR:26,DEX:12}},
+  {id:197,name:"Ripple Crescent Halberd",jp:"波紋の半月薙刀",type:"Halberd",src:"Base Game",primary:"ARC",req:{STR:12,DEX:10,ARC:14}},
+  {id:198,name:"Scythe",jp:"大鎌",type:"Reaper",src:"Base Game",primary:"DEX",req:{STR:12,DEX:14}},
+  {id:199,name:"Vulgar Militia Shovel",jp:"粗暴民兵のシャベル",type:"Halberd",src:"Base Game",primary:"STR",req:{STR:15,DEX:8}},
+  {id:200,name:"Winged Scythe",jp:"翼の大鎌",type:"Reaper",src:"Base Game",primary:"DEX/FTH",req:{STR:16,DEX:16,FTH:24}},
+
+  /* ── REAPERS ── */
+  {id:201,name:"Obsidian Lamina",jp:"黒曜の薄刃",type:"Reaper",src:"DLC",primary:"ARC",req:{STR:14,DEX:14,ARC:16}},
+  {id:202,name:"Grave Scythe",jp:"墓場の大鎌",type:"Reaper",src:"Base Game",primary:"STR/DEX",req:{STR:14,DEX:12}},
+  {id:203,name:"Halo Scythe",jp:"光輪の大鎌",type:"Reaper",src:"Base Game",primary:"DEX/FTH",req:{STR:13,DEX:16,FTH:15}},
+  {id:204,name:"Magma Whip Candlestick",jp:"溶岩鞭の燭台",type:"Whip",src:"Base Game",primary:"STR/FTH",req:{STR:16,DEX:10,FTH:23}},
+
+  /* ── WHIPS ── */
+  {id:205,name:"Serpent Flail",jp:"蛇の鞭",type:"Whip",src:"DLC",primary:"ARC",req:{STR:11,DEX:14,ARC:13}},
+  {id:206,name:"Hoslow's Petal Whip",jp:"ホスローの花弁鞭",type:"Whip",src:"Base Game",primary:"DEX",req:{STR:8,DEX:17}},
+  {id:207,name:"Thorned Whip",jp:"茨の鞭",type:"Whip",src:"Base Game",primary:"DEX",req:{STR:8,DEX:14}},
+  {id:208,name:"Urumi",jp:"ウルミ",type:"Whip",src:"Base Game",primary:"DEX",req:{STR:8,DEX:17}},
+  {id:209,name:"Whip",jp:"鞭",type:"Whip",src:"Base Game",primary:"STR/DEX",req:{STR:10,DEX:14}},
+  {id:210,name:"Tooth Whip",jp:"歯の鞭",type:"Whip",src:"DLC",primary:"DEX/ARC",req:{STR:8,DEX:16,ARC:14}},
+
+  /* ── FISTS ── */
+  {id:211,name:"Caestus",jp:"カエストゥス",type:"Fist",src:"Base Game",primary:"STR/DEX",req:{STR:8,DEX:11}},
+  {id:212,name:"Cipher Pata",jp:"暗号のパタ",type:"Fist",src:"Base Game",primary:"FTH",req:{STR:0,DEX:0,FTH:30}},
+  {id:213,name:"Clinging Bone",jp:"縋り骨",type:"Fist",src:"Base Game",primary:"DEX/ARC",req:{STR:8,DEX:12,ARC:13}},
+  {id:214,name:"Grafted Dragon",jp:"接ぎ木の竜",type:"Fist",src:"Base Game",primary:"STR",req:{STR:20,DEX:14}},
+  {id:215,name:"Katar",jp:"カタール",type:"Fist",src:"Base Game",primary:"DEX",req:{STR:10,DEX:12}},
+  {id:216,name:"Poisoned Hand",jp:"毒の手",type:"Fist",src:"DLC",primary:"DEX/ARC",req:{STR:8,DEX:15,ARC:14}},
+  {id:217,name:"Spiked Caestus",jp:"棘のカエストゥス",type:"Fist",src:"Base Game",primary:"STR/DEX",req:{STR:12,DEX:11}},
+  {id:218,name:"Star Fist",jp:"星砕き",type:"Fist",src:"Base Game",primary:"STR",req:{STR:12,DEX:8}},
+  {id:219,name:"Veteran's Prosthesis",jp:"老兵の義手",type:"Fist",src:"Base Game",primary:"STR/DEX",req:{STR:8,DEX:10}},
+
+  /* ── CLAWS ── */
+  {id:220,name:"Bloodhound Claws",jp:"猟犬の鉤爪",type:"Claw",src:"Base Game",primary:"DEX/ARC",req:{STR:10,DEX:16,ARC:15}},
+  {id:221,name:"Hookclaws",jp:"鉤爪",type:"Claw",src:"Base Game",primary:"DEX",req:{STR:8,DEX:14}},
+  {id:222,name:"Raptor Talons",jp:"猛禽の鉤爪",type:"Claw",src:"Base Game",primary:"DEX",req:{STR:6,DEX:20}},
+  {id:223,name:"Retaliatory Crossed-Tree",jp:"報復の十字樹",type:"Claw",src:"DLC",primary:"STR/FTH",req:{STR:14,DEX:10,FTH:16}},
+
+  /* ── LIGHT GREATSWORDS ── */
+  {id:224,name:"Bastard Sword",jp:"バスタードソード",type:"Greatsword",src:"Base Game",primary:"STR/DEX",req:{STR:14,DEX:11}},
+
+  /* ── GREAT KATANAS ── */
+  {id:225,name:"Dragon-Hunter's Great Katana",jp:"龍狩りの大刀",type:"Great Katana",src:"DLC",primary:"DEX",req:{STR:16,DEX:28}},
+  {id:226,name:"Trina's Sword",jp:"トリーナの剣",type:"Great Katana",src:"DLC",primary:"DEX/FTH",req:{STR:12,DEX:24,FTH:22}},
+
+  /* ── BACKHAND BLADES ── */
+  {id:227,name:"Curseblade's Cirque",jp:"呪刃のサーク",type:"Backhand Blade",src:"DLC",primary:"DEX/ARC",req:{STR:8,DEX:18,ARC:18}},
+
+  /* ── HAND-TO-HAND ARTS ── */
+  {id:228,name:"Hand-to-Hand",jp:"素手格闘",type:"Hand-to-Hand",src:"DLC",primary:"STR/DEX",req:{STR:12,DEX:12}},
+  {id:229,name:"Dryleaf Arts",jp:"枯葉の拳法",type:"Hand-to-Hand",src:"DLC",primary:"DEX",req:{STR:8,DEX:16}},
+
+  /* ── BEAST CLAWS ── */
+  {id:230,name:"Beast Claw",jp:"獣の鉤爪",type:"Beast Claw",src:"Base Game",primary:"STR/FTH",req:{STR:12,DEX:6,FTH:14}},
+  {id:231,name:"Claws of Night",jp:"夜の鉤爪",type:"Beast Claw",src:"DLC",primary:"DEX/ARC",req:{STR:10,DEX:20,ARC:16}}
+];
+
+const AUTO_TARGETS = {
+  150:{VIG:50,MND:15,END:25},
+  200:{VIG:60,MND:18,END:30},
+  250:{VIG:60,MND:22,END:40},
+  300:{VIG:60,MND:30,END:50}
+};
+
+function baseBuild(w) {
+  const r = w.req||{};
+  return {
+    VIG:15,MND:10,END:10,
+    STR:Math.max(r.STR||0,10),DEX:Math.max(r.DEX||0,8),
+    INT:Math.max(r.INT||0,9),FTH:Math.max(r.FTH||0,8),ARC:Math.max(r.ARC||0,7),
+    AR:null,notes:"Minimum requirements only — no stat optimization.",
+  };
+}
+
+function autoBuild(w, rl) {
+  const tgt = AUTO_TARGETS[rl];
+  const r = w.req||{};
+  const b = {
+    VIG:tgt.VIG,MND:tgt.MND,END:tgt.END,
+    STR:Math.max(r.STR||0,10),DEX:Math.max(r.DEX||0,8),
+    INT:Math.max(r.INT||0,9),FTH:Math.max(r.FTH||0,8),ARC:Math.max(r.ARC||0,7),
+    AR:null,notes:`Level ${rl} build — invest surplus into primary stat.`
+  };
+  const primaries = w.primary.split('/').filter(s=>['STR','DEX','INT','FTH','ARC'].includes(s));
+  for (const s of primaries) {
+    const cap = SOFT[s];
+    const target = rl<=150 ? cap.s1 : rl<=200 ? Math.round(cap.s1+(cap.s2-cap.s1)*0.5) : cap.s2;
+    b[s] = Math.max(b[s], target);
+  }
+  return b;
+}
+
+function getBuild(w, rl) {
+  if (rl === 'base') return baseBuild(w);
+  if (w.builds && w.builds[rl]) return w.builds[rl];
+  return autoBuild(w, rl);
+}
+
+function capClass(stat, val) {
+  const c = SOFT[stat];
+  if (!c) return 'below';
+  if (val >= c.s2) return 'hard';
+  if (val >= c.s1) return 'soft';
+  return 'below';
+}
+
+function isHybrid(p) { return p.includes('/'); }
+
+function primaryClass(p) {
+  if (isHybrid(p)) return 'pb-hybrid';
+  return 'pb-'+p;
+}
+
+function barFillPct(stat, val) {
+  return Math.min(100, (val / 99) * 100).toFixed(1);
+}
+
+function tickPct(v) { return ((v/99)*100).toFixed(1); }
+
+function makeCard(w, rl) {
+  const b = getBuild(w, rl);
+  const hy = isHybrid(w.primary) ? '1' : '0';
+  const primaryData = isHybrid(w.primary) ? 'HYBRID' : w.primary;
+  const t = T();
+
+  const mainName = (curLang === 'jp' && w.jp) ? w.jp : w.name;
+  const subName  = curLang === 'jp' ? w.name : (w.jp || '');
+
+  let statRows = '';
+  for (const s of STATS) {
+    const v = b[s];
+    const cc = capClass(s, v);
+    const pct = barFillPct(s, v);
+    const caps = SOFT[s];
+    const t1 = tickPct(caps.s1);
+    const t2 = caps.s2 < 99 ? `<div class="tick" style="left:${tickPct(caps.s2)}%"></div>` : '';
+    const label = t.stats[s] || s;
+    statRows += `
+    <div class="stat-row">
+      <span class="slabel">${label}</span>
+      <div class="sbar-wrap">
+        <div class="sbar-fill ${cc}" style="width:${pct}%"></div>
+        <div class="tick" style="left:${t1}%"></div>${t2}
+      </div>
+      <span class="sval ${cc}">${v}</span>
+    </div>`;
+  }
+
+  const arHtml = b.AR
+    ? `<span class="ar-val">~${b.AR}</span>`
+    : rl === 'base'
+      ? `<span class="ar-val none">${t.reqOnly}</span>`
+      : `<span class="ar-val none">—</span>`;
+
+  const primaryDisplay = t.primaryLabel(w.primary);
+  const infusionHtml = w.infusion ? `<div class="infusion"><em>${w.infusion}</em></div>` : '';
+
+  const imgUrl = wikiImg(w);
+
+  return `
+  <div class="card" data-id="${w.id}" data-primary="${primaryData}" data-hybrid="${hy}" data-src="${w.src}">
+    <div class="card-top">
+      <div class="card-top-left">
+        <div class="wimg-wrap">
+          <img class="wimg" src="${imgUrl}" alt="${w.name}"
+               onerror="this.parentElement.innerHTML='<div class=wimg-missing>⚔</div>'">
+        </div>
+        <div>
+          <div class="wnum">#${String(w.id).padStart(2,'0')}</div>
+          <div class="wname-main">${mainName}</div>
+          ${subName ? `<div class="wname-sub">${subName}</div>` : ''}
+        </div>
+      </div>
+      <div class="badges">
+        <span class="badge ${w.src==='DLC'?'badge-dlc':'badge-base'}">${t.srcMap[w.src]||w.src}</span>
+        <span class="badge badge-type">${t.typeMap[w.type]||w.type}</span>
+      </div>
+    </div>
+    <div class="primary-badge ${primaryClass(w.primary)}">${primaryDisplay}</div>
+    ${infusionHtml}
+    ${statRows}
+    <div class="ar-row">
+      <span class="ar-label">${t.estAR}</span>
+      ${arHtml}
+    </div>
+    <div class="bnotes">${t.translateNote(b.notes)}</div>
+  </div>`;
+}
+
+function getFiltered() {
+  let list = [...W];
+
+  if (curSearch) {
+    const q = curSearch.toLowerCase();
+    list = list.filter(w => w.name.toLowerCase().includes(q) || (w.jp||'').includes(q));
+  }
+
+  if (curStat !== 'all') {
+    if (curStat === 'hybrid') {
+      list = list.filter(w => isHybrid(w.primary));
+    } else {
+      list = list.filter(w => w.primary.includes(curStat));
+    }
+  }
+
+  if (curSrc !== 'all') {
+    list = list.filter(w => w.src === curSrc);
+  }
+
+  if (curSort === 'ar-desc') {
+    list.sort((a,b) => {
+      const ba = getBuild(a,curRL).AR||0, bb = getBuild(b,curRL).AR||0;
+      return bb - ba;
+    });
+  } else if (curSort === 'ar-asc') {
+    list.sort((a,b) => {
+      const ba = getBuild(a,curRL).AR||0, bb = getBuild(b,curRL).AR||0;
+      return ba - bb;
+    });
+  } else if (curSort === 'name') {
+    list.sort((a,b) => a.name.localeCompare(b.name));
+  }
+
+  return list;
+}
+
+function rlLabel() {
+  const t = T();
+  if (curRL === 'base') return t.rlBase;
+  return t.rlLevel(curRL);
+}
+
+function render() {
+  const list = getFiltered();
+  const t = T();
+  const grid = document.getElementById('grid');
+  const count = document.getElementById('result-count');
+  const rll = document.getElementById('rl-label');
+
+  count.textContent = t.weapons(list.length);
+  rll.textContent = rlLabel();
+
+  if (!list.length) {
+    grid.innerHTML = `<div class="empty">${t.noMatch}</div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(w => makeCard(w, curRL)).join('');
+}
+
+// Level buttons
+document.querySelectorAll('.level-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    curRL = btn.dataset.rl;
+    render();
+  });
+});
+
+// Stat filters
+document.querySelectorAll('#stat-filters .fbtn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#stat-filters .fbtn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    curStat = btn.dataset.stat;
+    render();
+  });
+});
+
+// Source filters
+document.querySelectorAll('#src-filters .fbtn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#src-filters .fbtn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    curSrc = btn.dataset.src;
+    render();
+  });
+});
+
+// Sort
+document.getElementById('sort-sel').addEventListener('change', e => {
+  curSort = e.target.value;
+  render();
+});
+
+// Search
+document.getElementById('search').addEventListener('input', e => {
+  curSearch = e.target.value.trim();
+  render();
+});
+
+// Language toggle
+document.getElementById('lang-btn').addEventListener('click', () => {
+  curLang = curLang === 'en' ? 'jp' : 'en';
+  applyLang();
+  render();
+});
+
+// Init
+applyLang();
+render();
+</script>
+</body>
+</html>
