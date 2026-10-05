@@ -428,6 +428,21 @@ html[data-game=nr] body{background:radial-gradient(1200px 600px at 50% -200px,rg
 @media (max-width:640px){.farer.mini img{height:64px}}
 .fattrs.three{grid-template-columns:repeat(3,minmax(0,1fr))}
 .sb-deep{display:flex;gap:6px;align-items:center;font-size:.78rem;color:#c9a6ff}
+
+.wgroups{display:flex;flex-direction:column;gap:4px}
+.wgrp{border:1px solid var(--rule-soft);border-radius:var(--r);background:var(--panel-2)}
+.wgrp>summary{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:8px 10px;cursor:pointer;list-style:none}
+.wgrp>summary::-webkit-details-marker{display:none}
+.wgrp>summary::before{content:"▸";color:var(--gold);margin-right:2px;grid-column:1;grid-row:1;justify-self:start}
+.wgrp[open]>summary::before{content:"▾"}
+.wg-n{font:500 1.02rem var(--f-display);color:var(--gold-hi);padding-left:16px;grid-column:1;grid-row:1}
+.wg-c{font-size:.72rem;color:var(--text-mute);border:1px solid var(--rule);border-radius:999px;padding:0 7px}
+.wg-b{font-size:.76rem;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
+.wg-b b{color:var(--gold-hi);font-weight:500}
+.wgrp .nwl{padding:0 8px 6px}
+.pk-g{position:sticky;top:0;background:var(--panel);padding:8px 14px 4px;font:600 .68rem var(--f-body);letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--rule)}
+.pk-g span{color:var(--text-mute);letter-spacing:0}
+@media (max-width:480px){.wg-b{display:none}}
 </style>
 <div class="gamebar">
   <div class="switch" role="tablist" aria-label="Game">
@@ -1226,7 +1241,7 @@ const T = {
     passive: 'Passive', skill: 'Character skill', ult: 'Ultimate Art', pref: 'Weapon preference', role: 'Role',
     stats: 'Attributes', at: l => `at level ${l}`, hp: 'HP', fp: 'FP', stam: 'Stamina', cd: 'Skill cooldown',
     topDmg: 'Top damage picks', topDmgHint: (l, r) => `Highest attack rating for this Nightfarer at level ${l}, ${r}. Calculated from game data. Melee weapons only; bows are listed separately.`,
-    bestPerType: 'Best weapon of each type', statusPick: 'Best status weapons', rangedPick: 'Best bows and crossbows',
+    bestPerType: 'Best weapon of each type', allByType: 'All weapons by category', statusPick: 'Best status weapons', rangedPick: 'Best bows and crossbows',
     relicFor: 'Relic effects that boost this build', relicForHint: 'Effects whose in-game text names this weapon type, its damage type, or this Nightfarer.',
     deep: 'Deep of Night', normal: 'Normal', curse: 'Curse', fixed: 'Fixed relics only',
     community: 'Community build notes', communityHint: 'Paraphrased from public guides (sources linked). Not verified against game data.',
@@ -1252,7 +1267,7 @@ const T = {
     passive: 'アビリティ', skill: 'スキル', ult: 'アーツ', pref: '得意武器', role: '役割',
     stats: '能力値', at: l => `レベル ${l}`, hp: 'HP', fp: 'FP', stam: 'スタミナ', cd: 'スキル再使用',
     topDmg: '火力上位の武器', topDmgHint: (l, r) => `レベル ${l}・${r}でこの夜渡りの攻撃力が最も高い武器。ゲームデータから計算（近接武器のみ。弓は別枠）。`,
-    bestPerType: '種類別の最強武器', statusPick: '状態異常の上位武器', rangedPick: '弓・クロスボウの上位',
+    bestPerType: '種類別の最強武器', allByType: '種類別の全武器', statusPick: '状態異常の上位武器', rangedPick: '弓・クロスボウの上位',
     relicFor: 'このビルドを強化する遺物効果', relicForHint: 'ゲーム内テキストがこの武器種・属性・夜渡りを指定している効果。',
     deep: '深き夜', normal: '通常', curse: 'デメリット', fixed: '固定遺物のみ',
     community: 'コミュニティのビルド情報', communityHint: '公開ガイドの要約（出典リンク付き）。ゲームデータでは未検証。',
@@ -1291,7 +1306,7 @@ const COLOR = { Red: ['#d0563f', 'Burning', '燃える'], Blue: ['#4f86d9', 'Dri
 const HEROES = D.chars.map(c => c.name);
 const heroJp = n => (D.chars.find(c => c.name === n) || {}).nameJp || n;
 const hn = n => J() ? heroJp(n) : n;
-const wn = w => J() && w.jp ? w.jp : w.n;
+const wn = w => J() && w.jp ? w.jp : w.n.replace(/ \(\d+\)$/, '');
 const isCat = w => /Staff|Seal/.test(w.t);
 const isShield = w => /shield/i.test(w.t);
 const isRanged = w => /bow$|crossbow|ballista/i.test(w.t);
@@ -1418,6 +1433,15 @@ function renderFarers() {
   for (const x of top) { if (seenT.has(x.w.t)) continue; seenT.add(x.w.t); perType.push(x); if (perType.length >= 12) break; }
   const ranged = topWeapons(hero, S.lvl, 'ranged').filter(x => !/Ballista/.test(x.w.t)).slice(0, 4);
   const stat = top.filter(x => Object.keys(x.r.status).length).sort((a, b) => Math.max(...Object.values(b.r.status)) - Math.max(...Object.values(a.r.status))).slice(0, 5);
+  const TORDER = Object.keys(TYPE_JP);
+  const allW = D.weapons.filter(w => w.drop || (w.hero && (c.startingWeapon || []).some(n => w.n.startsWith(n))))
+    .map(w => ({ w, r: calc(w, hero, S.lvl) })).filter(x => x.r);
+  const byType = new Map();
+  for (const x of allW) { if (!byType.has(x.w.t)) byType.set(x.w.t, []); byType.get(x.w.t).push(x); }
+  for (const l of byType.values()) l.sort((a, b) => b.r.total - a.r.total);
+  const types = [...byType.keys()].sort((a, b) => (TORDER.indexOf(a) + 1 || 99) - (TORDER.indexOf(b) + 1 || 99));
+  S.openT = S.openT || {};
+  const prefOpen = t => S.openT[hero + '|' + t] != null ? S.openT[hero + '|' + t] : (c.preference || '').toLowerCase().includes(t.toLowerCase());
   const wRow = (x, i) => `<button class="nw" data-nrw="${esc(x.w.n)}"><span class="rank tnum">${i + 1}</span><span class="ico sm"><img src="${ICON(x.w)}" alt="" loading="lazy"></span><span class="nwn"><b>${esc(wn(x.w))}</b><small>${esc(tt(x.w.t))} · <span style="color:${RAR_COL[x.r.rar]}">${rt(x.r.rar)}</span>${x.w.sk ? ' · ' + esc(J() && x.w.skj ? x.w.skj : x.w.sk) : ''}</small></span><span class="nwv tnum">${x.r.total}</span></button>`;
   const rel = best ? relicsFor(hero, best.w, best.r) : { list: [], mine: [] };
   const comm = D.builds.filter(b => b.character === hero);
@@ -1447,6 +1471,8 @@ function renderFarers() {
         <h4 class="nr-sh2">${t.bestPerType}</h4>
         <div class="nwl">${perType.map(wRow).join('')}</div>
         ${ranged.length ? `<h4 class="nr-sh2">${t.rangedPick}</h4><div class="nwl">${ranged.map(wRow).join('')}</div>` : ''}
+        <h4 class="nr-sh2">${t.allByType} <span class="hint">(${allW.length})</span></h4>
+        <div class="wgroups">${types.map(ty => { const l = byType.get(ty); return `<details class="wgrp" data-tkey="${esc(hero + '|' + ty)}" ${prefOpen(ty) ? 'open' : ''}><summary><span class="wg-n">${esc(tt(ty))}</span><span class="wg-c">${l.length}</span><span class="wg-b">${esc(wn(l[0].w))} <b class="tnum">${l[0].r.total}</b></span></summary><div class="nwl">${l.map(wRow).join('')}</div></details>`; }).join('')}</div>
         ${stat.length ? `<h4 class="nr-sh2">${t.statusPick}</h4><div class="nwl">${stat.map((x, i) => wRow(x, i).replace(/<span class="nwv tnum">\d+<\/span>/, `<span class="nwv st">${Object.entries(x.r.status).map(([k, v]) => `<span class="dot" style="background:var(${(ST[k] || [0, 0, '--phys'])[2]})"></span>${v}`).join(' ')}</span>`)).join('')}</div>` : ''}
       </section>
       <section class="nr-card">
@@ -1742,7 +1768,7 @@ function drawPicker() {
     <div class="pk-h"><b>${esc(PICK.title)}</b><button data-pkclose="1" class="d-close" style="display:block">${P().close}</button></div>
     <div class="pk-ctl"><input id="pk-q" type="search" placeholder="${P().search}" value="${esc(PICK.q)}" autocomplete="off">
       ${groups.length > 1 ? `<select id="pk-g"><option value="">${J() ? 'すべて' : 'All'}</option>${groups.map(g => `<option ${PICK.group === g ? 'selected' : ''}>${esc(g)}</option>`).join('')}</select>` : ''}</div>
-    <div class="pk-list">${items.slice(0, 400).map((x, i) => `<button class="pk-it" data-pk="${PICK.items.indexOf(x)}">${x.img ? `<span class="ico sm"><img src="${x.img}" alt="" loading="lazy"></span>` : ''}<span class="pk-t"><b>${esc(x.l)}</b>${x.s ? `<small>${esc(x.s)}</small>` : ''}</span>${x.tag ? `<span class="tag">${esc(x.tag)}</span>` : ''}</button>`).join('') || `<div class="empty">—</div>`}</div>
+    <div class="pk-list">${(() => { let last = null; return items.map(x => { const head = (groups.length > 1 && !PICK.group && x.g !== last) ? `<div class="pk-g">${esc(x.g)} <span>${items.filter(y => y.g === x.g).length}</span></div>` : ''; last = x.g; return head + `<button class="pk-it" data-pk="${PICK.items.indexOf(x)}">${x.img ? `<span class="ico sm"><img src="${x.img}" alt="" loading="lazy"></span>` : ''}<span class="pk-t"><b>${esc(x.l)}</b>${x.s ? `<small>${esc(x.s)}</small>` : ''}</span>${x.tag ? `<span class="tag">${esc(x.tag)}</span>` : ''}</button>`; }).join(''); })() || `<div class="empty">—</div>`}</div>
   </div>`;
   const qi = document.getElementById('pk-q'); if (qi && PICK.focus !== false) { qi.focus(); qi.setSelectionRange(qi.value.length, qi.value.length); }
 }
@@ -1881,7 +1907,9 @@ function plannerClick(b) {
   if (d.pw != null) {
     const i = +d.pw;
     const items = D.weapons.filter(w => w.drop || (w.hero && (D.chars.find(c => c.name === hero) || {}).startingWeapon?.some(n => w.n.startsWith(n))))
-      .map(w => ({ v: w.n, l: wn(w), s: `${tt(w.t)} · ${w.rs.map(rt).join(' / ')}${w.sk ? ' · ' + (J() && w.skj ? w.skj : w.sk) : ''}`, g: tt(w.t), img: ICON(w) }));
+      .map(w => ({ w, ar: (calc(w, hero, S.lvl) || {}).total || 0 }))
+      .sort((a, b) => ((Object.keys(TYPE_JP).indexOf(a.w.t) + 1 || 99) - (Object.keys(TYPE_JP).indexOf(b.w.t) + 1 || 99)) || b.ar - a.ar)
+      .map(({ w, ar }) => ({ v: w.n, l: wn(w), s: `${w.rs.map(rt).join(' / ')}${w.sk ? ' · ' + (J() && w.skj ? w.skj : w.sk) : ''}`, g: tt(w.t), img: ICON(w), tag: `${L().ar} ${ar}` }));
     openPicker({ title: pt.addWeapon, items, cb: n => { const w = weaponByName(n); p.w[i] = { n, rar: w.rs[w.rs.length - 1], sk: w.sk, pas: [] }; done(); } });
     return true;
   }
@@ -1976,6 +2004,10 @@ document.addEventListener('click', e => {
   } else return;
   save(); render();
 });
+document.addEventListener('toggle', e => {
+  const d = e.target; if (!d.classList || !d.classList.contains('wgrp')) return;
+  S.openT = S.openT || {}; S.openT[d.dataset.tkey] = d.open; save();
+}, true);
 document.addEventListener('input', e => {
   if (document.documentElement.dataset.game !== 'nr') return;
   const el = e.target;
