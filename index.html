@@ -443,6 +443,83 @@ html[data-game=nr] body{background:radial-gradient(1200px 600px at 50% -200px,rg
 .pk-g{position:sticky;top:0;background:var(--panel);padding:8px 14px 4px;font:600 .68rem var(--f-body);letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--rule)}
 .pk-g span{color:var(--text-mute);letter-spacing:0}
 @media (max-width:480px){.wg-b{display:none}}
+/* ================= wizard ================= */
+.wz-steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.wz-steps button{display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--rule);border-radius:var(--r);padding:10px 12px;color:var(--text-dim);cursor:pointer;text-align:left;min-width:0}
+.wz-steps .n{width:24px;height:24px;border-radius:50%;border:1px solid var(--rule);display:grid;place-items:center;font-size:.8rem;flex-shrink:0}
+.wz-steps .l{font:500 1rem var(--f-display);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex:1}
+.wz-steps .b{font-size:.7rem;color:var(--text-mute);white-space:nowrap}
+.wz-steps button.done .n{background:var(--rule);color:var(--gold-hi)}
+.wz-steps button[aria-current=step]{border-color:var(--grace);color:var(--gold-hi);box-shadow:0 0 0 1px var(--grace),0 0 18px rgba(111,155,255,.2)}
+.wz-steps button[aria-current=step] .n{background:var(--grace);color:var(--ink);border-color:var(--grace)}
+@media (max-width:760px){.wz-steps{grid-template-columns:repeat(5,minmax(0,1fr))}.wz-steps .l,.wz-steps .b{display:none}.wz-steps button{justify-content:center;padding:8px}}
+.wz-grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:16px;align-items:start}
+@media (max-width:1000px){.wz-grid{grid-template-columns:minmax(0,1fr)}}
+.wz-main{min-width:0;display:flex;flex-direction:column;gap:12px}
+.wz-h{font-size:1.7rem;margin-top:4px}
+.wz-side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);display:flex;flex-direction:column;gap:10px}
+@media (max-width:1000px){.wz-side{position:static;order:-1}}
+.wz-sh{display:flex;gap:12px;align-items:center}.wz-sh img{width:56px;height:72px;object-fit:cover;object-position:top;border-radius:var(--r);background:var(--ink)}
+.wz-sh b{display:block;font:500 1.3rem var(--f-display);color:var(--gold-hi)}.wz-sh small{color:var(--text-mute);font-size:.76rem}
+.wz-attr{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px 8px;font-size:.74rem;color:var(--text-mute)}
+.wz-attr b{color:var(--gold-hi);font-weight:500;font-size:.9rem;margin-left:2px}.wz-attr em{font-style:normal;margin-left:3px;font-size:.7rem}.wz-attr em.up{color:var(--good)}.wz-attr em.down{color:var(--bad)}
+.wz-der{display:flex;gap:12px;font-size:.8rem;color:var(--text-dim)}.wz-der b{color:var(--gold-hi);font-weight:500}
+.wz-cnt{display:flex;gap:6px;flex-wrap:wrap}.wz-cnt span{font-size:.72rem;border:1px solid var(--rule);border-radius:999px;padding:2px 8px;color:var(--text-dim)}
+.wz-chars{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+@media (max-width:640px){.wz-chars{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.wz-char{display:flex;flex-direction:column;gap:4px;align-items:center;background:linear-gradient(180deg,var(--panel-2),var(--ink));border:1px solid var(--rule-soft);border-radius:var(--r);padding:8px;cursor:pointer;color:var(--text-dim);text-align:center}
+.wz-char img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;filter:saturate(.7) brightness(.8)}
+.wz-char b{font:500 1.05rem var(--f-display);color:var(--gold-hi)}.wz-char small{font-size:.7rem;color:var(--text-mute)}
+.wz-char[aria-pressed=true]{border-color:var(--grace);box-shadow:0 0 0 1px var(--grace),0 0 24px rgba(111,155,255,.25)}.wz-char[aria-pressed=true] img,.wz-char:hover img{filter:none}
+.wz-pick{display:flex;flex-direction:column;gap:10px}
+.wz-pick .abil{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.wz-tray{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+@media (max-width:760px){.wz-tray{grid-template-columns:minmax(0,1fr)}}
+.wz-slot{border:1px solid var(--rule);border-radius:var(--r);background:var(--panel-2);padding:8px 10px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.wz-slot.empty{border-style:dashed;background:none;color:var(--text-mute);flex-direction:row;align-items:center;gap:8px;font-size:.84rem;min-height:56px}
+.wz-slot .sb-h{grid-template-columns:auto minmax(0,1fr) auto auto}
+.wz-row{grid-template-columns:40px minmax(0,1fr) auto auto;cursor:default}
+.chip.on{color:var(--ink);background:var(--grace);border-color:var(--grace)}
+.chip:disabled{opacity:.45;cursor:not-allowed}
+.btn-main{background:var(--grace);color:var(--ink);border:0;border-radius:var(--r);padding:10px 18px;font:600 .95rem var(--f-body);cursor:pointer}
+.btn-main:hover{filter:brightness(1.1)}
+.wz-nav{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.wz-vessels{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px}
+.wz-ves{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;background:var(--panel-2);border:1px solid var(--rule-soft);border-radius:var(--r);padding:8px 10px;color:var(--text);cursor:pointer;text-align:left;font-size:.84rem}
+.wz-ves b{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wz-ves[aria-pressed=true]{border-color:var(--grace);box-shadow:0 0 0 1px var(--grace)}
+.wz-rslots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+@media (max-width:760px){.wz-rslots{grid-template-columns:minmax(0,1fr)}}
+.wz-rslot{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;background:var(--panel-2);border:1px solid var(--rule);border-radius:var(--r);padding:10px;color:var(--text);cursor:pointer;text-align:left;min-height:60px}
+.wz-rslot.active{border-color:var(--grace);box-shadow:0 0 0 1px var(--grace),0 0 16px rgba(111,155,255,.2)}
+.rs-b{min-width:0;display:flex;flex-direction:column}.rs-b b{font-weight:500;font-size:.88rem;color:var(--gold-hi)}.rs-b small{font-size:.72rem;color:var(--text-dim);overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.wz-rslot .x{display:grid;place-items:center}
+.wz-rpick{display:flex;flex-direction:column;gap:10px}
+.relic.sel{border-color:var(--grace)}
+.relic .chip{align-self:flex-start;margin-top:6px}
+.elist2{display:flex;flex-direction:column}
+.erow2{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:7px 10px;border-bottom:1px solid var(--rule-soft)}
+.erow2:last-child{border-bottom:0}
+.erow2>span:first-child{min-width:0;display:flex;flex-direction:column}
+.erow2 b{font-weight:500;font-size:.9rem;color:var(--gold-hi)}.erow2 small{font-size:.76rem;color:var(--text-dim)}.erow2 small.can{color:var(--text-mute);font-size:.7rem}
+.erow2.picked{background:rgba(111,155,255,.08)}
+.erow2 .tier{font-style:normal;color:var(--grace);font-size:.8rem}
+.assign{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}.assign label{font-size:.7rem;color:var(--text-mute)}.assign select{font-size:.78rem;padding:3px 6px;max-width:180px}
+@media (max-width:640px){.erow2{grid-template-columns:minmax(0,1fr)}.assign{justify-content:flex-start}}
+.wz-tray.mini .wz-slot{gap:4px}
+.wz-cursed{display:flex;flex-direction:column;gap:4px;padding:8px 10px;border:1px solid #3d3160;border-radius:var(--r);background:rgba(140,90,220,.06)}
+.wz-final{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.2fr) minmax(0,1fr);gap:14px;align-items:start}
+@media (max-width:1200px){.wz-final{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.wz-hero{grid-column:1/-1}}
+@media (max-width:760px){.wz-final{grid-template-columns:minmax(0,1fr)}}
+.wz-hero{display:grid;grid-template-columns:160px minmax(0,1fr);gap:16px}
+.wz-hero>img{width:100%;border-radius:var(--r);object-fit:cover;object-position:top;background:radial-gradient(circle at 50% 30%,#1d2a48,transparent 70%)}
+@media (max-width:480px){.wz-hero{grid-template-columns:minmax(0,1fr)}.wz-hero>img{max-height:260px;object-fit:contain}}
+.fw.big{grid-template-columns:64px minmax(0,1fr) auto;align-items:start;padding:8px 0}
+.fw.big .fwn{display:flex;flex-direction:column;gap:4px}
+.fwv small{display:block;font:400 .66rem var(--f-body);color:var(--text-mute);text-align:right}
+.frl{display:flex;flex-direction:column;gap:8px}
+.fr{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start;padding-bottom:8px;border-bottom:1px solid var(--rule-soft)}
+.fr>span{display:flex;flex-direction:column;gap:4px;min-width:0}.fr b{font-weight:500;color:var(--gold-hi);font-size:.9rem}
 </style>
 <div class="gamebar">
   <div class="switch" role="tablist" aria-label="Game">
@@ -1809,131 +1886,297 @@ const effLabel = id => { const p = pasById(id); if (p) return J() ? p.ja || p.en
 const effDesc = id => (EM(id) || {})[J() ? 'descJa' : 'descEn'] || (effById.get(id) || {}).d || '';
 
 /* ---------------- render */
-function renderPlanner() {
-  const t = L(), pt = P(), hero = S.hero, lvl = S.lvl;
-  const p = planOf(hero), v = vesselOf(p);
-  const fb = finalBuild(hero, lvl, p);
-  const por = ART.portraits || {};
-  const roster = D.chars.map(x => `<button class="farer mini" data-hero="${esc(x.name)}" aria-pressed="${x.name === hero}" title="${esc(hn(x.name))}"><img src="${por[x.name.toLowerCase()] || ''}" alt=""><span>${esc(hn(x.name))}</span></button>`).join('');
-  const vs = D.vessels.filter(x => x.ch === hero || /universal/i.test(x.ch));
-  const nH = RULES().slotsPerHand;
-  const wslot = (ws, i) => {
-    if (!ws) return `<button class="slotbox empty" data-pw="${i}"><span>+</span> ${pt.addWeapon}</button>`;
+/* ================================================================ BUILD WIZARD (5 steps) */
+const WT = {
+  en: {
+    steps: ['Nightfarer', 'Weapons', 'Relics', 'Weapon effects', 'Final build'],
+    next: 'Next', back: 'Back', soFar: 'Build so far',
+    s1h: 'Choose your Nightfarer', s1p: 'Pick a character and the level you expect to reach. Everything after this is calculated for them.',
+    s2h: 'Choose weapons', s2p: n => `Pick up to 6 weapons (3 per hand). You have ${n} slot${n === 1 ? '' : 's'} left. Every weapon in the game is listed by category with its attack for this Nightfarer.`,
+    s3h: 'Choose relics', s3p: 'Pick a vessel, then fill its 3 relic slots and 3 Deep of Night slots. Select a slot, then choose a named relic or build a custom one from the effect list.',
+    s4h: 'Choose weapon effects', s4p: (a, b) => `Every weapon drops with 1 random effect (2 effects + 1 curse if it is a cursed Deep of Night drop). These are all the effects your weapons can roll. Tick the ones you picked up: ${a} of ${b} chosen.`,
+    s5h: 'Final build',
+    full: 'Full', add: 'Add', added: 'Added', remove: 'Remove', use: 'Use this relic', selected: 'Selected',
+    slot: 'Slot', right: 'R', left: 'L', emptySlot: 'Empty', search: 'Search', noWeapons: 'Pick weapons in step 2 first.',
+    named: 'Named relics', custom: 'Custom relic', curses: 'Curses', effectsOn: n => `${n}/3 effects`, slotFilled: (a) => `${a} of 6 slots filled`,
+    cursed: 'Cursed drop', onWeapon: 'On', noRoom: 'No free slot on a weapon that can roll this', canRoll: 'Can roll on',
+    weaponsPicked: n => `${n}/6 weapons`, effectsPicked: (a, b) => `${a}/${b} effects`, relicsPicked: n => `${n}/6 relics`,
+    vessels: 'Vessel', relicsSum: 'Relics', weaponsSum: 'Weapons', effectsSum: 'Weapon effects', none: 'None yet',
+    start: 'Start over', role: 'Role',
+  },
+  ja: {
+    steps: ['夜渡り', '武器', '遺物', '武器の付帯効果', '最終ビルド'],
+    next: '次へ', back: '戻る', soFar: '現在のビルド',
+    s1h: '夜渡りを選ぶ', s1p: 'キャラクターと到達予定のレベルを選択。以降はすべてこのキャラで計算します。',
+    s2h: '武器を選ぶ', s2p: n => `最大6本（片手3本ずつ）。残り${n}枠。全武器を種類別に、この夜渡りでの攻撃力つきで表示しています。`,
+    s3h: '遺物を選ぶ', s3p: '献器を選び、遺物3枠と深き夜の遺物3枠を埋めます。枠を選んでから、名前付き遺物を選ぶか効果リストからカスタム遺物を作成。',
+    s4h: '武器の付帯効果を選ぶ', s4p: (a, b) => `武器は付帯効果を1つ持って出現します（深き夜の呪われた武器は効果2＋デメリット1）。選んだ武器に付きうる効果の一覧です。拾ったものにチェック：${b}件中${a}件。`,
+    s5h: '最終ビルド',
+    full: '満杯', add: '追加', added: '追加済み', remove: '外す', use: 'この遺物を使う', selected: '選択中',
+    slot: '枠', right: '右', left: '左', emptySlot: '空き', search: '検索', noWeapons: '先にステップ2で武器を選んでください。',
+    named: '名前付き遺物', custom: 'カスタム遺物', curses: 'デメリット', effectsOn: n => `効果 ${n}/3`, slotFilled: a => `6枠中${a}枠`,
+    cursed: '呪われた武器', onWeapon: '装備先', noRoom: 'この効果が付く武器に空きがありません', canRoll: '付く武器',
+    weaponsPicked: n => `武器 ${n}/6`, effectsPicked: (a, b) => `効果 ${a}/${b}`, relicsPicked: n => `遺物 ${n}/6`,
+    vessels: '献器', relicsSum: '遺物', weaponsSum: '武器', effectsSum: '武器の付帯効果', none: 'まだありません',
+    start: '最初からやり直す', role: '役割',
+  }
+};
+const W_ = () => WT[lang()];
+const canDeepW = ws => ws && (ws.rar === 'Uncommon' || ws.rar === 'Rare');
+const capOf = ws => ws ? (ws.deep && canDeepW(ws) ? 2 : 1) : 0;
+function eligible(ws, x, kind) {
+  const w = weaponByName(ws.n); if (!w) return false;
+  if (kind === 'curse') return x.r.includes('curse') && ws.deep && canDeepW(ws);
+  if (!x.r.includes('affix')) return false;
+  const deep = !!(ws.deep && canDeepW(ws));
+  if (!deep && x.pool === 'deep') return false;
+  const types = deep ? ((x.wd && x.wd.length) ? x.wd.concat(x.wn || []) : x.wn) : x.wn;
+  if (types && !x.all && !types.includes(w.t)) return false;
+  if (x.t && x.t.length && !x.t.some(t => t.split('/').includes(ws.rar))) return false;
+  return true;
+}
+const filled = p => p.w.filter(Boolean).length;
+
+function sideSummary(hero, lvl, p, fb) {
+  const t = L(), wt = W_(), por = ART.portraits || {};
+  const c = D.chars.find(x => x.name === hero);
+  const attr = ATTR.map(([k, en, jp]) => { const d = fb.st[k] - fb.base[k]; return `<span>${J() ? jp : en} <b class="tnum">${fb.st[k]}</b>${d ? `<em class="${d > 0 ? 'up' : 'down'}">${d > 0 ? '+' : ''}${d}</em>` : ''}</span>`; }).join('');
+  const nEff = p.w.reduce((s, ws) => s + (ws ? (ws.pas || []).length + (ws.cu || []).length : 0), 0);
+  const cap = p.w.reduce((s, ws) => s + capOf(ws) + (ws && ws.deep && canDeepW(ws) ? 1 : 0), 0);
+  return `<aside class="nr-card wz-side">
+    <div class="wz-sh"><img src="${por[hero.toLowerCase()] || ''}" alt=""><div><div class="lbl">${wt.soFar}</div><b>${esc(hn(hero))}</b><small>${t.lvl} ${lvl} · ${esc(J() && vesselOf(p).jp ? vesselOf(p).jp : vesselOf(p).n)}</small></div></div>
+    <div class="wz-attr">${attr}</div>
+    <div class="wz-der tnum"><span>${t.hp} <b>${fb.hp[1]}</b></span><span>${t.fp} <b>${fb.fp[1]}</b></span><span>${t.stam} <b>${fb.sta[1]}</b></span></div>
+    <div class="wz-cnt"><span>${wt.weaponsPicked(filled(p))}</span><span>${wt.relicsPicked(p.r.filter(Boolean).length)}</span><span>${wt.effectsPicked(nEff, cap)}</span></div>
+    ${fb.weapons.length ? `<div class="fws">${fb.weapons.map(x => `<div class="fw"><span class="ico sm"><img src="${ICON(x.w)}" alt=""></span><span class="fwn"><b>${esc(wn(x.w))}</b><small style="color:${RAR_COL[x.ws.rar]}">${rt(x.ws.rar)}</small></span><span class="fwv tnum">${x.final}</span></div>`).join('')}</div>` : `<p class="hint">${wt.none}</p>`}
+  </aside>`;
+}
+
+function stepper(p) {
+  const wt = W_();
+  const nEff = p.w.reduce((s, ws) => s + (ws ? (ws.pas || []).length : 0), 0);
+  const badges = [esc(hn(S.hero)), `${filled(p)}/6`, `${p.r.filter(Boolean).length}/6`, `${nEff}`, ''];
+  return `<nav class="wz-steps" aria-label="Steps">${wt.steps.map((l, i) => `<button data-wstep="${i + 1}" aria-current="${S.step === i + 1 ? 'step' : 'false'}" class="${S.step > i + 1 ? 'done' : ''}"><span class="n">${i + 1}</span><span class="l">${l}</span>${badges[i] ? `<span class="b">${badges[i]}</span>` : ''}</button>`).join('')}</nav>`;
+}
+function navBtns() {
+  const wt = W_();
+  return `<div class="wz-nav">${S.step > 1 ? `<button class="chip" data-wstep="${S.step - 1}">← ${wt.back}</button>` : '<span></span>'}${S.step < 5 ? `<button class="btn-main" data-wstep="${S.step + 1}">${wt.next}: ${wt.steps[S.step]} →</button>` : ''}</div>`;
+}
+
+/* ---- step bodies */
+function step1(p) {
+  const wt = W_(), t = L(), por = ART.portraits || {};
+  const c = D.chars.find(x => x.name === S.hero) || D.chars[0];
+  const s = stats(S.hero, S.lvl);
+  return `<h2 class="nr-h wz-h">${wt.s1h}</h2><p class="hint">${wt.s1p}</p>
+    <div class="wz-chars">${D.chars.map(x => `<button class="wz-char" data-hero="${esc(x.name)}" aria-pressed="${x.name === S.hero}"><img src="${por[x.name.toLowerCase()] || ''}" alt=""><b>${esc(hn(x.name))}</b><small>${esc(x.preference || '')}</small></button>`).join('')}</div>
+    <div class="wz-pick nr-card">
+      <div class="lvrow"><label for="nr-lvl">${t.level}</label><input id="nr-lvl" type="range" min="1" max="15" value="${S.lvl}"><b class="tnum">${S.lvl}</b></div>
+      <div class="nbars">${ATTR.map(([k, en, jp]) => `<div class="nbar"><span>${J() ? jp : en}</span><span class="g">${(c.grades || {})[en] || ''}</span><span class="t"><i style="width:${Math.min(100, s[k] / 70 * 100)}%"></i></span><b class="tnum">${s[k]}</b></div>`).join('')}</div>
+      <div class="abil">${[['passive', c.passive], ['skill', c.skill], ['ult', c.ultimate]].map(([k, a]) => a ? `<div><div class="lbl">${t[k]}</div><div class="an">${esc(a.name)}</div><p>${esc(a.description || '')}</p></div>` : '').join('')}</div>
+    </div>`;
+}
+function step2(p) {
+  const wt = W_(), t = L(), nH = RULES().slotsPerHand, hero = S.hero;
+  const c = D.chars.find(x => x.name === hero);
+  const left = 6 - filled(p);
+  const tray = p.w.map((ws, i) => {
+    const lab = `${i < nH ? wt.right : wt.left}${(i % nH) + 1}`;
+    if (!ws) return `<div class="wz-slot empty"><span class="tag">${lab}</span>${wt.emptySlot}</div>`;
     const w = weaponByName(ws.n); if (!w) return '';
-    const canDeep = ws.rar === 'Uncommon' || ws.rar === 'Rare';
-    const maxP = ws.deep && canDeep ? 2 : 1;
     const skills = [w.sk].concat((w.pool || []).filter(x => x !== w.sk)).filter(Boolean);
-    const r = fb.weapons.find(x => x.i === i);
-    return `<div class="slotbox">
-      <div class="sb-h"><span class="ico sm"><img src="${ICON(w)}" alt=""></span><div class="sb-t"><b>${esc(wn(w))}</b><small>${esc(tt(w.t))}</small></div>
-        <span class="sb-ar tnum">${r ? r.final : ''}</span><button class="x" data-pwx="${i}" aria-label="${pt.remove}">×</button></div>
-      <div class="sb-row"><label>${pt.rarityLbl}</label><select data-pwr="${i}">${w.rs.map(x => `<option value="${x}" ${x === ws.rar ? 'selected' : ''}>${rt(x)}</option>`).join('')}</select></div>
-      <div class="sb-row"><label>${pt.skillLbl}</label><select data-pws="${i}">${skills.map(x => `<option value="${esc(x)}" ${x === ws.sk ? 'selected' : ''}>${esc(J() ? ((D.skillJp || {})[x] || x) : x)}</option>`).join('')}</select></div>
-      ${w.pas && w.pas.length ? `<div class="sb-fixed">${w.pas.map(esc).join(' · ')}</div>` : ''}
-      ${canDeep ? `<label class="sb-deep"><input type="checkbox" data-pwd="${i}" ${ws.deep ? 'checked' : ''}> ${pt.cursedW}</label>` : ''}
-      <div class="sb-fx">${(ws.pas || []).map((id, k) => `<span class="fxchip" title="${esc(effDesc(id))}">${esc(effLabel(id))}<button data-pwpx="${i}:pas:${k}" aria-label="${pt.remove}">×</button></span>`).join('')}
-        ${(ws.pas || []).length < maxP ? `<button class="chip" data-pwp="${i}">+ ${pt.addPassive}</button>` : ''}</div>
-      ${ws.deep && canDeep ? `<div class="sb-fx curse">${(ws.cu || []).map((id, k) => `<span class="fxchip bad" title="${esc(effDesc(id))}">${esc(effLabel(id))}<button data-pwpx="${i}:cu:${k}">×</button></span>`).join('')}${(ws.cu || []).length < 1 ? `<button class="chip" data-pwc="${i}">+ ${pt.addCurse}</button>` : ''}</div>` : ''}
-    </div>`;
+    return `<div class="wz-slot"><div class="sb-h"><span class="ico sm"><img src="${ICON(w)}" alt=""></span><div class="sb-t"><b>${esc(wn(w))}</b><small><span class="tag">${lab}</span> ${esc(tt(w.t))}</small></div><span></span><button class="x" data-pwx="${i}" aria-label="${wt.remove}">×</button></div>
+      <div class="sb-row"><label>${P().rarityLbl}</label><select data-pwr="${i}">${w.rs.map(x => `<option value="${x}" ${x === ws.rar ? 'selected' : ''}>${rt(x)}</option>`).join('')}</select></div>
+      <div class="sb-row"><label>${P().skillLbl}</label><select data-pws="${i}">${skills.map(x => `<option value="${esc(x)}" ${x === ws.sk ? 'selected' : ''}>${esc(J() ? ((D.skillJp || {})[x] || x) : x)}</option>`).join('')}</select></div></div>`;
+  }).join('');
+  const q = (S.wq || '').trim().toLowerCase();
+  const pool = D.weapons.filter(w => w.drop || (w.hero && (c.startingWeapon || []).some(n => w.n.startsWith(n))))
+    .filter(w => !q || w.n.toLowerCase().includes(q) || (w.jp || '').includes(S.wq.trim()) || w.t.toLowerCase().includes(q) || (TYPE_JP[w.t] || '').includes(S.wq.trim()));
+  const by = new Map();
+  for (const w of pool) { const r = calc(w, hero, S.lvl); if (!by.has(w.t)) by.set(w.t, []); by.get(w.t).push({ w, ar: r ? r.total : 0, rar: r ? r.rar : w.rs[0] }); }
+  for (const l of by.values()) l.sort((a, b) => b.ar - a.ar);
+  const order = Object.keys(TYPE_JP);
+  const types = [...by.keys()].sort((a, b) => (order.indexOf(a) + 1 || 99) - (order.indexOf(b) + 1 || 99));
+  S.wOpen = S.wOpen || {};
+  const inPlan = new Set(p.w.filter(Boolean).map(x => x.n));
+  const grp = types.map(ty => { const l = by.get(ty); const open = q ? true : S.wOpen[ty] != null ? S.wOpen[ty] : (c.preference || '').toLowerCase().includes(ty.toLowerCase());
+    return `<details class="wgrp wz-wg" data-wtype="${esc(ty)}" ${open ? 'open' : ''}><summary><span class="wg-n">${esc(tt(ty))}</span><span class="wg-c">${l.length}</span><span class="wg-b">${esc(wn(l[0].w))} <b class="tnum">${l[0].ar}</b></span></summary>
+      <div class="nwl">${l.map(({ w, ar, rar }) => `<div class="nw wz-row"><span class="ico sm"><img src="${ICON(w)}" alt="" loading="lazy"></span><span class="nwn"><b>${esc(wn(w))}</b><small>${w.rs.map(rt).join(' / ')}${w.sk ? ' · ' + esc(J() && w.skj ? w.skj : w.sk) : ''}</small></span><span class="nwv tnum">${ar}</span>
+        <button class="chip ${inPlan.has(w.n) ? 'on' : ''}" data-wadd="${esc(w.n)}" ${left <= 0 ? 'disabled' : ''}>${left <= 0 ? wt.full : inPlan.has(w.n) ? '+1' : wt.add}</button></div>`).join('')}</div></details>`; }).join('');
+  return `<h2 class="nr-h wz-h">${wt.s2h}</h2><p class="hint">${wt.s2p(left)}</p>
+    <div class="wz-tray">${tray}</div>
+    <div class="toolbar"><input id="wz-wq" type="search" placeholder="${wt.search}" value="${esc(S.wq || '')}"></div>
+    <div class="wgroups">${grp}</div>`;
+}
+function step3(p) {
+  const wt = W_(), hero = S.hero, v = vesselOf(p);
+  const vs = D.vessels.filter(x => x.ch === hero || /universal/i.test(x.ch));
+  const a = S.rActive ?? 0, deep = a >= 3, color = (deep ? v.dsl : v.sl)[a % 3];
+  const slot = (i) => {
+    const rs = p.r[i], d = i >= 3, col = (d ? v.dsl : v.sl)[i % 3];
+    let body = `<span class="hint">${wt.emptySlot}</span>`;
+    if (rs && rs.named != null) { const r = relicById(rs.named) || { fx: [] }; body = `<b>${esc(J() && r.jp ? r.jp : r.n)}</b><small>${r.fx.map(effLabel).map(esc).join(' · ')}</small>`; }
+    else if (rs) body = `<b>${P().custom}${rs.col && col === 'White' ? ' · ' + (J() ? COLOR[rs.col][2] : COLOR[rs.col][1]) : ''}</b><small>${(rs.fx || []).map(effLabel).map(esc).join(' · ') || wt.effectsOn(0)}${(rs.cu || []).length ? ' · ' + rs.cu.map(effLabel).map(esc).join(' · ') : ''}</small>`;
+    return `<button class="wz-rslot ${i === a ? 'active' : ''}" data-ract="${i}">${slotDot(col)}<span class="rs-b">${body}</span>${rs ? `<span class="x" data-prx="${i}" role="button" aria-label="${wt.remove}">×</button>` : ''}</button>`;
   };
-  const rslot = (rs, i) => {
-    const deep = i >= 3, color = (deep ? v.dsl : v.sl)[i % 3];
-    const dot = slotDot(color);
-    if (!rs) return `<button class="slotbox empty rel" data-pr="${i}">${dot}<span>+</span> ${pt.addRelic}</button>`;
-    if (rs.named != null) {
-      const r = relicById(rs.named) || { fx: [] };
-      return `<div class="slotbox rel"><div class="sb-h"><img class="gem sm" src="${gem(r.col, r.size, false)}" alt=""><div class="sb-t"><b>${esc(J() && r.jp ? r.jp : r.n)}</b><small>${pt.named}</small></div><button class="x" data-prx="${i}" aria-label="${pt.remove}">×</button></div>
-        <div class="sb-fx">${r.fx.map(id => `<span class="fxchip" title="${esc(effDesc(id))}">${esc(effLabel(id))}</span>`).join('')}</div></div>`;
-    }
-    const col = rs.col || (color === 'White' ? 'Red' : color);
-    return `<div class="slotbox rel"><div class="sb-h"><img class="gem sm" src="${gem(col, ['Delicate', 'Delicate', 'Polished', 'Grand'][Math.max(1, (rs.fx || []).length)], deep)}" alt="">
-        <div class="sb-t"><b>${pt.custom}</b><small>${color === 'White' ? `<select data-prc="${i}">${['Red', 'Blue', 'Yellow', 'Green'].map(c => `<option value="${c}" ${c === col ? 'selected' : ''}>${J() ? COLOR[c][2] : COLOR[c][1]}</option>`).join('')}</select>` : (J() ? COLOR[col][2] : COLOR[col][1])}</small></div><button class="x" data-prx="${i}" aria-label="${pt.remove}">×</button></div>
-      <div class="sb-fx">${(rs.fx || []).map((id, k) => `<span class="fxchip" title="${esc(effDesc(id))}">${esc(effLabel(id))}<button data-prfx="${i}:fx:${k}">×</button></span>`).join('')}
-        ${(rs.fx || []).length < 3 ? `<button class="chip" data-pre="${i}">+ ${pt.addEffect}</button>` : ''}</div>
-      ${deep ? `<div class="sb-fx curse">${(rs.cu || []).map((id, k) => `<span class="fxchip bad">${esc(effLabel(id))}<button data-prfx="${i}:cu:${k}">×</button></span>`).join('')}${(rs.cu || []).length < 3 ? `<button class="chip" data-prcu="${i}">+ ${pt.addCurse}</button>` : ''}</div>` : ''}
+  const rs = p.r[a];
+  const tab = S.rtab || 'named';
+  let lower = '';
+  if (tab === 'named' && !deep) {
+    const list = D.relics.filter(r => !r.deep && (color === 'White' || r.col === color));
+    lower = `<div class="rgrid">${list.map(r => `<div class="relic nr-card ${rs && rs.named === r.id ? 'sel' : ''}"><div class="rh"><img class="gem" src="${gem(r.col, r.size, false)}" alt=""><div><div class="en">${esc(J() && r.jp ? r.jp : r.n)}</div><div class="nm2">${esc(r.size || '')}</div></div></div><ul class="rlist">${r.fx.map(id => `<li class="rfx">${esc(effLabel(id))}</li>`).join('')}</ul><button class="chip" data-rnamed="${r.id}">${rs && rs.named === r.id ? wt.selected : wt.use}</button></div>`).join('')}</div>`;
+  } else {
+    const cur = rs && rs.named == null ? rs : null;
+    const nfx = cur ? (cur.fx || []).length : 0;
+    const q = (S.rq || '').trim().toLowerCase();
+    const items = effItems(e => deep ? (e.roll && e.deep && !e.curse) : (e.roll && !e.deep && !e.curse), hero).filter(x => !q || x.l.toLowerCase().includes(q) || (x.s || '').toLowerCase().includes(q));
+    const groups = [...new Set(items.map(x => x.g))];
+    const curses = deep ? effItems(e => e.curse, hero) : [];
+    lower = `${color === 'White' && cur ? `<div class="sb-row"><label>${P().colorLbl}</label><select data-prc="${a}">${['Red', 'Blue', 'Yellow', 'Green'].map(cc => `<option value="${cc}" ${cc === cur.col ? 'selected' : ''}>${J() ? COLOR[cc][2] : COLOR[cc][1]}</option>`).join('')}</select></div>` : ''}
+      <div class="toolbar"><input id="nr-rq" type="search" placeholder="${wt.search}" value="${esc(S.rq || '')}"><span class="hint">${wt.effectsOn(nfx)}</span></div>
+      <div class="wgroups">${groups.map(g => { const l = items.filter(x => x.g === g); return `<details class="wgrp" ${q || groups.length < 4 ? 'open' : ''}><summary><span class="wg-n">${esc(g)}</span><span class="wg-c">${l.length}</span><span></span></summary><div class="elist2">${l.map(x => { const on = cur && cur.fx.includes(x.v); return `<div class="erow2"><span><b>${esc(x.l)}</b>${x.s && x.s !== x.l ? `<small>${esc(x.s)}</small>` : ''}</span><button class="chip ${on ? 'on' : ''}" data-rfx="${x.v}" ${!on && nfx >= 3 ? 'disabled' : ''}>${on ? wt.remove : wt.add}</button></div>`; }).join('')}</div></details>`; }).join('')}</div>
+      ${deep ? `<h4 class="nr-sh2">${wt.curses}</h4><div class="elist2">${curses.map(x => { const on = cur && (cur.cu || []).includes(x.v); return `<div class="erow2"><span><b>${esc(x.l)}</b>${x.s && x.s !== x.l ? `<small>${esc(x.s)}</small>` : ''}</span><button class="chip ${on ? 'on' : ''}" data-rcu="${x.v}">${on ? wt.remove : wt.add}</button></div>`; }).join('')}</div>` : ''}`;
+  }
+  return `<h2 class="nr-h wz-h">${wt.s3h}</h2><p class="hint">${wt.s3p}</p>
+    <h4 class="nr-sh2">${wt.vessels}</h4>
+    <div class="wz-vessels">${vs.map(x => `<button class="wz-ves" data-ves="${x.id}" aria-pressed="${x.id === p.vessel}"><b>${esc(J() && x.jp ? x.jp : x.n)}</b><span class="slots">${x.sl.map(slotDot).join('')}</span><span class="slots deep">${(x.dsl || []).map(slotDot).join('')}</span></button>`).join('')}</div>
+    <h4 class="nr-sh2">${P().relicSlots} · ${wt.slotFilled(p.r.filter(Boolean).length)}</h4>
+    <div class="wz-rslots">${[0, 1, 2].map(slot).join('')}</div>
+    <h4 class="nr-sh2">${P().deepSlots}</h4>
+    <div class="wz-rslots">${[3, 4, 5].map(slot).join('')}</div>
+    <div class="nr-card wz-rpick">
+      <div class="subtabs">${deep ? '' : `<button data-rtab="named" aria-pressed="${tab === 'named'}">${wt.named}</button>`}<button data-rtab="custom" aria-pressed="${tab === 'custom' || deep}">${wt.custom}</button><span class="hint" style="margin-left:auto">${wt.slot} ${a < 3 ? a + 1 : 'D' + (a - 2)} ${slotDot(color)}</span></div>
+      ${lower}
     </div>`;
+}
+function step4(p) {
+  const wt = W_(), nH = RULES().slotsPerHand;
+  const ws = p.w.map((x, i) => x ? { x, i } : null).filter(Boolean);
+  if (!ws.length) return `<h2 class="nr-h wz-h">${wt.s4h}</h2><p class="hint">${wt.noWeapons}</p>`;
+  const cap = ws.reduce((s, { x }) => s + capOf(x), 0);
+  const used = ws.reduce((s, { x }) => s + (x.pas || []).length, 0);
+  const q = (S.pq || '').trim().toLowerCase();
+  // unique effects any picked weapon can roll
+  const map = new Map();
+  for (const x of PAS()) {
+    if (!x.r.includes('affix')) continue;
+    const on = ws.filter(({ x: w }) => eligible(w, x, 'affix'));
+    if (!on.length) continue;
+    const m = map.get(x.en);
+    if (!m) map.set(x.en, { x, on: on.slice() });
+    else on.forEach(o => { if (!m.on.some(z => z.i === o.i)) m.on.push(o); });
+  }
+  for (const m of map.values()) m.on.sort((a, b) => a.i - b.i);
+  let rows = [...map.values()];
+  if (q) rows = rows.filter(({ x }) => (x.en + ' ' + (x.ja || '') + ' ' + ((EM(x.id) || {}).descEn || '')).toLowerCase().includes(q));
+  const catOf = x => { const m = (EM(x.id) || {}).mods || []; const k = (m[0] || {}).k || ''; if (/^atk|_atk$|crit|charge|skill_atk/.test(k)) return J() ? '攻撃' : 'Attack'; if (/^neg|^res|poise|guard/.test(k)) return J() ? '防御' : 'Defence'; if (/hp|fp|stam|flask|regen|restore/.test(k)) return J() ? '回復・ステータス' : 'Recovery & stats'; return J() ? 'その他' : 'Other'; };
+  const groups = new Map(); rows.forEach(r => { const g = catOf(r.x); if (!groups.has(g)) groups.set(g, []); groups.get(g).push(r); });
+  const sameName = (id, en) => (pasById(id) || {}).en === en;
+  const assignedTo = en => ws.find(({ x }) => (x.pas || []).some(id => sameName(id, en)));
+  const lab = i => `${i < nH ? wt.right : wt.left}${(i % nH) + 1}`;
+  const row = ({ x, on }) => {
+    const a = assignedTo(x.en);
+    const free = on.filter(({ x: w }) => (w.pas || []).length < capOf(w));
+    const tierId = a ? a.x.pas.find(id => sameName(id, x.en)) : null;
+    const dx = tierId ? pasById(tierId) : x;
+    return `<div class="erow2 ${a ? 'picked' : ''}"><span><b>${esc(J() ? x.ja || x.en : x.en)}</b><small>${esc((EM(dx.id) || {})[J() ? 'descJa' : 'descEn'] || '')}</small><small class="can">${wt.canRoll}: ${on.map(({ x: w, i }) => `${lab(i)} ${esc(wn(weaponByName(w.n)))}`).join(', ')}</small></span>
+      ${a ? `<span class="assign"><label>${wt.onWeapon}</label><select data-pmove="${esc(x.en)}">${on.map(({ x: w, i }) => `<option value="${i}" ${a.i === i ? 'selected' : ''} ${a.i !== i && (w.pas || []).length >= capOf(w) ? 'disabled' : ''}>${lab(i)} ${esc(wn(weaponByName(w.n)))}</option>`).join('')}</select><button class="chip on" data-poff="${esc(x.en)}">${wt.remove}</button></span>`
+ : `<button class="chip" data-pon="${esc(x.en)}" ${free.length ? '' : `disabled title="${wt.noRoom}"`}>${free.length ? wt.add : wt.full}</button>`}</div>`;
   };
-  // final summary
+  const cursedRow = ws.filter(({ x }) => canDeepW(x)).map(({ x, i }) => `<label class="sb-deep"><input type="checkbox" data-pwd="${i}" ${x.deep ? 'checked' : ''}> ${lab(i)} ${esc(wn(weaponByName(x.n)))} · ${wt.cursed}</label>`).join('');
+  const cursedWs = ws.filter(({ x }) => x.deep && canDeepW(x));
+  const curseList = cursedWs.length ? PAS().filter(x => x.r.includes('curse')).filter((x, k, arr) => arr.findIndex(y => y.en === x.en) === k) : [];
+  return `<h2 class="nr-h wz-h">${wt.s4h}</h2><p class="hint">${wt.s4p(used, cap)}</p>
+    <div class="wz-tray mini">${ws.map(({ x, i }) => { const w = weaponByName(x.n); return `<div class="wz-slot"><div class="sb-h"><span class="ico sm"><img src="${ICON(w)}" alt=""></span><div class="sb-t"><b>${esc(wn(w))}</b><small><span class="tag">${lab(i)}</span> <span style="color:${RAR_COL[x.rar]}">${rt(x.rar)}</span> · ${(x.pas || []).length}/${capOf(x)}</small></div></div>${(x.pas || []).length ? `<div class="sb-fx">${x.pas.map(id => `<span class="fxchip">${esc(effLabel(id))}</span>`).join('')}</div>` : ''}${(x.cu || []).length ? `<div class="sb-fx">${x.cu.map(id => `<span class="fxchip bad">${esc(effLabel(id))}</span>`).join('')}</div>` : ''}</div>`; }).join('')}</div>
+    ${cursedRow ? `<div class="wz-cursed">${cursedRow}</div>` : ''}
+    <div class="toolbar"><input id="wz-pq" type="search" placeholder="${wt.search}" value="${esc(S.pq || '')}"><span class="hint">${wt.effectsPicked(used, cap)}</span></div>
+    <div class="wgroups">${[...groups.entries()].map(([g, l], gi) => `<details class="wgrp" ${q || gi === 0 || l.some(r => assignedTo(r.x.en)) ? 'open' : ''}><summary><span class="wg-n">${esc(g)}</span><span class="wg-c">${l.length}</span><span></span></summary><div class="elist2">${l.map(row).join('')}</div></details>`).join('')}</div>
+    ${curseList.length ? `<details class="wgrp" ${cursedWs.some(({ x }) => (x.cu || []).length) ? '' : 'open'}><summary><span class="wg-n">${wt.curses}</span><span class="wg-c">${curseList.length}</span><span class="wg-b">${cursedWs.flatMap(({ x }) => (x.cu || []).map(effLabel)).map(esc).join(', ')}</span></summary><div class="elist2">${curseList.map(x => { const on = cursedWs.find(({ x: w }) => (w.cu || []).includes(x.id)); return `<div class="erow2"><span><b>${esc(J() ? x.ja || x.en : x.en)}</b><small>${esc((EM(x.id) || {})[J() ? 'descJa' : 'descEn'] || '')}</small></span><button class="chip ${on ? 'on' : ''}" data-pcurse="${x.id}">${on ? wt.remove : wt.add}</button></div>`; }).join('')}</div></details>` : ''}`;
+}
+function step5(p, fb) {
+  const wt = W_(), t = L(), pt = P(), hero = S.hero, lvl = S.lvl, nH = RULES().slotsPerHand, por = ART.portraits || {};
+  const c = D.chars.find(x => x.name === hero), v = vesselOf(p);
   const attrRows = ATTR.map(([k, en, jp]) => { const b = fb.base[k], f = fb.st[k], d = f - b; return `<div class="fa"><span>${J() ? jp : en}</span><b class="tnum">${f}</b><small class="${d > 0 ? 'up' : d < 0 ? 'down' : ''}">${d ? (d > 0 ? '+' : '') + d : ''}</small></div>`; }).join('');
   const der = [[t.hp, fb.hp], [t.fp, fb.fp], [t.stam, fb.sta]].map(([l, [b, f]]) => `<div class="fa"><span>${l}</span><b class="tnum">${f}</b><small class="${f > b ? 'up' : f < b ? 'down' : ''}">${f !== b ? (f > b ? '+' : '') + (f - b) : ''}</small></div>`).join('');
-  const wl = fb.weapons.map(x => `<div class="fw"><span class="ico sm"><img src="${ICON(x.w)}" alt=""></span><span class="fwn"><b>${esc(wn(x.w))}</b><small>${x.i < nH ? pt.rightHand : pt.leftHand} · <span style="color:${RAR_COL[x.ws.rar]}">${rt(x.ws.rar)}</span> · ${pt.arBase} ${x.base}</small></span><span class="fwv tnum">${x.final}</span></div>`).join('');
+  const wl = fb.weapons.map(x => `<div class="fw big"><span class="ico"><img src="${ICON(x.w)}" alt=""></span><span class="fwn"><b>${esc(wn(x.w))}</b><small>${x.i < nH ? pt.rightHand : pt.leftHand} · <span style="color:${RAR_COL[x.ws.rar]}">${rt(x.ws.rar)}</span> · ${esc(J() ? ((D.skillJp || {})[x.ws.sk] || x.ws.sk || '') : (x.ws.sk || ''))}</small>${(x.ws.pas || []).concat(x.ws.cu || []).length ? `<span class="sb-fx">${(x.ws.pas || []).map(id => `<span class="fxchip">${esc(effLabel(id))}</span>`).join('')}${(x.ws.cu || []).map(id => `<span class="fxchip bad">${esc(effLabel(id))}</span>`).join('')}</span>` : ''}</span><span class="fwv tnum">${x.final}<small>${pt.arBase} ${x.base}</small></span></div>`).join('');
+  const rl = p.r.map((rs, i) => { if (!rs) return ''; const col = (i >= 3 ? v.dsl : v.sl)[i % 3]; const fx = rs.named != null ? (relicById(rs.named) || { fx: [] }).fx : (rs.fx || []); const name = rs.named != null ? (J() && relicById(rs.named).jp ? relicById(rs.named).jp : relicById(rs.named).n) : pt.custom; return `<div class="fr">${slotDot(rs.col || col)}<span><b>${esc(name)}</b><span class="sb-fx">${fx.map(id => `<span class="fxchip">${esc(effLabel(id))}</span>`).join('')}${(rs.cu || []).map(id => `<span class="fxchip bad">${esc(effLabel(id))}</span>`).join('')}</span></span></div>`; }).join('');
   const NEG = [['neg_all', J() ? '全カット' : 'All'], ['neg_affinity', J() ? '属性' : 'Elemental'], ['neg_phys', J() ? '物理' : 'Physical'], ['neg_magic', J() ? '魔力' : 'Magic'], ['neg_fire', J() ? '炎' : 'Fire'], ['neg_light', J() ? '雷' : 'Lightning'], ['neg_holy', J() ? '聖' : 'Holy']];
   const negs = NEG.filter(([k]) => fb.sums[k]).map(([k, l]) => `<span class="st">${l} <b>${fb.sums[k] > 0 ? '+' : ''}${+fb.sums[k].toFixed(1)}%</b></span>`).join('');
   const SKIP = new Set(['maxhp', 'maxfp', 'maxstam', ...NEG.map(x => x[0])]);
-  const others = Object.entries(fb.sums).filter(([k, v]) => v && !SKIP.has(k) && !/^atk_flat_|_flat$/.test(k)).map(([k, v]) => `<span class="st">${esc(keyLabel(k))} <b>${v > 0 ? '+' : ''}${+v.toFixed(1)}${/^(res_|hp_restore$|fp_restore$|stam_restore$)/.test(k) ? '' : '%'}</b></span>`).join('');
-  const uniq = [...new Map(fb.effs.map(e => [e.id + ':' + e.src, e])).values()];
-  const effRows = uniq.map(e => { const n = fb.counts.get(e.id); const hasNum = (EM(e.id) && EM(e.id).mods.length) || D.statMods[e.id]; return `<li><span class="pool ${e.src === 'r' ? 'deep' : ''}">${e.src === 'w' ? pt.fromWeapon : pt.fromRelic}</span><span>${esc(effLabel(e.id))}${n > 1 ? ` ×${n}` : ''}${fb.warn.has(e.id) ? ` <em class="warn">${pt.stackWarn}</em>` : ''}${!hasNum ? ` <em>${pt.noNum}</em>` : ''}</span></li>`; }).join('');
+  const others = Object.entries(fb.sums).filter(([k, v2]) => v2 && !SKIP.has(k) && !/^atk_flat_|_flat$/.test(k)).map(([k, v2]) => `<span class="st">${esc(keyLabel(k))} <b>${v2 > 0 ? '+' : ''}${+v2.toFixed(1)}${/^(res_|hp_restore$|fp_restore$|stam_restore$)/.test(k) ? '' : '%'}</b></span>`).join('');
   const conds = fb.condList.map(({ e, mod }) => `<li><span>${esc(effLabel(e.id))}</span> <small>${esc(mod.cond || '')} · ${esc(keyLabel(mod.k))} ${mod.v > 0 ? '+' : ''}${mod.v}${mod.u === '%' ? '%' : ''}</small></li>`).join('');
+  const warn = [...fb.warn].map(id => `<li><span>${esc(effLabel(id))}</span> <em class="warn">${pt.stackWarn}</em></li>`).join('');
+  return `<div class="wz-final">
+    <section class="nr-card wz-hero"><img src="${por[hero.toLowerCase()] || ''}" alt=""><div><div class="lbl">${wt.s5h}</div><h2 class="nr-h">${esc(hn(hero))}</h2><p class="hint">${t.lvl} ${lvl} · ${esc(J() && v.jp ? v.jp : v.n)}</p>
+      <h4 class="nr-sh2">${pt.attrs}</h4><div class="fattrs">${attrRows}</div><h4 class="nr-sh2">${pt.derived}</h4><div class="fattrs three">${der}</div></div></section>
+    <section class="nr-card"><h3 class="nr-sh">${wt.weaponsSum}</h3><div class="fws">${wl || `<p class="hint">${wt.none}</p>`}</div>
+      ${negs ? `<h4 class="nr-sh2">${pt.negation}</h4><div class="statline">${negs}</div>` : ''}${others ? `<h4 class="nr-sh2">${pt.other}</h4><div class="statline">${others}</div>` : ''}
+      ${conds ? `<h4 class="nr-sh2">${pt.cond}</h4><ul class="flist">${conds}</ul>` : ''}${warn ? `<ul class="flist">${warn}</ul>` : ''}</section>
+    <section class="nr-card"><h3 class="nr-sh">${wt.relicsSum}</h3><div class="frl">${rl || `<p class="hint">${wt.none}</p>`}</div>
+      <p class="hint">${pt.sumNote}</p>
+      <div class="ctl-row"><button class="chip" data-plcopy="1">${pt.copy}</button><button class="chip" data-plpaste="1">${pt.paste}</button><button class="chip" data-plreset="1">${wt.start}</button></div><div id="pl-msg" class="hint" role="status"></div></section>
+  </div>`;
+}
 
-  $('#nr-body').innerHTML = `
-    <p class="hint planlede">${pt.planLede}</p>
-    <div class="roster">${roster}</div>
-    <div class="plan-grid">
-      <section class="nr-card plan-left">
-        <div class="lvrow"><label for="nr-lvl">${t.level}</label><input id="nr-lvl" type="range" min="1" max="15" value="${lvl}"><b class="tnum">${lvl}</b></div>
-        <div class="field"><label for="pl-ves">${pt.vessel}</label><select id="pl-ves">${vs.map(x => `<option value="${x.id}" ${x.id === p.vessel ? 'selected' : ''}>${esc(J() && x.jp ? x.jp : x.n)}</option>`).join('')}</select></div>
-        <h4 class="nr-sh2">${pt.relicSlots} ${v.sl.map(slotDot).join('')}</h4>
-        <div class="slots-col">${[0, 1, 2].map(i => rslot(p.r[i], i)).join('')}</div>
-        <h4 class="nr-sh2">${pt.deepSlots} ${(v.dsl || []).map(slotDot).join('')}</h4>
-        <div class="slots-col">${[3, 4, 5].map(i => rslot(p.r[i], i)).join('')}</div>
-      </section>
-      <section class="nr-card plan-mid">
-        <h4 class="nr-sh2" style="margin-top:0">${pt.rightHand}</h4>
-        <div class="slots-col">${p.w.slice(0, nH).map((ws, i) => wslot(ws, i)).join('')}</div>
-        <h4 class="nr-sh2">${pt.leftHand}</h4>
-        <div class="slots-col">${p.w.slice(nH).map((ws, i) => wslot(ws, i + nH)).join('')}</div>
-        <p class="hint">${pt.rulesNote}</p>
-      </section>
-      <section class="nr-card plan-right">
-        <h3 class="nr-sh">${pt.final}</h3>
-        <p class="hint">${esc(hn(hero))} · ${t.lvl} ${lvl} · ${esc(J() && v.jp ? v.jp : v.n)}</p>
-        <h4 class="nr-sh2">${pt.attrs}</h4><div class="fattrs">${attrRows}</div>
-        <h4 class="nr-sh2">${pt.derived}</h4><div class="fattrs three">${der}</div>
-        ${wl ? `<h4 class="nr-sh2">${pt.weaponsAR} · ${pt.arWith}</h4><div class="fws">${wl}</div>` : ''}
-        ${negs ? `<h4 class="nr-sh2">${pt.negation}</h4><div class="statline">${negs}</div>` : ''}
-        ${others ? `<h4 class="nr-sh2">${pt.other}</h4><div class="statline">${others}</div>` : ''}
-        ${effRows ? `<h4 class="nr-sh2">${pt.active}</h4><ul class="flist">${effRows}</ul>` : ''}
-        ${conds ? `<h4 class="nr-sh2">${pt.cond}</h4><ul class="flist">${conds}</ul>` : ''}
-        <p class="hint">${pt.sumNote}${window.NR_MODEL ? '' : ' ' + pt.noModel}</p>
-        <div class="ctl-row"><button class="chip" data-plcopy="1">${pt.copy}</button><button class="chip" data-plpaste="1">${pt.paste}</button><button class="chip" data-plreset="1">${pt.reset}</button></div>
-        <div id="pl-msg" class="hint" role="status"></div>
-      </section>
-    </div>`;
+function renderPlanner() {
+  S.step = S.step || 1;
+  const hero = S.hero, lvl = S.lvl, p = planOf(hero);
+  const fb = finalBuild(hero, lvl, p);
+  const body = [step1, step2, step3, step4, step5][S.step - 1](p, fb);
+  $('#nr-body').innerHTML = `${stepper(p)}${S.step < 5 ? `<div class="wz-grid"><div class="wz-main">${body}${navBtns()}</div>${sideSummary(hero, lvl, p, fb)}</div>` : body + navBtns()}`;
 }
 
 function plannerClick(b) {
-  const d = b.dataset, hero = S.hero, p = planOf(hero), pt = P();
+  const d = b.dataset, hero = S.hero, p = planOf(hero);
   const done = () => { save(); render(); };
-  if (d.pw != null) {
-    const i = +d.pw;
-    const items = D.weapons.filter(w => w.drop || (w.hero && (D.chars.find(c => c.name === hero) || {}).startingWeapon?.some(n => w.n.startsWith(n))))
-      .map(w => ({ w, ar: (calc(w, hero, S.lvl) || {}).total || 0 }))
-      .sort((a, b) => ((Object.keys(TYPE_JP).indexOf(a.w.t) + 1 || 99) - (Object.keys(TYPE_JP).indexOf(b.w.t) + 1 || 99)) || b.ar - a.ar)
-      .map(({ w, ar }) => ({ v: w.n, l: wn(w), s: `${w.rs.map(rt).join(' / ')}${w.sk ? ' · ' + (J() && w.skj ? w.skj : w.sk) : ''}`, g: tt(w.t), img: ICON(w), tag: `${L().ar} ${ar}` }));
-    openPicker({ title: pt.addWeapon, items, cb: n => { const w = weaponByName(n); p.w[i] = { n, rar: w.rs[w.rs.length - 1], sk: w.sk, pas: [] }; done(); } });
-    return true;
-  }
+  if (d.wstep) { S.step = +d.wstep; done(); window.scrollTo({ top: document.getElementById('nr-tabs').offsetTop - 8, behavior: 'smooth' }); return true; }
+  if (d.wadd) { const i = p.w.findIndex(x => !x); if (i < 0) return true; const w = weaponByName(d.wadd); p.w[i] = { n: w.n, rar: w.rs[w.rs.length - 1], sk: w.sk, pas: [], cu: [] }; done(); return true; }
   if (d.pwx != null) { p.w[+d.pwx] = null; done(); return true; }
-  if (d.pwp != null) { const i = +d.pwp; openPicker({ title: pt.addPassive, items: passiveItems(p.w[i], 'affix'), cb: id => { p.w[i].pas = (p.w[i].pas || []).concat(id); done(); } }); return true; }
-  if (d.pwc != null) { const i = +d.pwc; openPicker({ title: pt.addCurse, items: passiveItems(p.w[i], 'curse'), cb: id => { p.w[i].cu = [id]; done(); } }); return true; }
-  if (d.pwpx) { const [i, kind, k] = d.pwpx.split(':'); p.w[+i][kind].splice(+k, 1); done(); return true; }
-  if (d.pr != null) {
-    const i = +d.pr, deep = i >= 3, v = vesselOf(p), color = (deep ? v.dsl : v.sl)[i % 3];
-    const named = deep ? [] : D.relics.filter(r => !r.deep && (color === 'White' || r.col === color)).map(r => ({ v: 'n' + r.id, l: J() && r.jp ? r.jp : r.n, s: r.fx.map(effLabel).join(' · '), g: pt.named, img: gem(r.col, r.size, false) }));
-    const items = [{ v: 'custom', l: pt.custom, s: deep ? (J() ? '深き夜の効果とデメリットを自由に選択' : 'Pick any Deep of Night effects and curses') : (J() ? '効果を最大3つ自由に選択' : 'Pick up to 3 effects'), g: pt.custom, img: gem(color === 'White' ? 'Red' : color, 'Grand', deep) }].concat(named);
-    openPicker({ title: `${pt.addRelic} · ${J() ? COLOR[color][2] : COLOR[color][1]}`, items, cb: val => { p.r[i] = val === 'custom' ? { col: color === 'White' ? 'Red' : color, fx: [], cu: [] } : { named: +val.slice(1) }; done(); } });
-    return true;
+  if (d.ves) { p.vessel = +d.ves; done(); return true; }
+  if (d.prx != null) { p.r[+d.prx] = null; done(); return true; }
+  if (d.ract != null) {
+    S.rActive = +d.ract; const deep = S.rActive >= 3; if (deep) S.rtab = 'custom'; done(); return true;
   }
   if (d.prx != null) { p.r[+d.prx] = null; done(); return true; }
-  if (d.pre != null) {
-    const i = +d.pre, deep = i >= 3;
-    const items = effItems(e => deep ? (e.roll && e.deep && !e.curse) : (e.roll && !e.deep && !e.curse), hero);
-    openPicker({ title: pt.addEffect, items, cb: id => { p.r[i].fx.push(id); done(); } });
-    return true;
+  if (d.rtab) { S.rtab = d.rtab; done(); return true; }
+  if (d.rnamed) { p.r[S.rActive ?? 0] = { named: +d.rnamed }; done(); return true; }
+  if (d.rfx) {
+    const a = S.rActive ?? 0, v = vesselOf(p), color = (a >= 3 ? v.dsl : v.sl)[a % 3];
+    let rs = p.r[a]; if (!rs || rs.named != null) rs = p.r[a] = { col: color === 'White' ? 'Red' : color, fx: [], cu: [] };
+    const id = +d.rfx, k = rs.fx.indexOf(id);
+    if (k >= 0) rs.fx.splice(k, 1); else if (rs.fx.length < 3) rs.fx.push(id);
+    if (!rs.fx.length && !(rs.cu || []).length) p.r[a] = null;
+    done(); return true;
   }
-  if (d.prcu != null) { const i = +d.prcu; openPicker({ title: pt.addCurse, items: effItems(e => e.curse, hero), cb: id => { p.r[i].cu = (p.r[i].cu || []).concat(id); done(); } }); return true; }
-  if (d.prfx) { const [i, kind, k] = d.prfx.split(':'); p.r[+i][kind].splice(+k, 1); done(); return true; }
-  if (d.plreset) { delete S.plans[hero]; done(); return true; }
+  if (d.rcu) {
+    const a = S.rActive ?? 3, v = vesselOf(p), color = v.dsl[a % 3];
+    let rs = p.r[a]; if (!rs || rs.named != null) rs = p.r[a] = { col: color === 'White' ? 'Red' : color, fx: [], cu: [] };
+    rs.cu = rs.cu || []; const id = +d.rcu, k = rs.cu.indexOf(id);
+    if (k >= 0) rs.cu.splice(k, 1); else rs.cu.push(id);
+    done(); return true;
+  }
+  if (d.pon) {
+    const en = d.pon;
+    for (const ws of p.w) {
+      if (!ws || (ws.pas || []).length >= capOf(ws)) continue;
+      const x = PAS().filter(y => y.en === en && eligible(ws, y, 'affix')).sort((a, b) => b.p - a.p)[0];
+      if (x) { ws.pas = (ws.pas || []).concat(x.id); break; }
+    }
+    done(); return true;
+  }
+  if (d.poff) { const en = d.poff; p.w.forEach(ws => { if (ws && ws.pas) ws.pas = ws.pas.filter(z => (pasById(z) || {}).en !== en); }); done(); return true; }
+  if (d.pcurse) {
+    const id = +d.pcurse; const has = p.w.find(ws => ws && (ws.cu || []).includes(id));
+    if (has) has.cu = has.cu.filter(z => z !== id);
+    else { const ws = p.w.find(ws => ws && ws.deep && canDeepW(ws) && !(ws.cu || []).length); if (ws) ws.cu = [id]; }
+    done(); return true;
+  }
+  if (d.plreset) { delete S.plans[hero]; S.step = 1; done(); return true; }
+  if (d.plcopy || d.plpaste || d.plload) return plannerCodes(b);
+  return false;
+}
+function plannerCodes(b) {
+  const d = b.dataset, hero = S.hero, p = planOf(hero), pt = P();
   if (d.plcopy) {
     const code = 'NR1.' + btoa(unescape(encodeURIComponent(JSON.stringify({ h: hero, l: S.lvl, p }))));
     const msg = $('#pl-msg');
@@ -1941,18 +2184,14 @@ function plannerClick(b) {
     try { navigator.clipboard.writeText(code).then(() => { if (msg) msg.insertAdjacentText('afterbegin', pt.copied + ' '); }, () => {}); } catch (e) {}
     return true;
   }
-  if (d.plpaste) {
-    const msg = $('#pl-msg');
-    if (msg) { msg.innerHTML = `<input id="pl-code" class="codebox" placeholder="${pt.pasteHint}"> <button class="chip" data-plload="1">${pt.paste}</button>`; $('#pl-code').focus(); }
-    return true;
-  }
+  if (d.plpaste) { const msg = $('#pl-msg'); if (msg) { msg.innerHTML = `<input id="pl-code" class="codebox" placeholder="${pt.pasteHint}"> <button class="chip" data-plload="1">${pt.paste}</button>`; $('#pl-code').focus(); } return true; }
   if (d.plload) {
     const msg = $('#pl-msg');
     try {
       const raw = $('#pl-code').value.trim().replace(/^NR1\./, '');
       const o = JSON.parse(decodeURIComponent(escape(atob(raw))));
       if (!HEROES.includes(o.h) || !o.p) throw 0;
-      S.hero = o.h; S.lvl = Math.max(1, Math.min(15, +o.l || 15)); S.plans = S.plans || {}; S.plans[o.h] = o.p; save(); render();
+      S.hero = o.h; S.lvl = Math.max(1, Math.min(15, +o.l || 15)); S.plans = S.plans || {}; S.plans[o.h] = o.p; S.step = 5; save(); render();
       const m2 = $('#pl-msg'); if (m2) m2.textContent = pt.loaded;
     } catch (e) { if (msg) msg.insertAdjacentText('beforeend', ' ' + pt.badCode); }
     return true;
@@ -1961,13 +2200,26 @@ function plannerClick(b) {
 }
 function plannerChange(el) {
   const p = planOf(S.hero);
-  if (el.id === 'pl-ves') { p.vessel = +el.value; save(); render(); return true; }
-  if (el.dataset.pwr != null) { const ws = p.w[+el.dataset.pwr]; ws.rar = el.value; ws.pas = []; ws.cu = []; if (!['Uncommon', 'Rare'].includes(ws.rar)) ws.deep = false; save(); render(); return true; }
-  if (el.dataset.pwd != null) { const ws = p.w[+el.dataset.pwd]; ws.deep = el.checked; if (!ws.deep) { ws.pas = (ws.pas || []).slice(0, 1); ws.cu = []; } save(); render(); return true; }
+  if (el.dataset.pwr != null) { const ws = p.w[+el.dataset.pwr]; ws.rar = el.value; ws.pas = []; ws.cu = []; if (!canDeepW(ws)) ws.deep = false; save(); render(); return true; }
   if (el.dataset.pws != null) { p.w[+el.dataset.pws].sk = el.value; save(); render(); return true; }
   if (el.dataset.prc != null) { p.r[+el.dataset.prc].col = el.value; save(); render(); return true; }
+  if (el.dataset.pwd != null) { const ws = p.w[+el.dataset.pwd]; ws.deep = el.checked; if (!ws.deep) { ws.pas = (ws.pas || []).slice(0, 1); ws.cu = []; } save(); render(); return true; }
+  if (el.dataset.pmove != null) {
+    const en = el.dataset.pmove, to = p.w[+el.value];
+    const x = PAS().filter(y => y.en === en && eligible(to, y, 'affix')).sort((a, b) => b.p - a.p)[0];
+    if (x) { p.w.forEach(ws => { if (ws && ws.pas) ws.pas = ws.pas.filter(z => (pasById(z) || {}).en !== en); }); to.pas = (to.pas || []).concat(x.id); }
+    save(); render(); return true;
+  }
   return false;
 }
+document.addEventListener('toggle', e => { const d = e.target; if (d.classList && d.classList.contains('wz-wg')) { S.wOpen = S.wOpen || {}; S.wOpen[d.dataset.wtype] = d.open; save(); } }, true);
+document.addEventListener('input', e => {
+  if (document.documentElement.dataset.game !== 'nr' || S.tab !== 'plan') return;
+  const el = e.target;
+  const live = (key, id) => { S[key] = el.value; clearTimeout(window.__wzq); window.__wzq = setTimeout(() => { save(); render(); const i = document.getElementById(id); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }, 200); };
+  if (el.id === 'wz-wq') live('wq', 'wz-wq');
+  if (el.id === 'wz-pq') live('pq', 'wz-pq');
+});
 
 /* ---------------------------------------------------------------- footer + orchestration */
 function renderFoot() {
@@ -1985,7 +2237,7 @@ let deb;
 document.addEventListener('click', e => {
   if (document.documentElement.dataset.game !== 'nr') return;
   if (PICK) return;
-  const b = e.target.closest('button'); if (!b) return;
+  const b = e.target.closest('[data-prx],button'); if (!b) return;
   if (S.tab === 'plan' && plannerClick(b)) return;
   const d = b.dataset;
   if (d.nrtab) { S.tab = d.nrtab; S.sel = null; }
